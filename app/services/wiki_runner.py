@@ -27,6 +27,10 @@ class OpenWikiRunError(Exception):
     """Raised when the OpenWiki CLI cannot complete a run."""
 
 
+class OpenWikiRunCancelled(Exception):
+    """Raised when a run is stopped because the wiki was cancelled."""
+
+
 def split_command(command: str) -> list[str]:
     """Split ``OPENWIKI_BIN`` into argv, keeping Windows backslashes intact."""
     if os.name == "nt":
@@ -163,11 +167,13 @@ async def run_openwiki(
     page_concurrency: int | None = None,
     secrets: tuple[str, ...] = (),
     env_overrides: dict[str, str] | None = None,
+    cancel_event: asyncio.Event | None = None,
 ) -> None:
     """Run OpenWiki in one-shot mode (``openwiki --init -p``) inside ``repo_dir``.
 
     Output is streamed to ``log_path``. Raises :class:`OpenWikiRunError` on a
-    non-zero exit code or when the job timeout is exceeded.
+    non-zero exit code or when the job timeout is exceeded, and
+    :class:`OpenWikiRunCancelled` when ``cancel_event`` gets set.
     """
     repo_dir = Path(repo_dir)
     log_path = Path(log_path)
@@ -211,16 +217,44 @@ async def run_openwiki(
                 line = raw.decode("utf-8", errors="replace").rstrip("\r\n")
                 write_line(redact_text(line, secrets))
 
+        async def wait_for_process() -> int:
+            """Wait for the CLI, honouring the cancel event and the timeout."""
+            pump_task = asyncio.create_task(pump())
+            cancel_task = asyncio.create_task(cancel_event.wait()) if cancel_event is not None else None
+            try:
+                waiters = {pump_task} if cancel_task is None else {pump_task, cancel_task}
+                done, _ = await asyncio.wait(
+                    waiters, timeout=timeout_seconds, return_when=asyncio.FIRST_COMPLETED
+                )
+                if cancel_task is not None and cancel_task in done and pump_task not in done:
+                    process.kill()
+                    await process.wait()
+                    write_line("! openwiki killed: generation cancelled")
+                    raise OpenWikiRunCancelled("cancelled by user")
+                if pump_task in done:
+                    pump_task.result()
+                else:
+                    raise asyncio.TimeoutError
+                return await process.wait()
+            finally:
+                if cancel_task is not None:
+                    cancel_task.cancel()
+                    with contextlib.suppress(asyncio.CancelledError):
+                        await cancel_task
+                if not pump_task.done():
+                    pump_task.cancel()
+                    with contextlib.suppress(asyncio.CancelledError):
+                        await pump_task
+
         try:
-            await asyncio.wait_for(pump(), timeout=timeout_seconds)
-            returncode = await process.wait()
+            returncode = await wait_for_process()
         except asyncio.TimeoutError:
             process.kill()
             await process.wait()
             write_line(f"! openwiki exceeded the {settings.job_timeout_minutes} minute timeout and was killed")
             raise OpenWikiRunError(f"openwiki timed out after {settings.job_timeout_minutes} minutes")
         except asyncio.CancelledError:
-            # The service is shutting down: never leave an orphan process behind.
+            # The worker is shutting down: never leave an orphan process behind.
             process.kill()
             with contextlib.suppress(Exception):
                 await process.wait()

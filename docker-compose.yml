@@ -12,16 +12,29 @@ services:
         required: false
     environment:
       DATA_DIR: /data
-      MAX_CONCURRENT_JOBS: ${MAX_CONCURRENT_JOBS:-2}
-      JOB_TIMEOUT_MINUTES: ${JOB_TIMEOUT_MINUTES:-60}
-      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-200}
-      DEFAULT_PAGE_CONCURRENCY: ${DEFAULT_PAGE_CONCURRENCY:-2}
+      # Single-container mode: run one worker inside the API process.
+      # RUN_LOCAL_WORKER: "true"
     volumes:
       - openwiki-ci-data:/data
-    # Uncomment to reach an OpenAI-compatible model server running on the host
-    # (e.g. Ollama at http://host.docker.internal:11434/v1).
-    # extra_hosts:
-    #   - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  # Scales horizontally: docker compose up -d --scale worker=4
+  worker:
+    image: openwiki-ci:latest
+    command: ["python", "-m", "app.worker"]
+    healthcheck:
+      disable: true
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATA_DIR: /data
+      MAX_CONCURRENT_JOBS: ${MAX_CONCURRENT_JOBS:-1}
+      JOB_TIMEOUT_MINUTES: ${JOB_TIMEOUT_MINUTES:-60}
+    volumes:
+      - openwiki-ci-data:/data
+    depends_on:
+      - api
     restart: unless-stopped
 
 volumes:

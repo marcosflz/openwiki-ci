@@ -6,9 +6,13 @@ generada por [OpenWiki](https://github.com/langchain-ai/openwiki) como un
 `wiki.zip` (Markdown + `openwiki/.claims/`). Opcionalmente, con `push`, la
 commitea de vuelta al repositorio de origen.
 
-- **API**: Python 3.12 + FastAPI (generaciones asíncronas con estado consultable).
-- **Generación**: el CLI `openwiki` (Node 22) se ejecuta en modo one-shot
-  (`openwiki --init -p`) dentro del workspace de la generación.
+- **API**: Python 3.12 + FastAPI; encola, sirve estado/logs/zip y reencola
+  claims caducados (no genera).
+- **Workers**: contenedores de la misma imagen (`python -m app.worker`) que
+  ejecutan el CLI `openwiki` (Node 22) en modo one-shot (`openwiki --init -p`);
+  escala horizontal con `docker compose up -d --scale worker=N`.
+- **Cola**: SQLite (`openwiki.db`, WAL) en el volumen compartido; claims
+  atómicos, progreso por heartbeat y reencolado de claims muertos.
 - **Desacople**: todo el contacto con OpenWiki vive en
   `app/services/wiki_runner.py`; actualizar OpenWiki es reconstruir la imagen
   con otro `OPENWIKI_VERSION`, sin tocar el código del servicio.
@@ -19,11 +23,50 @@ commitea de vuelta al repositorio de origen.
 cp .env.example .env
 # edita .env y pon tu proveedor de modelos + API key (OPENAI_API_KEY, ANTHROPIC_API_KEY, ...)
 
-docker compose up --build -d
+docker compose up --build -d --scale worker=2
 curl http://localhost:8000/health
 ```
 
 Documentación interactiva de la API: http://localhost:8000/docs
+
+## Arquitectura y escalado
+
+```
+                        ┌──────────────────────────────┐
+        POST /wikis ───▶│ api (FastAPI) · no genera    │
+                        └───────────────┬──────────────┘
+                                        │  openwiki.db (SQLite, WAL)
+                        ┌───────────────┴───────────────┐
+                        ▼                               ▼
+                 ┌────────────┐                  ┌────────────┐
+                 │  worker 1  │   ...            │  worker N  │
+                 │  OpenWiki  │                  │  OpenWiki  │
+                 └────────────┘                  └────────────┘
+```
+
+- **api**: crea las wikis (`queued`), sirve estado/logs/zip y reencola claims
+  caducados. Es ligera y se puede reiniciar sin matar generaciones.
+- **worker**: reclama la siguiente wiki encolada y ejecuta el pipeline
+  (clone → OpenWiki → zip → push opcional). Misma imagen que la API, comando
+  distinto.
+- **Reanudación**: si un worker muere a mitad, la API reencola su claim tras
+  `WORKER_LEASE_SECONDS` y otro worker continúa desde `openwiki/.run.json`.
+
+```bash
+docker compose up -d --scale worker=4
+docker compose ps
+curl http://localhost:8000/health   # pool.workers = workers vistos recientemente
+```
+
+- Cada worker hace **1 generación a la vez** por defecto
+  (`MAX_CONCURRENT_JOBS` por contenedor); la concurrencia la da el número de
+  réplicas.
+- API y workers se comunican solo por el volumen (`openwiki.db` + `jobs/`): si
+  la API se cae, los workers terminan sus generaciones igualmente.
+- Pensado para **un host** (volumen local). Para varios hosts, sustituye
+  `app/core/storage.py` por un backend Postgres con los mismos métodos.
+- Modo de un solo contenedor (dev): `RUN_LOCAL_WORKER=true` arranca un worker
+  dentro de la API (`docker compose up -d` sin réplicas de worker).
 
 ## API
 
@@ -42,11 +85,11 @@ Documentación interactiva de la API: http://localhost:8000/docs
 | `GET` | `/health/model` | Comprobación activa de que el modelo configurado responde (cacheada; `?force=true`). |
 
 Estados de una wiki: `queued → fetching → generating → finalizing → done`
-(o `failed`, `cancelled`). Las wikis son resumibles: si el timeout lo mata o
-cancelas la generación, `POST /wikis/{id}/retry` la reencola en el **mismo
-workspace** y OpenWiki continúa desde su cola de páginas
-(`openwiki/.run.json`); al reiniciar el contenedor, las wikis en curso se
-reencolan igual.
+(o `failed`, `cancelled`). Un worker la reclama de la cola (`claimed_by`,
+`attempts`) y su progreso actualiza el heartbeat; son resumibles: si el timeout
+la mata o la cancelas, `POST /wikis/{id}/retry` la reencola y OpenWiki continúa
+desde su cola de páginas (`openwiki/.run.json`). Si un worker muere, la API
+reencola el claim caducado y otro worker la reanuda en el mismo workspace.
 
 Durante la generación, `progress` se lee del propio plan de OpenWiki
 (`3/7 pages · generating`) y los logs llevan marca de tiempo
@@ -261,7 +304,13 @@ Variables propias del servicio:
 | `JOB_TIMEOUT_MINUTES` | `45` | Timeout por generación; al superarlo se mata el proceso. |
 | `MAX_UPLOAD_MB` | `200` | Tamaño máximo de subida. |
 | `MAX_EXTRACTED_MB` | `1024` | Tamaño máximo descomprimido. |
-| `MAX_CONCURRENT_JOBS` | `2` | Generaciones simultáneas (workers). |
+| `MAX_CONCURRENT_JOBS` | `1` | Generaciones por contenedor worker (escala con `--scale worker=N`). |
+| `RUN_LOCAL_WORKER` | `false` | Arranca un worker dentro de la API (un solo contenedor / dev). |
+| `WORKER_ID` | hostname | Identidad del worker en la cola. |
+| `WORKER_POLL_SECONDS` | `2` | Sondeo de la cola cuando no hay trabajo. |
+| `WORKER_PROGRESS_SECONDS` | `2` | Frecuencia de heartbeats/progreso durante la generación. |
+| `WORKER_LEASE_SECONDS` | `180` | Sin heartbeat durante este tiempo, el claim se reencola. |
+| `WORKER_REAP_SECONDS` | `30` | Barrido de claims caducados en la API. |
 | `DEFAULT_PAGE_CONCURRENCY` | `2` | `OPENWIKI_PAGE_CONCURRENCY` por defecto (1–8). |
 | `JOB_RETENTION_HOURS` | `0` | Borra wikis terminadas tras N horas (`0` = conservar). |
 | `MODEL_CHECK_TTL_SECONDS` | `30` | Caché de `/health/model` (`0` = probar en cada llamada). |
@@ -304,13 +353,17 @@ uv venv --python 3.12
 uv pip install -e ".[test]"
 uv run pytest
 
-# ejecución local del servicio
-uv run uvicorn app.main:create_app --factory --reload
+# ejecución local: API + un worker in-process (dev)
+RUN_LOCAL_WORKER=true uv run uvicorn app.main:create_app --factory --reload
+
+# o en dos procesos, como en Docker (el worker reclama de la cola SQLite)
+uv run uvicorn app.main:create_app --factory
+uv run python -m app.worker
 ```
 
 Los tests corren todo el pipeline (clone → openwiki fake → zip → descarga) con
-un CLI simulado (`tests/fixtures/fake_openwiki.py`), así que no necesitan
-proveedor de modelos ni red.
+un CLI simulado (`tests/fixtures/fake_openwiki.py`) y un worker in-process, así
+que no necesitan proveedor de modelos ni red.
 
 > Nota: la imagen configura `safe.directory` a nivel de sistema para poder
 > clonar repositorios montados o con otro propietario. Si ejecutas el servicio
@@ -321,17 +374,18 @@ proveedor de modelos ni red.
 
 ```
 app/
-├── main.py                  # factory de FastAPI + lifespan (workers, recuperación)
+├── main.py                  # factory de FastAPI + lifespan (reaper, worker local)
 ├── core/config.py           # Settings (env vars)
-├── core/storage.py          # job.json por generación, escrituras atómicas
+├── core/storage.py          # cola y estado en SQLite (openwiki.db, WAL)
 ├── core/util.py             # redacción de credenciales
-├── routers/wikis.py          # endpoints de wikis
+├── routers/wikis.py         # endpoints de wikis
 ├── routers/health.py        # /health
+├── services/pipeline.py     # clone → openwiki → zip → push (una generación)
 ├── services/ingestion.py    # clone git, subidas, extracción segura, git init
 ├── services/wiki_runner.py  # ÚNICO punto de contacto con el CLI OpenWiki
 ├── services/packer.py       # empaquetado de openwiki/ en wiki.zip
 ├── services/publisher.py    # commit + push de la wiki al repositorio
-└── workers/pool.py          # pool asíncrono de generaciones
+└── worker/loop.py           # worker: reclama de la cola y ejecuta el pipeline
 ```
 
 ### Añadir endpoints / features
@@ -340,8 +394,9 @@ app/
    incluirlo en `create_app()`.
 2. La lógica de negocio vive en `app/services/`; los routers no hablan con git
    ni con el CLI directamente.
-3. Cuando haga falta una cola persistente (Redis, RQ, Celery), solo se
-   reemplaza `app/workers/pool.py`.
+3. La coordinación API↔workers vive en `app/core/storage.py` (SQLite en el
+   volumen). Para multi-host, sustituye ese módulo por Postgres manteniendo los
+   métodos (`claim_next`, `heartbeat`, `complete`, `recover_stale`, ...).
 
 Roadmap natural ya previsto: `GET /wikis/{id}/pages` (páginas parseadas desde el
 front matter), webhooks de finalización y servido del visualizador
@@ -351,11 +406,12 @@ estático (`openwiki visualize --export`).
 
 - **Sin autenticación** en la API: pensada para red interna o detrás de un
   reverse proxy con auth. Añadir un bearer token es el siguiente paso natural.
-- El pool de workers es **in-process**: con varias réplicas del contenedor,
-  cada réplica ejecuta sus propias generaciones; usa `DATA_DIR` por réplica.
-- El token de un repo privado se guarda en `job.json` (volumen `/data`, fuera
-  de logs y respuestas) para poder reintentar el job sin reenviarlo; si el
-  workspace se pierde, el job fallará y hay que reenviarlo.
+- La cola es un SQLite en el volumen (`/data/openwiki.db`, WAL): sirve para un
+  host con varios contenedores; para multi-host usa un backend Postgres.
+- El token de un repo privado se guarda en la base del volumen
+  (`/data/openwiki.db`, fuera de logs y respuestas) para poder reintentar la
+  wiki sin reenviarlo; si el workspace se pierde, la wiki fallará y hay que
+  reenviarla.
 - `push` escribe en tu repositorio con ese PAT: revisa la rama destino. Si el
   push falla, la generación queda `failed` pero la wiki sigue descargable.
 - `ALLOW_LOCAL_GIT=true` permite clonar rutas locales/`file://` (útil en

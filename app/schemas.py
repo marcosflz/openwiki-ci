@@ -145,6 +145,8 @@ class WikiView(BaseModel):
     mode: str = "auto"
     push: PushOptions | None = None
     push_result: PushResult | None = None
+    worker: str | None = Field(None, description="Worker that claimed the generation.")
+    attempts: int = 0
     progress: str | None = None
     pages: int | None = None
     size_bytes: int | None = None
@@ -173,7 +175,7 @@ def wiki_to_view(job: dict[str, Any]) -> WikiView:
     push_request = job.get("push")
     push_result_data = job.get("push_result")
     return WikiView(
-        wiki_id=job["job_id"],
+        wiki_id=job["wiki_id"],
         status=WikiStatus(job.get("status", "queued")),
         source_type=source_type,
         source_url=source_url,
@@ -184,6 +186,8 @@ def wiki_to_view(job: dict[str, Any]) -> WikiView:
         mode=job.get("mode", "auto"),
         push=PushOptions(**push_request) if isinstance(push_request, dict) else None,
         push_result=PushResult(**push_result_data) if isinstance(push_result_data, dict) else None,
+        worker=job.get("claimed_by"),
+        attempts=int(job.get("attempts") or 0),
         progress=job.get("progress"),
         pages=job.get("pages"),
         size_bytes=job.get("size_bytes"),

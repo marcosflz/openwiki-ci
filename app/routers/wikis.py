@@ -38,7 +38,7 @@ def list_wikis(
     limit: int = Query(50, ge=1, le=500),
 ) -> list[WikiView]:
     store = request.app.state.store
-    return [wiki_to_view(job) for job in store.list_jobs(limit=limit)]
+    return [wiki_to_view(job) for job in store.list_wikis(limit=limit)]
 
 
 @router.post(
@@ -86,8 +86,7 @@ async def create_wiki(payload: WikiCreate, request: Request) -> WikiAccepted:
         mode=payload.mode,
         push=payload.push.model_dump() if payload.push is not None else None,
     )
-    await request.app.state.pool.enqueue(job["job_id"])
-    return _accepted(job["job_id"])
+    return _accepted(job["wiki_id"])
 
 
 @router.post(
@@ -122,7 +121,7 @@ async def upload_source(
         concurrency=concurrency,
         mode=mode or "auto",
     )
-    dest = store.job_dir(job["job_id"]) / f"upload{suffix}"
+    dest = store.job_dir(job["wiki_id"]) / f"upload{suffix}"
     try:
         await ingestion.save_upload(
             _upload_chunks(file),
@@ -130,11 +129,10 @@ async def upload_source(
             max_bytes=settings.max_upload_mb * 1024 * 1024,
         )
     except ingestion.IngestionError as exc:
-        store.delete(job["job_id"])
+        store.delete(job["wiki_id"])
         raise HTTPException(status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail=str(exc)) from exc
 
-    await request.app.state.pool.enqueue(job["job_id"])
-    return _accepted(job["job_id"])
+    return _accepted(job["wiki_id"])
 
 
 async def _upload_chunks(file: UploadFile, chunk_size: int = 1024 * 1024) -> AsyncIterator[bytes]:
@@ -147,7 +145,7 @@ async def _upload_chunks(file: UploadFile, chunk_size: int = 1024 * 1024) -> Asy
 
 @router.post("/{wiki_id}/cancel", summary="Cancel a queued or running generation")
 async def cancel_wiki(wiki_id: str, request: Request) -> dict[str, str]:
-    outcome = await request.app.state.pool.cancel(wiki_id)
+    outcome = request.app.state.store.cancel(wiki_id)
     if outcome == "not_found":
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
     if outcome == "not_running":
@@ -166,7 +164,7 @@ async def cancel_wiki(wiki_id: str, request: Request) -> dict[str, str]:
     summary="Re-enqueue a failed/cancelled wiki (OpenWiki resumes where it stopped)",
 )
 async def retry_wiki(wiki_id: str, request: Request) -> WikiAccepted:
-    outcome = await request.app.state.pool.retry(wiki_id)
+    outcome = request.app.state.store.retry(wiki_id)
     if outcome == "not_found":
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
     if outcome == "not_retryable":

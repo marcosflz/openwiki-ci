@@ -41,11 +41,27 @@ class Settings(BaseSettings):
     job_timeout_minutes: int = 45
     max_upload_mb: int = 200
     max_extracted_mb: int = 1024
-    max_concurrent_jobs: int = 2
     default_page_concurrency: int = 2
     log_tail_default: int = 50
-    #: 0 keeps finished jobs forever; >0 deletes them after N hours on startup.
+    #: 0 keeps finished wikis forever; >0 deletes them after N hours on startup.
     job_retention_hours: int = 0
+
+    # --- Worker pool --------------------------------------------------------
+    #: Run an in-process worker (single container / dev / tests). Worker
+    #: containers do not set this: they run ``python -m app.worker``.
+    run_local_worker: bool = False
+    #: Worker identity in the pool; defaults to the container hostname.
+    worker_id: str = ""
+    #: Generations a single worker runs in parallel (scale with replicas instead).
+    max_concurrent_jobs: int = 1
+    #: Seconds between claim attempts when the queue is empty.
+    worker_poll_seconds: float = 2.0
+    #: Seconds between progress/heartbeat updates while a generation runs.
+    worker_progress_seconds: float = 2.0
+    #: A claim with no heartbeat for this long is requeued by the API.
+    worker_lease_seconds: int = 180
+    #: Seconds between stale-claim sweeps in the API.
+    worker_reap_seconds: int = 30
 
     # --- Model health check -------------------------------------------------
     #: Cached /health/model results; 0 disables the cache and probes every call.
@@ -82,11 +98,25 @@ class Settings(BaseSettings):
             raise ValueError("default_page_concurrency must be between 1 and 8")
         return value
 
-    @field_validator("job_timeout_minutes", "max_upload_mb", "max_concurrent_jobs", "model_check_timeout_seconds")
+    @field_validator(
+        "job_timeout_minutes",
+        "max_upload_mb",
+        "max_concurrent_jobs",
+        "model_check_timeout_seconds",
+        "worker_lease_seconds",
+        "worker_reap_seconds",
+    )
     @classmethod
     def _check_positive(cls, value: int) -> int:
         if value < 1:
             raise ValueError("value must be positive")
+        return value
+
+    @field_validator("worker_poll_seconds", "worker_progress_seconds")
+    @classmethod
+    def _check_positive_seconds(cls, value: float) -> float:
+        if value <= 0:
+            raise ValueError("worker intervals must be positive")
         return value
 
     @field_validator("compat_proxy_port")

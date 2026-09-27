@@ -276,6 +276,7 @@ def test_completed_wikis_survive_a_restart(settings, make_git_repo):
 def test_active_wikis_are_resumed_after_a_restart(settings, make_git_repo):
     from fastapi.testclient import TestClient
 
+    from app.core.storage import JobStore
     from app.main import create_app
 
     repo = make_git_repo("resume-repo")
@@ -284,12 +285,17 @@ def test_active_wikis_are_resumed_after_a_restart(settings, make_git_repo):
         wiki_id = response.json()["wiki_id"]
         assert wait_for_status(first, wiki_id)["status"] == "done"
 
-    # Simulate a crash mid-generation: active status, no packaged wiki yet.
-    meta = settings.data_dir / "jobs" / wiki_id / "job.json"
-    data = json.loads(meta.read_text(encoding="utf-8"))
-    data["status"] = "generating"
-    data["finished_at"] = None
-    meta.write_text(json.dumps(data), encoding="utf-8")
+    # Simulate a crash mid-generation: running status with a dead claim and no
+    # packaged wiki yet.
+    store = JobStore(settings.data_dir)
+    store.update(
+        wiki_id,
+        status="generating",
+        finished_at=None,
+        claimed_by="crashed-worker",
+        claim_id="deadbeef",
+        last_seen_at=None,
+    )
     (settings.data_dir / "jobs" / wiki_id / "wiki.zip").unlink()
 
     with TestClient(create_app(settings)) as second:

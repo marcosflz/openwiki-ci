@@ -48,7 +48,10 @@ def settings(tmp_path: Path) -> Settings:
         data_dir=tmp_path / "data",
         openwiki_bin=f'"{sys.executable}" "{FAKE_OPENWIKI}"',
         allow_local_git=True,
+        run_local_worker=True,
         max_concurrent_jobs=1,
+        worker_poll_seconds=0.1,
+        worker_progress_seconds=0.1,
         job_timeout_minutes=2,
         default_page_concurrency=1,
     )

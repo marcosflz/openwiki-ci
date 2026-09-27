@@ -17,7 +17,7 @@ router = APIRouter(tags=["health"])
 @router.get("/health", summary="Service health (fast, never calls the model)")
 def health(request: Request) -> dict[str, object]:
     settings = request.app.state.settings
-    pool = request.app.state.pool
+    store = request.app.state.store
 
     binary = ""
     with_argv = split_command(settings.openwiki_bin)
@@ -30,7 +30,7 @@ def health(request: Request) -> dict[str, object]:
         "openwiki_bin": settings.openwiki_bin,
         "openwiki_found": shutil.which(binary) is not None,
         "data_dir": str(settings.data_dir),
-        "pool": pool.stats,
+        "pool": store.stats(),
         "model": describe_model(settings),
     }
 
