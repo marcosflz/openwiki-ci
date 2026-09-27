@@ -4,7 +4,7 @@ services:
       context: .
       args:
         OPENWIKI_VERSION: ${OPENWIKI_VERSION:-0.6.0}
-    image: openwiki-service:latest
+    image: openwiki-ci:latest
     ports:
       - "8000:8000"
     env_file:
@@ -13,11 +13,11 @@ services:
     environment:
       DATA_DIR: /data
       MAX_CONCURRENT_JOBS: ${MAX_CONCURRENT_JOBS:-2}
-      JOB_TIMEOUT_MINUTES: ${JOB_TIMEOUT_MINUTES:-45}
+      JOB_TIMEOUT_MINUTES: ${JOB_TIMEOUT_MINUTES:-60}
       MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-200}
       DEFAULT_PAGE_CONCURRENCY: ${DEFAULT_PAGE_CONCURRENCY:-2}
     volumes:
-      - openwiki-data:/data
+      - openwiki-ci-data:/data
     # Uncomment to reach an OpenAI-compatible model server running on the host
     # (e.g. Ollama at http://host.docker.internal:11434/v1).
     # extra_hosts:
@@ -25,4 +25,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  openwiki-data:
+  openwiki-ci-data:
