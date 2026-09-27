@@ -153,16 +153,23 @@ def test_push_failure_keeps_the_wiki_downloadable(client, make_remote_repo):
     assert client.get(f"/wikis/{wiki_id}/download").status_code == 200
 
 
-def test_retry_after_push_failure_pushes_the_existing_wiki(client, make_remote_repo):
+def test_retry_after_push_failure_pushes_the_existing_wiki(client, make_remote_repo, monkeypatch):
+    # The real CLI records the documented commit; the fake only does it on demand.
+    monkeypatch.setenv("FAKE_OPENWIKI_GITHEAD", "1")
     origin = make_remote_repo("retry-push", bare=False)
     body = {"source": {"url": origin.as_uri()}, "push": {}}
     wiki_id = client.post("/wikis", json=body).json()["wiki_id"]
     failed = wait_for_status(client, wiki_id)
     assert failed["push_result"]["status"] == "failed"
 
-    # Fix the remote so it accepts the push, then retry: the wiki is already
-    # generated, so a clean update runs and only the push is retried.
+    # Fix the remote so it accepts the push and move it ahead (like new commits
+    # landing while the wiki was generated), then retry: the wiki is already
+    # generated, so a clean update runs, the workspace fast-forwards and the
+    # push succeeds.
     _git(["config", "receive.denyCurrentBranch", "ignore"], origin)
+    (origin / "src.py").write_text("print('new')\n", encoding="utf-8")
+    _commit(origin, "remote moved ahead")
+
     assert client.post(f"/wikis/{wiki_id}/retry").status_code == 202
     payload = wait_for_status(client, wiki_id, timeout=60)
 
@@ -170,7 +177,9 @@ def test_retry_after_push_failure_pushes_the_existing_wiki(client, make_remote_r
     assert payload["mode"] == "auto"
     assert payload["resolved_mode"] == "update"
     assert payload["push_result"]["status"] == "pushed"
-    assert ".openwiki/index.md" in _remote_names(origin)
+    names = _remote_names(origin)
+    assert ".openwiki/index.md" in names
+    assert "src.py" in names
 
 
 def test_push_of_a_detached_checkout_needs_a_branch(client, make_remote_repo):

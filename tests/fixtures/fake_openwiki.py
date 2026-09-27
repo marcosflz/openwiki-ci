@@ -52,6 +52,17 @@ def main() -> int:
         encoding="utf-8",
     )
     print("openwiki: page 2/2 architecture.md", flush=True)
+    last_update: dict[str, object] = {
+        "command": "init" if "--init" in sys.argv else "update",
+        "status": "complete",
+    }
+    if os.environ.get("FAKE_OPENWIKI_GITHEAD"):
+        import subprocess
+
+        last_update["gitHead"] = subprocess.run(
+            ["git", "rev-parse", "HEAD"], capture_output=True, text=True, check=False
+        ).stdout.strip()
+    (wiki / ".last-update.json").write_text(json.dumps(last_update), encoding="utf-8")
     print("openwiki: run complete", flush=True)
     return 0
 

@@ -46,6 +46,7 @@ async def publish_wiki(
     secrets = (token,) if token else ()
     try:
         branch = await _target_branch(repo_dir, options.get("branch"))
+        await _sync_with_remote(repo_dir, url, branch, token, secrets, log)
         _expose_artifact_dir(repo_dir, artifact_dir, log)
 
         await run_git(
@@ -104,6 +105,45 @@ async def publish_wiki(
         "detail": f"pushed to {branch}",
         "at": utc_now(),
     }
+
+
+async def _sync_with_remote(
+    repo_dir: Path,
+    url: str,
+    branch: str,
+    token: str | None,
+    secrets: tuple[str, ...],
+    log: Callable[[str], None],
+) -> None:
+    """Fast-forward the workspace to the remote branch before committing.
+
+    Updates may document remote commits newer than the clone (OpenWiki diffs
+    against the fetched branch). Moving HEAD to the remote tip first keeps the
+    wiki commit on top of the latest history, so the push is a fast-forward
+    instead of a non-fast-forward rejection.
+    """
+    try:
+        code, _, _ = await run_git_status(
+            [*git_auth_prefix(url, token), "fetch", "--quiet", url, f"refs/heads/{branch}"],
+            cwd=repo_dir,
+            secrets=secrets,
+            timeout_seconds=_REMOTE_LOOKUP_TIMEOUT_SECONDS,
+        )
+        if code != 0:
+            return
+        _, out, _ = await run_git_status(["rev-parse", "FETCH_HEAD"], cwd=repo_dir, secrets=secrets)
+        remote_tip = out.strip().splitlines()[0].strip() if out.strip() else ""
+        _, out, _ = await run_git_status(["rev-parse", "HEAD"], cwd=repo_dir, secrets=secrets)
+        head = out.strip()
+        if not remote_tip or not head or remote_tip == head:
+            return
+        code, _, _ = await run_git_status(
+            ["merge", "--ff-only", "--quiet", remote_tip], cwd=repo_dir, secrets=secrets
+        )
+    except IngestionError:
+        return
+    if code == 0:
+        log(f"fast-forwarded the workspace to {remote_tip[:12]} before pushing")
 
 
 async def _target_branch(repo_dir: Path, requested: str | None) -> str:
