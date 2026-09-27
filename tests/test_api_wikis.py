@@ -207,7 +207,8 @@ def test_auto_mode_uses_update_when_the_source_ships_a_wiki(client, make_git_rep
 
     payload = wait_for_status(client, wiki_id)
     assert payload["status"] == "done", payload
-    assert payload["mode"] == "update"
+    assert payload["mode"] == "auto"
+    assert payload["resolved_mode"] == "update"
     assert "--update" in _fake_args_from_zip(client, wiki_id)
 
 
@@ -217,7 +218,8 @@ def test_auto_mode_uses_init_without_a_wiki(client, make_git_repo):
 
     payload = wait_for_status(client, wiki_id)
     assert payload["status"] == "done"
-    assert payload["mode"] == "init"
+    assert payload["mode"] == "auto"
+    assert payload["resolved_mode"] == "init"
     assert "--init" in _fake_args_from_zip(client, wiki_id)
 
 
@@ -228,7 +230,8 @@ def test_explicit_update_without_wiki_falls_back_to_init(client, make_git_repo):
 
     payload = wait_for_status(client, wiki_id)
     assert payload["status"] == "done"
-    assert payload["mode"] == "init"
+    assert payload["mode"] == "update"
+    assert payload["resolved_mode"] == "init"
     logs = client.get(f"/wikis/{wiki_id}/logs", params={"tail": 50}).text
     assert "falling back to --init" in logs
 
@@ -245,7 +248,8 @@ def test_hidden_wiki_is_adopted_for_incremental_updates(client, make_git_repo):
 
     payload = wait_for_status(client, wiki_id)
     assert payload["status"] == "done", payload
-    assert payload["mode"] == "update"
+    assert payload["mode"] == "auto"
+    assert payload["resolved_mode"] == "update"
     assert "--update" in _fake_args_from_zip(client, wiki_id)
 
     logs = client.get(f"/wikis/{wiki_id}/logs", params={"tail": 50}).text

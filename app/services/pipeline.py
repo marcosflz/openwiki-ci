@@ -89,7 +89,7 @@ async def run_pipeline(
     ):
         log("fetched the full history so --update can diff against the last documented commit")
     report(status="generating")
-    store.update(wiki_id, mode=mode)
+    store.update(wiki_id, resolved_mode=mode)
     if requested_mode == "update" and mode == "init":
         log("no existing wiki found in the source; falling back to --init")
     elif mode == "update":
@@ -121,7 +121,7 @@ async def run_pipeline(
         store.wiki_zip_path(wiki_id),
         root_name=settings.wiki_artifact_dir,
     )
-    report(pages=pages)
+    report(pages=pages, size_bytes=size)
     log(f"wiki ready: {pages} pages, {size} bytes")
 
     push_result: dict[str, Any] | None = None

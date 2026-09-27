@@ -38,6 +38,7 @@ _UPDATABLE = frozenset(
         "language",
         "concurrency",
         "mode",
+        "resolved_mode",
         "push",
         "claimed_by",
         "claim_id",
@@ -64,6 +65,7 @@ CREATE TABLE IF NOT EXISTS wikis (
     language TEXT,
     concurrency INTEGER,
     mode TEXT NOT NULL DEFAULT 'auto',
+    resolved_mode TEXT,
     push TEXT,
     claimed_by TEXT,
     claim_id TEXT,
@@ -120,6 +122,9 @@ class JobStore:
             self._connection.execute("PRAGMA synchronous=NORMAL")
             self._connection.execute("PRAGMA busy_timeout=5000")
             self._connection.executescript(_SCHEMA)
+            columns = {row["name"] for row in self._connection.execute("PRAGMA table_info(wikis)")}
+            if "resolved_mode" not in columns:  # upgrade databases created before this column
+                self._connection.execute("ALTER TABLE wikis ADD COLUMN resolved_mode TEXT")
         self.migrate_legacy_files()
 
     # --- paths --------------------------------------------------------------
@@ -276,6 +281,7 @@ class JobStore:
         status: str | None = None,
         progress: str | None = None,
         pages: int | None = None,
+        size_bytes: int | None = None,
     ) -> dict[str, Any]:
         """Refresh a claim and return ``{"ok", "cancel", "status"}``.
 
@@ -302,6 +308,9 @@ class JobStore:
             if pages is not None:
                 assignments.append("pages=?")
                 values.append(pages)
+            if size_bytes is not None:
+                assignments.append("size_bytes=?")
+                values.append(size_bytes)
             self._connection.execute(
                 f"UPDATE wikis SET {', '.join(assignments)} WHERE wiki_id=?", (*values, wiki_id)
             )

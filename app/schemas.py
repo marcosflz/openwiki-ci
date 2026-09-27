@@ -143,6 +143,9 @@ class WikiView(BaseModel):
     language: str | None = None
     concurrency: int | None = None
     mode: str = "auto"
+    resolved_mode: str | None = Field(
+        None, description="Mode actually executed (auto may resolve to init or update)."
+    )
     push: PushOptions | None = None
     push_result: PushResult | None = None
     worker: str | None = Field(None, description="Worker that claimed the generation.")
@@ -184,6 +187,7 @@ def wiki_to_view(job: dict[str, Any]) -> WikiView:
         language=job.get("language"),
         concurrency=job.get("concurrency"),
         mode=job.get("mode", "auto"),
+        resolved_mode=job.get("resolved_mode"),
         push=PushOptions(**push_request) if isinstance(push_request, dict) else None,
         push_result=PushResult(**push_result_data) if isinstance(push_result_data, dict) else None,
         worker=job.get("claimed_by"),

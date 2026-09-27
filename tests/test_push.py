@@ -120,6 +120,26 @@ def test_push_failure_keeps_the_wiki_downloadable(client, make_remote_repo):
     assert client.get(f"/wikis/{wiki_id}/download").status_code == 200
 
 
+def test_retry_after_push_failure_pushes_the_existing_wiki(client, make_remote_repo):
+    origin = make_remote_repo("retry-push", bare=False)
+    body = {"source": {"url": origin.as_uri()}, "push": {}}
+    wiki_id = client.post("/wikis", json=body).json()["wiki_id"]
+    failed = wait_for_status(client, wiki_id)
+    assert failed["push_result"]["status"] == "failed"
+
+    # Fix the remote so it accepts the push, then retry: the wiki is already
+    # generated, so a clean update runs and only the push is retried.
+    _git(["config", "receive.denyCurrentBranch", "ignore"], origin)
+    assert client.post(f"/wikis/{wiki_id}/retry").status_code == 202
+    payload = wait_for_status(client, wiki_id, timeout=60)
+
+    assert payload["status"] == "done", payload
+    assert payload["mode"] == "auto"
+    assert payload["resolved_mode"] == "update"
+    assert payload["push_result"]["status"] == "pushed"
+    assert ".openwiki/index.md" in _remote_names(origin)
+
+
 def test_push_of_a_detached_checkout_needs_a_branch(client, make_remote_repo):
     origin = make_remote_repo("detached-push")
     _git(["tag", "v1", "main"], origin)
@@ -152,7 +172,7 @@ def test_update_wikis_fetch_the_full_history(client, settings, make_remote_repo)
     second = client.post("/wikis", json=body).json()["wiki_id"]
     payload = wait_for_status(client, second)
     assert payload["status"] == "done", payload
-    assert payload["mode"] == "update"
+    assert payload["resolved_mode"] == "update"
 
     shallow = settings.data_dir / "jobs" / second / "repo" / ".git" / "shallow"
     assert not shallow.exists()

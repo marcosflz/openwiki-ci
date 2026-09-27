@@ -48,6 +48,8 @@ def test_heartbeat_cancel_and_complete(tmp_path):
 
     beat = store.heartbeat(wiki["wiki_id"], claim_id, status="generating", progress="1/3 pages")
     assert beat == {"ok": True, "cancel": False, "status": "generating"}
+    store.heartbeat(wiki["wiki_id"], claim_id, size_bytes=1234)
+    assert store.get(wiki["wiki_id"])["size_bytes"] == 1234
 
     assert store.cancel(wiki["wiki_id"]) == "cancelling"
     beat = store.heartbeat(wiki["wiki_id"], claim_id, progress="2/3 pages")
