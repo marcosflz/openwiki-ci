@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:bbff4d00d1785e112ab9465d0824b5885e3fb7998d672e92ddb958ccaef27a97",
+  "claims": [
+    {
+      "id": "claim_f23de9dd75b8466fa096b956a44b2a51",
+      "statement": "`JobStore.cancel` implements two different cancellation semantics: a `queued` wiki is cancelled immediately (`status='cancelled'`, `finished_at`, `error='cancelled before start'`), a running wiki (`fetching`/`generating`/`finalizing`) only gets `cancel_requested=True` so the status stays untouched, and a terminal or unknown wiki yields `\"not_running\"` / `\"not_found\"`; the router maps those to `200 cancelled`, `200 cancelling`, `409` and `404` respectively.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L386-L397",
+          "version": "repo-lines-v1:sha256:0e45c6601726e7de8238ec13caed9c0acc98a10d6ac7d37a5af47d798cce3d3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5YjNjYmJmYTk1NGI5MjlhMDg4YWQwM2MwNDExMWRjZDBkYzExZDI3NTk2MmIyZWUwOGVmNDdkMDQ0MTZjNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMjIyY2UzYTVlMzUyMDA5NTY0ODdlMzM3NzgwOTI4MGExMTk0NDk0YWUyMzcyNTY1ZTk4ZWRjZTgxYmFkOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5ZDA5Y2JjMTk3NTM0MGYxNzI5YTEwMDQ1ZmJlYTIyMWI4MjgzZjMzY2U5YWM2OGFlMWM2ZDNmODYyYTVjNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOGViYWZhNzNiZjhhYzkyMjkwODllNDc4NmM4NzM4Y2M0YjIwY2JhOGZhNDg5YzgwYjMwMDk1NGViMDNlMGUifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L146-L157",
+          "version": "repo-lines-v1:sha256:0f190e2b2076bf06291976fb9e27631105d73059289cda02d324f185e08e7171:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmODEzY2I5YjJmZDQ4ZTRmMTc1YjYwYWNjZTJhNWI2YjU1M2M0MzAyMzQ0YWUyOGIyNGNkNjdkNjYxZDBjM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4NmVkMzdlNTVjN2E4ZDEyM2ZiODY4NDk5Njg4ZTcwOTYyNDYxZmZmZDE4MzBjMjk1OWZiMzk0OTFjNDI3MTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNWQ0Y2RlNTc3MTNkZTc2ZjViMmUzMzRiNzg1OGVkNWUzNTc1MmNjZDllZjFmNzk1ZDZkNDRlZmM3YmMwNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjNjAwMmVmNDc2NWUyNzE4NzhlMjg4OGM1ODRjYWE2N2U0YjllZDAyMWMwODU4OWFhNWY3MWQ0NTI4ZDI1ZWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fc6c15eaef264361a94a8262a34d9079",
+      "statement": "Running cancellation is cooperative because `heartbeat` is the only delivery channel: it re-confirms `(wiki_id, claim_id)` is in `RUNNING_STATUSES`, refreshes `last_seen_at` and returns the row's `cancel_requested` as `cancel`; `WorkerLoop._track` turns a truthy `cancel` into `cancel_event.set()`, and `pipeline.report()`/`check_cancel()` raise `PipelineCancelled` on the same signal, so the worker learns about the cancel at most one `WORKER_PROGRESS_SECONDS` later.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L271-L308",
+          "version": "repo-lines-v1:sha256:c0451c6dd807cded94d8ca706ded480fd6d1db5ae09ef36202e437e1669ec677:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMGVmOWIzMzdjNGEyMTY5MTQ2NjRlNjM1NWMzMGUyOGU4YzY5MDM3ZmEzOWVmMWIzM2YwYjM3YWE0ODc1OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NjJhYjU0ZGU2YTJmNjNlNzRjNzk5Nzg3ZGNmYmZkNzI2MTIzNWQxMzUxNjRiYWE1MjZhMTc0NTA2YjZmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0OTE5NjY5ZmU4YjQ1NmU3ZDkxODE2YzkyN2ZmMTVkNzg4Yjc4NTY1NjA0MDE1NzNhNTg0MTkxMjk5NjA4ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYTM5ZTJmZTUyODU2MTg3OTBiN2QzNjczZjZkYzcyZjJmNDI3MGNhNDg2MDdjYTUyYmE0YThkMjRmNTI1NzYifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L66-L77",
+          "version": "repo-lines-v1:sha256:0065549b31f0d90669ccd3ace3efd2e8851f67c6c73dd4761c8d819b2b9a5f11:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljOGJmYjYwMDVmMWU5NjkzNGM3MDdhYjU3YmVhZDAzM2Q0YmIzNGJlMWE4YmRjMzg4NmZmMjA2ZDU1MjgyZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NWE0Y2MxNDc4ZmIwZDg4YTdjMmZmYTE5OTAwNzIzYjIzOWE5NzdmYjZiNzliMzhkNjhmZWE3YzBlMTM2NjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyYzQwNmViMjAxMzFhZDIwOGE0MWZiNzYxYjU4ZmI3MmMzYTY2MjA3OTg1MzBlZDgyOWU2MGNjZWYyZDRmNDkifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L132-L157",
+          "version": "repo-lines-v1:sha256:9e8fc0c32d663a5670d96262684f3b351e0b87b20f4d44efefe6c18e5e28d9dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMzA3MjJjNTdjN2I4ZTgwZTg3ZjE1OThhYWQxZWY3ODE5YzEyZDUwMjJiMWQxNGFiODhkNDBlODE1MTk4ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmMjUyNGU4ZGM1Y2JjYWYwOWY3M2MzNTRjMDM2OGMwODZkMTdiMzZjOTdhYWNkMGRhZTgzZjNhOTFhMDU5YjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzM2E2MjRhMDhkMmQ5MWUzODQxNDdiMTAzMmMxYjUxMWJhNzkyYjE4NzAyYjUzZmM4YjQwZDkwZTI1NWRkMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6cf277b0eac442929ca6a8f57f3f019d",
+      "statement": "`run_openwiki` enforces cancellation on the CLI subprocess: `wait_for_process` waits concurrently on the stdout/stderr pump and `cancel_event.wait()` with `asyncio.wait(..., return_when=FIRST_COMPLETED)`, and when the cancel future wins it calls `process.kill()`, awaits the process, writes the log line `! openwiki killed: generation cancelled` and raises `OpenWikiRunCancelled`, which the pipeline re-raises as `PipelineCancelled` so the attempt is stored as a terminal `cancelled` row with a reason.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L102-L114",
+          "version": "repo-lines-v1:sha256:23f16d51082d2d751ac974cd74ec78720d820010f308c77d221f23ddf4453c24:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYTVjNjZlMTdiMTQ1Mzk3ODM0YjhjODU0ZGM0MTkzZTIxMjUxODBhODk5NmExNGMzMTg4MzMyNmIyZWZiY2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMjNlYzExYjc0MzMwNmNmN2EyNTJjNDI1NjA5YzJlNTQyMDIwN2I1YjgxOWE4OTYxYThhZWMzZTMwNWNkZDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNmZjhhNTliNjgyYmYzZGNjNmIxZjViNzg1MGYzYTAyNGZhNGUyOGYxMmVhYzczODIzZjllZmQ4N2NhNDA0ZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxM2I0YmM2Y2I5YzBiZjQ5NmM2MWEyMTAxODZmOWM2ZGY4NmNmYTA4M2ViNDhkNDE1OTdjNmMyNWUxNTcyMWQifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L220-L247",
+          "version": "repo-lines-v1:sha256:9785971f1560d2955d5252baef6373b355ad8f6bdadfcaf4c6ca46b6efc7874a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MWYzMmQzZTY2YWUxZGY2ODEyODVhZjMyNzU1MWZkYjcwZDRhZDQyNzNjOTQ4NDc3YjhkM2M0YTMxZDc4ZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllODZmNmRkMjMxMmJmNDhkOTlhMmM0MzJkMWU5NGNiNDIzYjY5OGQ0N2M1OWM4ZWIxOTA5OWQyMDNhYWU5Y2MiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzMWMzNDgxMTc5ZmM1YTU1OGRiYzFmNTc4YjI5YjdiNmVjMDRlNmJlOGViNWMyYjI4MTcwNzkyY2FjZmViZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBjOGUxYWRhYmJhZTMxNGNmMTg3YzcwMmUwN2JjZjBhZjcwYTcwYzRkYTQzMTQ5ZDM4YTlkMmNkNWM4NWI0OWYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L104-L105",
+          "version": "repo-lines-v1:sha256:750f6d0b3c495f15b61fb4896e374dadb7b7b6b52480d664a19a99c8356565ee:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzlkMDU3ZWFmZmJiMDM5MWQ3MDI0OTg5YWVhMmVmYWM4NTQyODAzMzRmMGE1NmE4YmUwMjczZmJiNmFhOTVkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTlkODQ4OTVlYThiOTgzMTU2NzhlMGQyNzQ3M2NlODEwOTU4ZTAyMWU2ZmU2ODM3Yzc4MGNkNjQzODJiZTU3MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDZjYjMzMmUzZWZkYTQyMmQzNjVlZDMwYzg2YzZlMDVkNGM5NmE1MGIzNGM3MDI4MTgzODZlZGNjODA2NmY2ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTJmODIzNGM1NTczNzExZDk2M2EwZjYwNjBiNGQyODQzNmM0MDhjNGIxYmQxMTIyY2NmMzIxZjE0OGE2MzAzMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f023041abda6487ea0edea067f8e0259",
+      "statement": "A cancelled attempt leaves no downloadable artifact: `pipeline.run_pipeline` calls `check_cancel()` before `packer.pack_wiki`, and `GET /wikis/{id}/download` requires an existing `wiki.zip`, so a cancelled wiki answers `404 wiki is not ready (status=...)` until a later attempt packages the wiki.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L216-L231",
+          "version": "repo-lines-v1:sha256:fd7a78bbe0daeac9cd1904c907441eeca705371bbaf7b4c63511af8c7f9199eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NzU0MDMyYWQxY2NkNDRmMGJjZTI2MjYzNTI3ODJjMjU2YTgwZWE2MmRhYzBkYTA2YmI5MDBmNmE4ZDU0OGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiNWI0MzEzMWI3NThhYmM5MjQ0Nzk4NmJhMjMzODBlNDRmZTZhYmU0NTY3YjFlYTZhZDRiMzAxNWMwNjRkZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NmMyMmIzOWNhNTFiNGQ0OGM5YzhlZjE1YTg4NWQyMzM0MTFiMWUzYThjMGE5YTIyNjc3NTU3MGFjNzE0MjcifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L116-L125",
+          "version": "repo-lines-v1:sha256:c43e83a4594e810dd7958bf829b36562eeed1266b41c434dae18a3e71fc25765:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjZGYyZTg1ZDViYTM5NzUwZjU5YWQ2YTI1YjM5MjFjZDRlZWY2ZGJjN2I2ODMxYTU2Nzc5YjkwZjljNWFiM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDI0YmU0OTkwNmQxYmIxZGY1ODg3Y2YxNTdlMWZhNTMwZDVkYWI5ODYyZmIzMWQ0YmQ5OThhZDI0Y2IxNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2MDU2MTBmODlmNGJhZGM3M2YzMjg5OGVmZDYyY2I2MjUyMTQyZmNlY2EwYzM2NmM4NzI3NTBmZWFhYWM3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b8dc802a3804219bf58542e9ab1c76f",
+      "statement": "A cancel request cannot stop an orphaned claim: `recover_stale` requeues running rows with `cancel_requested=0`, so a wiki whose worker already died is resumed rather than cancelled, and there is no cancel path for it other than finishing and deleting the terminal row.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L345-L356",
+          "version": "repo-lines-v1:sha256:0bc515054cd31cc2129d901d5d9de545e5d0a821001c26e4b6920b65148e00f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTAyZDc2ZWUwOWZiN2M5NjJlNWM5NzRkMjJhOWZmNDVkNjMyYjQ5YzFjODQ2M2IwMzg3YjUxZTNmN2Y0YzcifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L386-L397",
+          "version": "repo-lines-v1:sha256:0e45c6601726e7de8238ec13caed9c0acc98a10d6ac7d37a5af47d798cce3d3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5YjNjYmJmYTk1NGI5MjlhMDg4YWQwM2MwNDExMWRjZDBkYzExZDI3NTk2MmIyZWUwOGVmNDdkMDQ0MTZjNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMjIyY2UzYTVlMzUyMDA5NTY0ODdlMzM3NzgwOTI4MGExMTk0NDk0YWUyMzcyNTY1ZTk4ZWRjZTgxYmFkOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5ZDA5Y2JjMTk3NTM0MGYxNzI5YTEwMDQ1ZmJlYTIyMWI4MjgzZjMzY2U5YWM2OGFlMWM2ZDNmODYyYTVjNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOGViYWZhNzNiZjhhYzkyMjkwODllNDc4NmM4NzM4Y2M0YjIwY2JhOGZhNDg5YzgwYjMwMDk1NGViMDNlMGUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c7307bfbd55c4f7bb7f693721fac5470",
+      "statement": "`JobStore.retry` accepts only `failed` or `cancelled` rows and requeues them by clearing both the result (`error`, `progress`, `finished_at`, `cancel_requested`) and the whole claim (`claimed_by`, `claim_id`, `claimed_at`, `last_seen_at`) while leaving `attempts` and the workspace on disk untouched; the router answers `409` for a non-retryable status (naming it in the detail) and `404` for an unknown id, and `202` with a `WikiAccepted` (`status: queued`) on success.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L399-L418",
+          "version": "repo-lines-v1:sha256:0c268d0f3f2c2191393835127df6aa2e7b58ddc980537951f6f6331235dda061:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyODJlNzAxZWFiMTJhOWQ3ODMwMThlZmQ4NGZjMjRhMWNlZDVhM2EwMjdhMzg2NWRkOGQ1NTM4NTcwZTgyNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWE3NGNlYTJjYzhjYjAxZDNhM2E5ZWFkNzU4OWRlMWNiZWViMWIxM2EwODRlM2MzNWQwMTU4ZDRlNzQzYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMWU0ZGRmM2QzZWFmMjgzMWI3OTI3YzhkYzEyODVjYzhjMTQ4MjQ1NDQzYmVjMWQxOWM1MzZmYjZkOWEwZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwZWQxMTRmN2I3ZTRhYjI1MmY0NTlhMTE2MTVkMzE4M2M1NDUyNGMyMTgwZTAzMGJmNTA2ZjNjNmQyZjkwYTMifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L160-L179",
+          "version": "repo-lines-v1:sha256:3b34114c815e929ceed2ce426b95eb06afc10337898661760689be0857615bbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MzI2OTVmZjkxMTMzNTM5M2YyZWMyMjNmYWE0OWMwZTFjNTJjNDU2YzQ3MmU0ZWE0MzkzYmRkMTNmZDgxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MWJmODMzMjc3NzU1OWZmMTUxNmZhOTY2ODIyNGIxMzA0NzVjYTRhNDIxODFlZDY4MTU4OTAyYWZiMzg5NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExZjU3ZmZlYzEyZjdlNTI0NTM5OTY5NzI2YTYyN2NlMTA0MWZiNmQ5YjY5ZjY4Y2ZjODg4NmVlOWM0N2FlZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNjZmZDY4NDkyN2VlYTczN2FiY2NkZjY0OTUwNThiNjc3NDRmZGZmNWVjOGI4ZTViYTZmNTE0M2Y3NTIwM2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1279aa1886e14cb880d74b81be8630f6",
+      "statement": "Lease recovery is a single conditional `UPDATE` in `JobStore.recover_stale`: it requeues every row in `fetching`/`generating`/`finalizing` whose `last_seen_at` is `NULL` or older than `lease_seconds`, clears `claimed_by`/`claim_id`/`claimed_at`/`last_seen_at` and `cancel_requested`, and preserves `attempts` — which makes the call idempotent and safe to run from several API replicas.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L243-L269",
+          "version": "repo-lines-v1:sha256:25fdf753945a0b032263a0bb88cf92fc75616b0a43aca9352feab12d8ad2e0f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTk3OTE0NzNiNzkxOTIzNzY1MzkwN2IwMmM2ZWZkYjg5NzU5YmMwMjAzYzRhZWE4NzNkMGY4OGU1YTQ3YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwMjEzODY1M2EzZDVlMWU3MDVlMjBkN2ZlMWExNjZlZDk3N2Y0NjJlMDkxOGUwOWI1N2NjNzVlN2U2ZTQwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMDQ1ZDY2N2E2ODBmZWRiN2ExMjUwN2JjNzIxZTEwNzQ2YmIxNDgwY2ZjNjExNGU4NDIyNWQ4MDY5YjM0NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxYzhjOTg2NDg3NTg0ZGNhOWY1ZDBkNjNlMmU1NTljY2IyNGI4ZWJiZmJlNzcyNzNkN2FiZmNiZWM2YzIzZjkifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L345-L356",
+          "version": "repo-lines-v1:sha256:0bc515054cd31cc2129d901d5d9de545e5d0a821001c26e4b6920b65148e00f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTAyZDc2ZWUwOWZiN2M5NjJlNWM5NzRkMjJhOWZmNDVkNjMyYjQ5YzFjODQ2M2IwMzg3YjUxZTNmN2Y0YzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_eca50ebf61874dce96899378a9f34a26",
+      "statement": "`recover_stale` has exactly two triggers in the API process, both in `app/main.py`: once inside the `create_app` lifespan startup (after `purge_expired`, before the reaper task starts) and then every `WORKER_REAP_SECONDS` from the `openwiki-reaper` task created by `_reap_loop`, whose body also calls `prune_workers()` and is wrapped in `contextlib.suppress(Exception)` so the periodic requeue never dies on a transient error.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L32-L40",
+          "version": "repo-lines-v1:sha256:8d12b2cd359a8db5a6bd6ea33e07ab6c2998440ed681b6768e630e28770b27ee:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM0NDEzYzFjOTI1Y2NlNTM1NzMxZDcwY2Y2ZGVhNjNmODE5MzA3MWYzNmVhZDc4ZTkzNzNjYzEwYjE4YzUwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY1MTMwZTA3Y2UyNjM4Yzg4YTBjNzVmYWY2MmExNjlmOWZjOWNjMjI4ZGFmM2JhOGQ4MmQxOGM5NjRkNGY4NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI0ZDRjYmRkNTU1OTIzMWM2NTY5ZmFlYWY0MWUyMjZlNTJhMTM5NmIxN2I3MmYxMGIwZmQwNDY3OGM4YTZkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWQ2ZTBjOWZmMGI2NGNkMjIxMDVhOGU0MzZhMGJlY2IwZGE5ZWU4M2MyMTg3MmM5NGE0YjBhZDY5MTdmZmMxNiJ9"
+        },
+        {
+          "resource": "repo://app/main.py#L53-L60",
+          "version": "repo-lines-v1:sha256:689b5bcaf83ebdd3747a757b019e06916ab2c8d255c61e51d4a6bb7fb26b6a55:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWQwMjZkNTc4YjVmM2QzYTljMmI2OWRjYjk5M2E2YjczNWFlNzk2YjEwNzVlOTZhNmE3ZjI1MjY4MTUxNzdmZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2EwNjBiYzUzYWJiY2NmZDUwMzE5YTIwZDU3YzdlZmEyNTEzMzA1NmRjOTMwNWRjOGNhZjlmYzEwN2U2MzlmMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAxZmQxNTQ3NTdjMGNmMjhkMDhmZmFhZTYwZjAxZGI4MTJhNmJlNDI3OWNkMDA5MWMzZDY0YTk1MDFmMjY2YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDJkMzliNzU4M2YyMmJhZmUxNTAxMzYzNWQ2MjA3YTM4NWQ0NGY1NGNmNjFmNWMzOWExZDM4NTZkYzU4ZjQyNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0673517202d04411b7722b7f8c2b38a6",
+      "statement": "Recovery timing is controlled by `WORKER_LEASE_SECONDS` (default 180, the age of `last_seen_at` at which an orphaned claim is requeued), `WORKER_REAP_SECONDS` (default 30, the sweep period) and `WORKER_PROGRESS_SECONDS` (default 2.0, the heartbeat period and therefore the effective lease refresh rate); the intended relationship is `WORKER_LEASE_SECONDS >> WORKER_PROGRESS_SECONDS`, which allows roughly ninety missed heartbeats before a worker is declared dead and makes the worst-case detection latency of a hard-killed worker about lease plus reap interval.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L49-L64",
+          "version": "repo-lines-v1:sha256:dfb022fc84d66dcf2bca09fb5903944f37446afaccc41cc745a6ab884752f9d6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1NzUzYzljNTFiMTI1MjZiZTE0NjEyN2YwOTNmNGU2MmZjMzliNWI1NzQ0YjZlMjY4YWM0MGNhNjMwMjNlMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1Mjk1OGE4YzRmNGVmZGQwM2Y0OTA1OGZhYzA5MDdjNjcwNjEyMjU0ZWU0NzRhNDE4ZTg1MGViY2YxN2NiNTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MjQ3ZTExODI0M2MxY2NhODVmMTBmYTk1MmE0N2U5MDQwOTBjMTJmMjBkNDA0MmVlN2RlM2MxZWI2MDc5OGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0YWJmMTA5MDg5Y2VjODk4MWI3NzMyNTViYjE3ZTU0ODJiNTE1NTA5YTFhNGE0MzQ2MjkzODI3ODRmMjMyMjIifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L132-L157",
+          "version": "repo-lines-v1:sha256:9e8fc0c32d663a5670d96262684f3b351e0b87b20f4d44efefe6c18e5e28d9dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMzA3MjJjNTdjN2I4ZTgwZTg3ZjE1OThhYWQxZWY3ODE5YzEyZDUwMjJiMWQxNGFiODhkNDBlODE1MTk4ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmMjUyNGU4ZGM1Y2JjYWYwOWY3M2MzNTRjMDM2OGMwODZkMTdiMzZjOTdhYWNkMGRhZTgzZjNhOTFhMDU5YjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzM2E2MjRhMDhkMmQ5MWUzODQxNDdiMTAzMmMxYjUxMWJhNzkyYjE4NzAyYjUzZmM4YjQwZDkwZTI1NWRkMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_656a169d2adb4dac848d627bb94bd7be",
+      "statement": "A lost lease is terminal for that attempt because `claim_id` is the ownership token: `heartbeat` returns `{\"ok\": False, \"cancel\": True}` without writing when the pair no longer exists or the row left `RUNNING_STATUSES`, and `complete` only updates `WHERE wiki_id=? AND claim_id=?` so it returns `False`; `pipeline.report()` converts `ok=False` into `PipelineCancelled(\"the worker lease was lost\")` (closed as `cancelled`, not `failed`), and `_run` never checks the boolean returned by `complete` because the terminal state belongs to the holder of the live claim.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L271-L308",
+          "version": "repo-lines-v1:sha256:c0451c6dd807cded94d8ca706ded480fd6d1db5ae09ef36202e437e1669ec677:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMGVmOWIzMzdjNGEyMTY5MTQ2NjRlNjM1NWMzMGUyOGU4YzY5MDM3ZmEzOWVmMWIzM2YwYjM3YWE0ODc1OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NjJhYjU0ZGU2YTJmNjNlNzRjNzk5Nzg3ZGNmYmZkNzI2MTIzNWQxMzUxNjRiYWE1MjZhMTc0NTA2YjZmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0OTE5NjY5ZmU4YjQ1NmU3ZDkxODE2YzkyN2ZmMTVkNzg4Yjc4NTY1NjA0MDE1NzNhNTg0MTkxMjk5NjA4ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYTM5ZTJmZTUyODU2MTg3OTBiN2QzNjczZjZkYzcyZjJmNDI3MGNhNDg2MDdjYTUyYmE0YThkMjRmNTI1NzYifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L310-L343",
+          "version": "repo-lines-v1:sha256:c540bace3fc1d460fd6018a3a97eba92c688a686bf8ea90a140044f4f36aa18c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzYzJlMTY3ZTNlOWI4NDhiOTAzYzMyYTkwZGRlNjA0YmY3ZWU2ODRkY2ViOGEwMzhkNmEzMTM0ZTUzNWI4ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyMThjMTgwYjMwNzJiOGZmNDI2N2ZjNGRlZmZhZmIwOWQ4NWZhNjFkMmM1N2JjYzAyMWQyOWQwZWE2YmY5NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiM2QxMmE2NGYzZTRiMDk3OGFiY2QzMmFiZTQ1NmE1MTY2ODRjMjE5ZmM2NWE1NjhmYzM4MjA2NzBmMzgxMmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4OTcyMGI5Y2I1MWU2MzU1NzhhZDhiNTU0NTBhOWE4YzAwMWEwZGY4MzU1ZTVmYjI0YjY1ZjJiOWJhYjE4ZjIifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L96-L105",
+          "version": "repo-lines-v1:sha256:76c7b0a68be02e6a13e71d03619be89852f6ac2f169927b1d1f39db349d73d0d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ODM2ODVhYWNmMzA2ZDBmZmY0YWUzMmRjZWQ0ZmJmNDM0ODZjZWJiMGE3YzZiZjBmZDExNWVjNzZlMDM0OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk5ZDg0ODk1ZWE4Yjk4MzE1Njc4ZTBkMjc0NzNjZTgxMDk1OGUwMjFlNmZlNjgzN2M3ODBjZDY0MzgyYmU1NzAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzMDZjMzY3M2U2MjYyMTExNzhhNWRhMTc1Zjk5YzdhY2QwNTUwYjE1MzQ3YTY5M2QyMDFhYzU5NTYyMGU0NDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyZjgyMzRjNTU3MzcxMWQ5NjNhMGY2MDYwYjRkMjg0MzZjNDA4YzRiMWJkMTEyMmNjZjMyMWYxNDhhNjMwMzEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0f818b4d2252489799d6b7c20e0d809d",
+      "statement": "A worker that is shut down or killed writes no terminal state at all: `_run` re-raises `asyncio.CancelledError` for a graceful worker shutdown (killing the CLI subprocess on the way out so no orphan process survives) and a SIGKILLed process simply disappears, so the row keeps its running status until `recover_stale` requeues it — which is what makes `docker compose restart worker` safe.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L256-L261",
+          "version": "repo-lines-v1:sha256:6de50395fc82f8915b708ee3baa018b6b7f9b62727bb256db33ed03e994b726c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjVmZTFlMzkyYzViZmZhMmM2MmFhZjgzNGIzYzRjOTdiMGFkNWVkMzc4MGUwZjhhNjEwNjE5YWMxODQ2NWY1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjI5YzUyNDQzNGMwMDlhYWYwZDdmZTllMmZmZTcyMmIxNzBjZjhlYjFjOGMxNTc1ZTRlM2JkNTFlOTI2YzcxYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWU1NDE5ZDFjNmZkZjAwNTkwNmY5YjdmMzY3MmZlNzRhMDgxMzA3NjlhYWRlN2M4MWY3MGMzN2NiNTRkMDJmOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzExOWI0OWFiM2I3MTQwNjdjMzdiYWJjNmQyNjc4N2JhNWNhOTFiZTYxOGI1YzNkMjA2YWIwZDRiYTg5ZDMxMiJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L117-L118",
+          "version": "repo-lines-v1:sha256:dc9890fbc96e5fe3586ff8ca3df6b95b4c6be855d82261424d5d5e9c3775e3e6:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjVmZTFlMzkyYzViZmZhMmM2MmFhZjgzNGIzYzRjOTdiMGFkNWVkMzc4MGUwZjhhNjEwNjE5YWMxODQ2NWY1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjUxMWQxMWIzM2E5NzM0MTAwZjEyNDQ2MDk0NTI0ZTNmOTAwZWFmYmRjMjMyNmYyODU2ZmUxMTEzNzJiY2FlNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDRmNjgwMGFhYzUxY2VmMjIxOGY4NDdkMDExNjA5YTEzNjBkYzI0ODQ5NGJlMWRmMjRlZmI5YzhjZjEyZWRlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTdkNDViMTMzODlkNjM4NTlmZjYwZWQ5YzYyOWRiMDYxYjY5OTU2OGM5NDUzODM2ZTUzZWQ1YzU1NjQ5MWUwMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a86e1c81ae964edcbb28d2414b349c9d",
+      "statement": "Resumption level 1 is the surviving workspace: `pipeline._fetch` returns immediately with the log line `repository workspace already present; resuming the generation` when `repo_dir/.git` exists, so a new claim with a fresh `claim_id` continues in `<DATA_DIR>/jobs/<wiki_id>/repo` without re-cloning; only a missing `.git` triggers a fresh fetch (after deleting any leftover non-git directory).",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L155-L175",
+          "version": "repo-lines-v1:sha256:1d18021511f3d91e26e4755eb93242627d29f42d60c5ae3c575444e175a2c511:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwOGYzY2I2Y2EzYTVkMzZiMTJkNDU0OGM3ZTdmNTg3NTFlZTg4Y2UzMzk0ZWMyYTM0OGMzN2YwOWExOThhYjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNmZjMzNzM2ZDYyMzE2MzkxZDdjNjYxNDY3MGQ0MmFlZTc5MTU5ZjNkYzIxNTVlYWNlODEzZjkyOWFhNGU2NjUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkZWFlMDM0ZTkzZmFlMjY4ZDMzODEyZDNlNjk1MDc1N2E4ZDc5N2Q2NjJlOGYzMWIzODExMjQ0MWU4ZjMxNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFhYzMyYmE3Njk2MDY0Y2FkOTU4YTQ4ZjA1ZTFjZDExMjM4M2NkZGNjYTZkOGIxNmUzMTBkOTBjZWZhZTJlZTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_69e2eeb1cef14319ad2e731061e29a44",
+      "statement": "For a git source the retry/resume path needs nothing re-sent because the token is persisted in the `source` JSON column, while an upload source is only resumable while its archive still exists at `<job_dir>/upload<ext>`; otherwise `_fetch` raises `IngestionError(\"the uploaded archive is no longer available; submit the wiki again\")` and the wiki can only be fixed by re-submitting the archive.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L117-L135",
+          "version": "repo-lines-v1:sha256:bbc9c1b8c0f737b70bfe80e97967f52732ab496b2e3ebe0da0ea14c03ade1271:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYTRjYWMxOWJhNjRiNDk2NDIxNzhlMjE3NTJhZDEwOWY2NzBjZjE3YTMxNTk2ZTkxNTg0ODU5MDA5ZmViMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNTBiYTM3MTA1YzZlNmMzYjAyMzg3MTI5NTM5OGFiNmQwYTg1YzIwYzg4MWQzM2RlMTg1MDNiYjdiMjlhMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlYWI2YzQ5ZjMwNTBlZWNmMzBmODRlNTQzYTEwZmY2NzhiM2I2YTNjMmI1YzBjNGI3MjUwZDBlMDVhZTU2NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4Y2EwZTQ2MzM0N2I2MWYzM2E3MzdjMjJkYmUxYzdhOGI0MWE0Mjc2YTEwZDI1MDljZTIzMTgzMjc0NDM1MmYifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L173-L198",
+          "version": "repo-lines-v1:sha256:a5f070089121074cbbfc1b3b24fc34eb2d6410baed958d66d7ad3b57aa6fb89f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5YWI5NDVlNzM1MTFjODgzN2IwNzU2OWY0OTQwMjJjYTM3YWM0ZTUzZjAyZGFiMTc0NDgxZTIyYmM0YmE0MWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0NDUyYzVlNjFlODBkZWE0MzNmMmIyNThjYTdhZjU1NWQ0MTNjOGRiMDFlMjhlZjhiMTc5MzUwOWNmMDY1ZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwOWFiZTAzYThiZWVmZDQ2MzgwODNjNjY4M2VjZjYxZDI0MTJkMGNiYjhiYTYyYWRkMjZhNDE4NTUyZDczYmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_73615998b1934ca58cf29b61bec23539",
+      "statement": "`DELETE /wikis/{id}` removes the whole `<DATA_DIR>/jobs/<wiki_id>/` directory together with the row, so deleting a wiki also destroys the workspace and OpenWiki plan that made it resumable.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L219-L227",
+          "version": "repo-lines-v1:sha256:eec47ad246bc29d8b4aa9b806c08a1fcea6f52990ee2ba036e994cc56cd5ecad:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk2MDdjOWRlY2E5MDBkZmFmM2JiN2M4OTNhNjlmYjI0ZjkwMWE5OWFlN2YyMzBiN2FkNGM4MGQ2MDU2YjViOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTIxOGMxODBiMzA3MmI4ZmY0MjY3ZmM0ZGVmZmFmYjA5ZDg1ZmE2MWQyYzU3YmNjMDIxZDI5ZDBlYTZiZjk2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTRlODhmMjJkM2ZmNTg0ZTMyMzZkODgwOTU1NTdlYmZmZDlkNDMxYjk4MmQ5ODRjMTQwOWYyMDIyODI3MDkzOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTM3NWUzMzVlOTZjNWFjNDE3MTkxOTQ3NzM0N2Q0NTQzODkyNTViYWNiNjY2ZTU0YzAyMDcyYTQ1ZWE4NzQzZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_21bff92a6c624a4bb45fabf959d7d9cd",
+      "statement": "Resumption level 2 is OpenWiki's own plan file: `read_run_state` parses `openwiki/.run.json` into `{phase, total, completed, pending, current}` by counting `plan.pages[*].status == \"complete\"` and tolerates a missing, unparsable or oddly shaped file, and the service only ever reads that file (through `_track`, every `WORKER_PROGRESS_SECONDS`, for the `progress` column) — the CLI itself is what continues the pending pages when it re-runs in the reused workspace.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L96-L125",
+          "version": "repo-lines-v1:sha256:048a0b6261934baf076e7cf3eab8d177fb89d26389387b1a6fb670d7752d95c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMmRkOGQ0YTliYTJiZjViYTRiZDZmNGJmOGU5MDI4NTVmYmIyNjU4YzMxYzdkNDVmNjEzNjJjYTIzY2EwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYjIxYmY4OTVmYWUyZDczOTIwZDkzMTc4Y2ZkNTg0MWNkZjhmOTUyNDUxNmM4YTU2NTg0MzZhNGFjNDhmM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2NGM2N2Y0ZmFiYTEzYzk0NTU4MmRkN2I2OGMwY2Q2NTMxYTY0NGVkYzg4MGFhZmNjYjVjZThhNDhiNWM0ZTYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L139-L156",
+          "version": "repo-lines-v1:sha256:f41e47d1683cb6c855719154b86fbf1540da386d3c2452f349b45885071fed1c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0NGFjMTdiMjczMzFmMWY3YmRjMTM2NTU2NWYwMGEzY2NmMzM1YzhlZDIyYTE5YWZjNTNjNjMzMmNkNTNiYWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiYWI2YzdiZTI0NDU0MjFmOGQwY2Y2MDM5MzU1NjM4OTIzN2QwZGY0MDliMmE2ZjNlN2MxNTU3MjM1YjEyZWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBhYmUwMDQ5NDg2N2E0YTc2MzAzYWYwNjJjYWNkODc1MmMyYTcxMjc2NDJlZmFjYzZmOTUyMjI5ZTNjYzIyMmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI4ZmEzNGQxY2Y1NWFjZTAwZmU2MmVlNDlkYjZmNzFhOTEwNTVlMDg3MWQ3NzNjNGE4NWE0NDM4ZDc5M2E5NTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5c8197b499ac44efbbbc43afa6ad842e",
+      "statement": "Run mode is recomputed on every attempt because requeueing records nothing about it: `decide_mode` returns `update` when `openwiki/index.md` exists and `init` otherwise, an explicit `update` degrades to `init` without a wiki, the resolved value is written back with `store.update(wiki_id, mode=mode)` so `GET /wikis/{id}` reports what ran, and in `update` mode the pipeline calls `ingestion.ensure_full_history` because a `--depth 1` clone lacks the commit recorded in `openwiki/.last-update.json`.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L209-L226",
+          "version": "repo-lines-v1:sha256:cd81cb938ad3fc8663b62b4cd7acf922a4936bea7ca0380d6a52cefa24a41b49:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiODhmYzc5MWI1NDg4MTZkNmE2ZGM3NTk3OTA0OWMxYWM0ZTkzY2RjNWZlYTNjYjg2MGFkMGIxYzJhY2ZhMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTJhNDY1MDA5NWZhOTVkMGUyYmI0MWIyZGIyOTA5NGQzNDA0ZDI4Y2UxMjMzOWVjODhiYjRiNWM1YmU4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllODNlNmZjMGMzYjExMjMyMWQ1MTNjMjcyOTJkNjFjZDViZWE0YzE0YWU1MGNmMWNiYmJhY2ZhYWQ2NzgxMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkMmUzOGFjMmIxMTMzMGRlNDQwMjM2MzY1MTBkZDU1YTM5MDI2NWE1MGNhMTNmOTYwYjVkYmUwZGMzZDU2MzQifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L85-L98",
+          "version": "repo-lines-v1:sha256:8e3af9b70937713ce93b39fed2dd2e11b425a456355a899de32199af0e23a36b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1YjdiZTMxNGFlMGU0MTBmMWM4YWQwMzg3NjA5MzdlYzE3NTBlYWM0NDZjNDg4YjYxMTIyZTc3NWJkNDdjYzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5Y2NlMTI5ODQ2MmMxYzU1YjRhNzAyMDg1MzhiNDM3ZGU2NTRjMGYzY2RmYTIzN2E5NWY4MTBkZWI0YjcyNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhM2M3YWUzZWI5YjhhYWM5YTZjNjFiZjk4ZGRmOWUwZDczNWNmNTY2NTE0YjhmOTc1OGFhM2Q5Yzc1YzE3M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNmZjhhNTliNjgyYmYzZGNjNmIxZjViNzg1MGYzYTAyNGZhNGUyOGYxMmVhYzczODIzZjllZmQ4N2NhNDA0ZTkifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L62-L75",
+          "version": "repo-lines-v1:sha256:636e2a1128c858106ad0795f15ef6a9be5aa8bd08c091fb9cbcbfccc5810d9eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3ZmY4MWEwZTNlNjZjZGM3NmFiNTU1YzMzZWUxYjZhMTA0NjU3NjZmMTI3OTE5ZDBiNjQ0MzdkNmViODA5NjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhOGNkMWIyYWJkOGVhNWJjZWY3M2M3NTQwMjUzYjJmYzM4Zjc3Yzc3MTMxODQ4YTQ2YTU1Njk5YzMxNjQ1ZmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlYzIzZTJjMTE3YTU5Y2M2NzEwNzBiZDcwY2E0NzY1OWJkNzE4YTA1NTJkNDJlNWQ1ODlmOWQwNTBiMmE5ZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NDBiNTg3YjdjMzQxNzdjZTMxZTk0MWEyNjU4MjUyNDE1YTBjNTRmNjgzNzlhY2E2ZjNhMWMyMzM2YzIwODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d58b92b3614e48f5aef78fd560ef4f08",
+      "statement": "A retried wiki whose earlier attempt already packaged a zip keeps serving it: `GET /wikis/{id}/download` only checks that `wiki.zip` exists (not the status), and `pack_wiki` writes `wiki.zip.tmp` before atomically replacing the destination, so the previous archive stays downloadable during the new attempt.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L216-L231",
+          "version": "repo-lines-v1:sha256:fd7a78bbe0daeac9cd1904c907441eeca705371bbaf7b4c63511af8c7f9199eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NzU0MDMyYWQxY2NkNDRmMGJjZTI2MjYzNTI3ODJjMjU2YTgwZWE2MmRhYzBkYTA2YmI5MDBmNmE4ZDU0OGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiNWI0MzEzMWI3NThhYmM5MjQ0Nzk4NmJhMjMzODBlNDRmZTZhYmU0NTY3YjFlYTZhZDRiMzAxNWMwNjRkZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NmMyMmIzOWNhNTFiNGQ0OGM5YzhlZjE1YTg4NWQyMzM0MTFiMWUzYThjMGE5YTIyNjc3NTU3MGFjNzE0MjcifQ"
+        },
+        {
+          "resource": "repo://app/services/packer.py#L45-L58",
+          "version": "repo-lines-v1:sha256:6aeb14377b3a37cc2ac691506378030b92216996173e93e466aecddc0d002e43:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2ZGEwZjNkZTcwNWEyOWVlYzIyMGMyN2FhYzNhZjlmZGE3ZGI4MGEzOGFlZWRiNWVhYjhjOGQ1ZTNiOWMyYTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMjAzN2FmNmFmZDU5ODIwZmQxYTRjYTMwYTY3N2Q0ZTVhMTIzNDljNzhlZTQzMzk3N2JiOGQwYzkyNDQ1N2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExMzk0MDdlNDJlNzIyZTczMGIwOTg2NDg2M2Q5MDUzNDQyZjE3ZjQ5MGE5YWVjZWE0ZjRlNjMwNmUxM2MzYzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2ZGY2MjhhMTczNTQzMDVjMjJjMjRkYjg3OTdiZDY1YzE0MGIyOTYwNDg3NDBjYWVmMWI5YjMxNzhlZDVmMWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_316508ac25b743109b00764c23b87b22",
+      "statement": "`tests/test_worker_queue.py` is the store-level specification of these semantics: `test_stale_claims_are_requeued` (a fresh claim untouched by `recover_stale(180)`, an old `last_seen_at` requeued with `claim_id is None` and `attempts` preserved), `test_complete_with_stale_claim_is_ignored` (wrong `claim_id` returns `False` and the row stays `fetching`), `test_heartbeat_cancel_and_complete` (heartbeat result shape and `cancel is True` after `cancel` returns `\"cancelling\"`) and `test_queued_cancel_and_retry` (immediate cancel and requeue of a never-claimed row).",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_worker_queue.py#L43-L95",
+          "version": "repo-lines-v1:sha256:7d9928f7da32ae746fccf25fb38481228af9a9eb3bab6f1f41bd30d0294a25f9:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiOGQyMDAyNmY3ZDY5YTkzZmM5ZDZlM2FjMGUzNjk4MTcwYzkyZmI5MWIyNDI3ODQ3NGZiODk2YzU3ZDUzZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmNGQwYmY3YjQyNjU4YWVlNTVlZjUwNTBmNzJjMDU4ODJhYmNhZDk5MzZiMzQ2ODU1MTUyNmM5MjhiNmM2MzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU0YmNjODU2NWFkOGU5MTI1NzBiYmU4NjIwYmJiYjYzODMyNDg4NWM4Y2ZlYTNmZjAwZDY1Yzk3MjlmZWRjNDMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9da186a21b654af0b301ec5dc32d36d6",
+      "statement": "`tests/test_api_wikis.py` exercises the recovery flows end to end with the fake CLI: `test_cancel_running_wiki_and_retry_resumes` (a slow generation reaches `generating`, cancel returns `cancelling`, the row becomes `cancelled` with `cancelled` in `error`, and retry ends `done`), `test_cancel_queued_wiki` (a wiki queued behind a busy worker is cancelled immediately as `cancelled`, not `cancelling`), `test_failed_wiki_can_be_retried`, `test_cancel_and_retry_validation` (`409`/`404`), and `test_active_wikis_are_resumed_after_a_restart`, which forces a running row with `claimed_by=\"crashed-worker\"`, `claim_id=\"deadbeef\"`, `last_seen_at=None` and no `wiki.zip` and relies on the startup `recover_stale` of a second `create_app` instance to requeue it until `done`.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L44-L57",
+          "version": "repo-lines-v1:sha256:99d12b11313e0fc69b428f38a9c58a18c218d1881dc37b426426303a7fbd8a5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L125-L182",
+          "version": "repo-lines-v1:sha256:6a9cd2f7998008038519ab09c7c822216689e433c3f3a323ad23af212d2f43be:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZjFmM2IzOTg3ZmFkMzViNGY3NDYzODFlMWU4OWMxZWYwYTljNDQ0OTY5ZGY1OTQyYjYyODM0YjdkNjRmMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIzODU0OWVjOGQ4YmVlM2E0NGQwMDdiZTJmOGQ1MzQ3NDM1MWQ1NTUwOTY1MGM3YWY0MmI2OWY0NzJkYzVlM2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhYWY0YTgxNDQxNTNkNzczYzYwZTc3NGIxNGM3ZTRmMmQ5NWQ5NDc2NDJkMWRiM2FlMjdhMzgxMzNiMTExMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVmZGE3NzI2ZmExOGFlMGJhYTNiNTVmYjE1MjJiYzVkMzUyNzRkNzk3MGUyOWQ2M2YxNDdkMjNjMjA3ZmVlYWEifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L276-L304",
+          "version": "repo-lines-v1:sha256:0be41f2033782e7e20fbe08c717345ce50e1e34dfac9fb1f721c885a760fbb59:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyOTgxNGUzNTlkM2U2NWRiZTljNjI1MDRiY2Y2YmEzYjA0NTYzZjRiN2QxZTg1MWFkNzlkNGM4Y2FlMjI5MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNTdkNDAyYzUyYzBmMmM3ODQ4MzAwNjI5ZGM1ZDQ4ODk3MDdmYjEzYTJlNWJhMjUwMTUzYThhOTk3Zjk2NjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI4ZWI5NjJmOTcxNjAxNmJkZGU1OTczNWIxMmNjZmIwMzc0MmMyYzE4YzVhMjA5Y2IyYmUzYTcyMzYyYjMwYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9ca3c8491a7441e5ba17b5c7f230448e",
+      "statement": "The `failed` branches of `WorkerLoop._run` truncate their message to 500 characters (`error=str(exc)[:500]`) while the `PipelineCancelled` branch stores `str(exc)` untruncated, so a lease loss or a user cancel surfaces in the row as the readable message `the worker lease was lost` / `cancelled by user` rather than a traceback, and knowing which terminal branch truncates is what makes the `error` column useful for triage.",
+      "evidence": [
+        {
+          "resource": "repo://app/worker/loop.py#L104-L126",
+          "version": "repo-lines-v1:sha256:6b4f7b00249c632fcbc70080b3c5ced80cfcc62df56fd2023fd9732144d10555:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5ZDA1N2VhZmZiYjAzOTFkNzAyNDk4OWFlYTJlZmFjODU0MjgwMzM0ZjBhNTZhOGJlMDI3M2ZiYjZhYTk1ZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxMDM0ODFjNTdkMGYwZGMwZjc2Y2QyY2M4YjM2MDRjNGU4Mjk2ZGE0MTIyYWRkMTllODE3NDVkYzdlMzMxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2Y2IzMzJlM2VmZGE0MjJkMzY1ZWQzMGM4NmM2ZTA1ZDRjOTZhNTBiMzRjNzAyODE4Mzg2ZWRjYzgwNjZmNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwMGRiOTVlZDAyMjkyYTA2MzY4ZGRjMmU0OTJiOTM4NzkzMTMxOTk2MWM3YjkzYWI0M2ZjNjYyNTNkN2JhNGIifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

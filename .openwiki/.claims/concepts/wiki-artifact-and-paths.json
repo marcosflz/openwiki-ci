@@ -1,0 +1,336 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:ed6f4d9ab10b8fc87fdf3d5bb049e265b7f3a3b417305366977606ee5b3ecb50",
+  "claims": [
+    {
+      "id": "claim_32c1c157b87d4d069d19f2518351e025",
+      "statement": "The wiki tree has two distinct names: the OpenWiki CLI hardcodes `openwiki/` as its output directory in the workspace (declared as `NATIVE_WIKI_DIR` in `app/services/wiki_runner.py`, imported by `packer.py` and `publisher.py`, the only modules that actually move the tree), while `Settings.wiki_artifact_dir` (env `WIKI_ARTIFACT_DIR`, default `.openwiki`) only renames the packaged output and the committed root. `pipeline.py` never names the native directory: it threads `settings.wiki_artifact_dir` into `adopt_hidden_wiki`, `pack_wiki(root_name=...)` and `publish_wiki(artifact_dir=...)`.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L89-L92",
+          "version": "repo-lines-v1:sha256:0b27cffe4d55ffaaa20c5c023a85f308009f99be0a446b2b0e221480e6c8ea32:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTQ0Y2RmYzkxMzgxYWUzZDA5MThiM2JjNmI2MTA4YjAzNjc2NDAxOTUyMzk5NGYyMjg0NjdiYzg1NDg1ZDk3OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGI2ODM5MjA2YTI4MDY5ZWEwMzlkOWJhMTJlYjM1ZTEzZDc2MGEyZmFiOGYzNjE3ZjZkYTlhZjIwYjM5YjVkZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODg3MDNhMDQ4ZWJlYjkxMmMwZjRiYWUzYjVkMDFjODg0MjUxNzVjMzE4N2E5ZTM3N2I3YTA1MWQ1NWM5N2UwMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTAzZDE5MjE4ZWQ0NjA0YTI5Y2Q0YTgwZWZhODc3ZTE1N2U4ZTA2NjRhZTg5MDcwOTlhZDUxNmY4NGVmOTg4YiJ9"
+        },
+        {
+          "resource": "repo://app/services/packer.py#L9-L10",
+          "version": "repo-lines-v1:sha256:43f81cda8f543126c921a58016a04c4d30931a7b3988674695e6a73aec1a5ae5:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzhhZDRhNDUwYjY2NjU2ZjdiZDYyNTgzZDUyZjgxMTE2ZmVjYmU3YTg1NjAyMmQ5ZWFiMjFlZDkwM2Y4YjNkNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWI2NjJjOWU3NjdhZjM1NDg1ZjczMjNhNWQ4YzM3MGFmOWM1Mjg2ZTM1NzUxOTZhNTNiNDhkYTc4OTk5MzgxZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjc1NGFhZmI5MmUyYWEyNGJhMmFhODU2NjY5ZTk4M2Y4ODA4ZGRmYjE5OGZiZGNiMTYyOTM2YTBhNGQ5MmExMiJ9"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L82-L84",
+          "version": "repo-lines-v1:sha256:5a3c7ae3eb9b8aac9a6c61bf98ddf9e0d735cf566514b8f9758aa3d9c75c173f:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTIxNDFlMWNjNmQ1ZDk5YjFjYTYyMTJhM2RiYTI4ZWE1NDJkN2UzYmQwODA2MTA2ZmMzYWRhYjk0NTJiYTc4NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDkxYTM2NmFhYWUxNGU0MmRhY2ZkYzQzYTZiMjdiMDk4Njg0MmFiYTBhMDY1NmZiZjRhMzRjY2Q4YTVhMjE5YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjljYzlhZmQ0ZWQ5ODg4Y2E1ZmQ2OTY5NTgzZTg0M2YyNDdkMzdkZWNmOGRkMTkwNTU4NzNmMzhlZTM2NTk5NiJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L12-L12",
+          "version": "repo-lines-v1:sha256:78ad4a450b66656f7bd62583d52f81116fecbe7a856022d9eab21ed903f8b3d5:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzhhZDRhNDUwYjY2NjU2ZjdiZDYyNTgzZDUyZjgxMTE2ZmVjYmU3YTg1NjAyMmQ5ZWFiMjFlZDkwM2Y4YjNkNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzhhZDRhNDUwYjY2NjU2ZjdiZDYyNTgzZDUyZjgxMTE2ZmVjYmU3YTg1NjAyMmQ5ZWFiMjFlZDkwM2Y4YjNkNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWM0NmMwMTgyNTU4MWY3ODEyM2UyY2ZhMDYzMGEyOGU1OTQ4ZDQ5NDRhNjkwMmM2NDU4ZWU4ODcyNGRhM2YzMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGMwYWRkZGQ4OTcyZGVkMWI5YzJkNjA4Zjg0MDZlNzk1MTgxNzhlMmMxMjg2ODhkYmZlNTNiZGNkODFiODlkNCJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L22-L23",
+          "version": "repo-lines-v1:sha256:4e96a4e68dd93376d0b2ffad7a19fd8465c4cc3e0917549190f1f8ef8bbcc41d:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZGY1NTM4MzRiZmY3MGE2NTRhYTgxZDFjOTVkZGIxMmQyZDQyMjA4ZjIwMWUzZGY2NmE0YjExZWY4OWFmMDI2ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjdiODU4NzE4MDk0OTczMzIxZjZkN2Q4ZWYzNjI0M2RhNzU3MjEwYzI5Y2ZkYzZiM2Y0M2MwMmJhZTJkNjU0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzNkN2NjNWMyNDUwZjU2NjY5ODRjOGQ1M2JjMjBiMzgyMDdhMWFkMTAxYzNiMTM3N2RiYTU3MmMxMTBkZDA5MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDlhZjMzM2QyMjAxYTBlOTE1MjFmODFjYWZhN2IyM2VhMWFmMjgyMjBkZTYwNjIwYmU4MDYxNDc1ZjVhZWYyNyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_73bd7fac715d490f8807fef4415b5232",
+      "statement": "`Settings.wiki_artifact_dir` is validated to be a simple folder name - non-empty, not `.` or `..`, and containing no `/` or backslash - because the value becomes a path component in the zip and a pathspec in `git add`; an invalid value fails Settings construction.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L129-L135",
+          "version": "repo-lines-v1:sha256:ce2d1547f94286287096aa333e1cd2e4cd103348c6b5d020729c543af72792da:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTM3MDU4YmY4ZGFiZDM0N2E0ZTc4OGNiZWI1ZjlkMjFiMmU5NGY2ODIzYmNmZDI4NjA3MjZjMWNmMjhmZWZkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWUzY2ZjZWIzM2UwMTFmOWI2OTUwODhlMGIzYWE4M2IxNjAzZDY5ZGI0ZGM2NTgwM2FhODM2MzUzZTgxYjBkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQxMjVjNjE1NDllMmI5ZDhmNWJhZjA0MDc2ZWIxOTYxYTUyMzNlY2YxMDA0ZGVjY2M1OGYxZGVjNTBmOWJmNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmE4MjQwYWQ4NmQ3MmEzMmU3ZGUzYmViNjQyOGU3N2RiMTAwNDQwZTA2MDk4NTJmNDdmMWI1ZjkwMjYyY2RiOCJ9"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L15-L18",
+          "version": "repo-lines-v1:sha256:95c983218172de548d0d2c52fe478814c0d92423922de83f91532f05a940700c:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTVhZTI4ODlhY2EyOTQwODNhODA5Y2Q4MmQ0Y2MxZmRlNmQ0MjdiNGE5NTdmY2FmMGM5NWUwYTlhZDM2YmZiMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODg0NzJjMGJiZDA3NGFiMjM2Y2FhZGQ5ZjJiYTM4Y2NlNmU0NmFkNjJiYWMyZmIyN2VmNmMyNjA0OWU2MTdmMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzZiNzEwY2M4MmFmODA1ZjljZTRmOTgzZTNjZDUyYTIwYjk1ZjdmMDdjNjdjMDk5MjUxZDFlODIwZGNkYjZmYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWM2ODUzNWVjMTU4M2I1MjMyMGUwNDlkOGY0ODY5YjVmMGRjYzlkNjU4ZDVkZmFjYTI5ZGFmNzRhMDcwNjRiYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1b17e33137bd42ab80f48e195869ec53",
+      "statement": "`JobStore` is the sole owner of the per-wiki workspace paths: `job_dir` = `<DATA_DIR>/jobs/<wiki_id>/`, `repo_dir` = `.../repo/` (which contains the `openwiki/` tree), `logs_path` = `.../logs.txt`, `wiki_zip_path` = `.../wiki.zip`, and `meta_path` = `.../job.json` (legacy only). `wiki_id` is validated against a 32-hex pattern and `jobs_dir` is created in `__init__` so the API and workers can race to create it safely.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L106-L146",
+          "version": "repo-lines-v1:sha256:e3158e05e30cc7c9c6d17dfe3da4fcc8e690d7d6c6aec4634b79c9e7e7bc41fc:eyJzZWxlY3RlZExpbmVDb3VudCI6NDEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzYWI2YTM2YTYxMzI2MTUyNzdhMWM2ZmFhZTdjZmFhYzRlNWFmOTdiY2I1MThhYzY1MmMzN2Y3OWE4M2VmZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFmZmNiMDhjYmE4Yjg2MGRkNjBmODg3YTNhMTI3NDMyOWI3MjYyNDhkMDRiZjlmOTI5NzBkNGVlNmE3YTVkYTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4ZTUxZDJhOTJhYTU2ODNkNGU1OGJjMWQyMzUwNTVmYWNmMjk3OTFhYTc2M2Y2NWQ3YzY5YWY2YzhhMGMxMmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2MDFkMDk5NDA0NzYzYzQzZTdkN2NmN2RlZjhiODY1MWMyODBlNDkxZTRhZTU0ODRmY2JlNDkzYjZiZjcwYWQifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L28-L28",
+          "version": "repo-lines-v1:sha256:f5002489dbe0d73ffd11c733c489f940349a8fd0c6af2f36642a8e159dfb551e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUwMDI0ODlkYmUwZDczZmZkMTFjNzMzYzQ4OWY5NDAzNDlhOGZkMGM2YWYyZjM2NjQyYThlMTU5ZGZiNTUxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUwMDI0ODlkYmUwZDczZmZkMTFjNzMzYzQ4OWY5NDAzNDlhOGZkMGM2YWYyZjM2NjQyYThlMTU5ZGZiNTUxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjM2ODJhMWFhYjAwOGQ0M2ZlYmQ4MWEwYjFjNTVkYjMzY2I3YzgxMzdmMGNkMmUzNDZiNGU4MWI5YTJjZDM2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTBjNjU3ZDBmZDVjNDUxM2IzODg2YTBlZjg1YmYwYjRmZTA2NmJkZTIyNzAzYjJkMjliMTNhMTg5MTYwODNhMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af30a4e223c349d3a70bafd65f0e7002",
+      "statement": "Deleting a wiki removes both its database row and the entire `<DATA_DIR>/jobs/<wiki_id>/` directory, so the workspace artifacts and the packaged zip are reclaimed together (also driving `purge_expired` retention).",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L219-L227",
+          "version": "repo-lines-v1:sha256:eec47ad246bc29d8b4aa9b806c08a1fcea6f52990ee2ba036e994cc56cd5ecad:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk2MDdjOWRlY2E5MDBkZmFmM2JiN2M4OTNhNjlmYjI0ZjkwMWE5OWFlN2YyMzBiN2FkNGM4MGQ2MDU2YjViOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTIxOGMxODBiMzA3MmI4ZmY0MjY3ZmM0ZGVmZmFmYjA5ZDg1ZmE2MWQyYzU3YmNjMDIxZDI5ZDBlYTZiZjk2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTRlODhmMjJkM2ZmNTg0ZTMyMzZkODgwOTU1NTdlYmZmZDlkNDMxYjk4MmQ5ODRjMTQwOWYyMDIyODI3MDkzOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTM3NWUzMzVlOTZjNWFjNDE3MTkxOTQ3NzM0N2Q0NTQzODkyNTViYWNiNjY2ZTU0YzAyMDcyYTQ1ZWE4NzQzZCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L229-L240",
+          "version": "repo-lines-v1:sha256:57baa631d1c71884efe15aed636f4ee43f9a0169393a22c568c616a80c3d30c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNDFiNjJjOWY5MTIxMDM5NDZlOTk1Nzk1Y2RmZWI1OWZkZjgyNTlhZTk4MGNmMTBhODcwZDg1NjY5NmY2ODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwN2I0YjM0ZThhNWVhNTNlNzVjMWEyZGI2YTQ5M2Q4Y2IyMWQ5ZjU5NmNiMjhmNTBlM2I5ZjFjY2JhMTY5YWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MWIxOWY4M2QzMzU5MTFiOWY1YjJmYjQwYjRkNTk3YzVmMGY5NTY3ODUwOTk3ODg1MzNjMDg2ZTNhYTI3NjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0NzUxNzIxY2I1NTE1YjlmMDE3YmE2YzQ0YTZmYWQyYzk2MDk1YzViM2JhNDg5MTdkNGJkMjFjNTQzYzc5M2IifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_40905e4b3e0f486b95fd8897c6a35449",
+      "statement": "`openwiki/.run.json` is the CLI's durable, transient resume state that this service never writes. `wiki_runner.read_run_state` parses it into `{phase, total, completed, pending, current}` by counting `plan.pages[*].status == \"complete\"`, tolerating a missing, unparsable or malformed file by returning `None` or a zeroed summary.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L96-L125",
+          "version": "repo-lines-v1:sha256:048a0b6261934baf076e7cf3eab8d177fb89d26389387b1a6fb670d7752d95c0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMmRkOGQ0YTliYTJiZjViYTRiZDZmNGJmOGU5MDI4NTVmYmIyNjU4YzMxYzdkNDVmNjEzNjJjYTIzY2EwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYjIxYmY4OTVmYWUyZDczOTIwZDkzMTc4Y2ZkNTg0MWNkZjhmOTUyNDUxNmM4YTU2NTg0MzZhNGFjNDhmM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY2NGM2N2Y0ZmFiYTEzYzk0NTU4MmRkN2I2OGMwY2Q2NTMxYTY0NGVkYzg4MGFhZmNjYjVjZThhNDhiNWM0ZTYifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L61-L105",
+          "version": "repo-lines-v1:sha256:ecfe6cece69519968ad6b9bae321a53c8f3438b6571e7ab940c3601682b90646:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2Y2FiNzA2ZGE5NWY5NmU3NmU2OTBlYTJhMjViNjViOTFhMjQ5ZjkxMWRmYThiOWNhMTNlMDgwNDM0ZTljYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ZGE3MGI0NzA3NmYxZTYzNzVlNzMwZDk2MTZmNzljMmU0M2IyYzgwN2EzN2YyYjZkN2JiODMyNzFlNmVlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzM2JlMGJlY2Y5YWMyYWYwN2EzZjg3N2UyODgzNjRhNmQwNzM1Y2Q0Y2MzZGU0ZDhjYmNhMGUwZmRjZGQwMTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1d9da596326b4ac5afa810534c4012ad",
+      "statement": "The worker's `_track` task polls `read_run_state` every `WORKER_PROGRESS_SECONDS`, formats the result with `format_progress` into the job's `progress` column (`\"2/7 pages - generating\"`), and falls back to `packer.count_pages` (a `**/*.md` count under `openwiki/`) when no plan is available.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/packer.py#L16-L21",
+          "version": "repo-lines-v1:sha256:5294b7d040656aeb3938f0eb463f2d514a9361bbbb6b126882b9411aff6decad:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2YzMmYwMjZmNTllNDM3NjkyMjE3ZDljODJiMjNhNzQ5MzZiOTk3NzBiY2NjMzY0NjRmZTQ1OTVmMDIwNjY3NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWVmZWQzMzc1YWQxN2JhMDIyYjBiMzgyMjIwOTZmZjJlMjg0MzNiZmE4MTc0ZTU1YjBmYmZhZjA2NmE3NTE0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjgwOWZjYjg3OWFlNWM4OThjMzQ2M2MyOGU0YzBjNThhZDY0ZjM2OTlkNGFjOWMxMGRmMDM3MDUyMTY0ODBhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmNhNzVhYmJkNmZjODUyNzJiODliODYyN2VmNTI2ZTcyNGRmNjM0YjNkOWI3ODEwZTAyMzIzMzJmZWRmOTI2ZSJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L128-L137",
+          "version": "repo-lines-v1:sha256:fac64be6bd6d07ef5949b2cddc4a5d50e21292a311162d8b8a0c4ce6f862c23c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjZjc2ZGI3ZGRmNzc2MzBhMjIyZWUwNjZlMDRiYjBlYjQwNzcyOGU5M2E2MGVmZjExNTdlZmJjMTRlNTdmMTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTYwMGE3M2QyZTAyZjM1MmI5MGZlZjFkOGQ2MzgxMWJhNGE4ZWUwYzFiZWFhN2FlNDY1OGYzNmFhMmUxOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRmYmQwMDkzMTRiYzI3MDg0MTY3MzRhMDJhZTVmZjM5YTFlNDhhMDUwYmU5MWY0M2IyZmFhOTIwMDJjNjJiZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5MzgyYmMyNDA1ZWVhZTg3YmY5NzJlOGRiM2U0ODM2M2I2YjQ0Y2UyMzYwNTMwYjk2MzJmNWRmNjhjNTYwZTYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L132-L157",
+          "version": "repo-lines-v1:sha256:9e8fc0c32d663a5670d96262684f3b351e0b87b20f4d44efefe6c18e5e28d9dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMzA3MjJjNTdjN2I4ZTgwZTg3ZjE1OThhYWQxZWY3ODE5YzEyZDUwMjJiMWQxNGFiODhkNDBlODE1MTk4ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmMjUyNGU4ZGM1Y2JjYWYwOWY3M2MzNTRjMDM2OGMwODZkMTdiMzZjOTdhYWNkMGRhZTgzZjNhOTFhMDU5YjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzM2E2MjRhMDhkMmQ5MWUzODQxNDdiMTAzMmMxYjUxMWJhNzkyYjE4NzAyYjUzZmM4YjQwZDkwZTI1NWRkMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab06ead0f1094193af223679cc5dc6aa",
+      "statement": "The push-back commit excludes the transient `openwiki/.run.json` state while including the wiki's versioned evidence: the `git add` pathspec is `--all --force -- <artifact_dir> :(exclude)<artifact_dir>/.run.json`, so `.openwiki/.run.json` and the scaffolding outside the wiki folder (e.g. `AGENTS.md`) are absent from the remote tree while `.openwiki/index.md` and `.openwiki/.claims/*` are present.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L149-L153",
+          "version": "repo-lines-v1:sha256:ecffc467bbf3f1ff4e3ea1d61c25820aa2816377562c5ef702c939601e605c87:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDdiNjI0YzM5YzBhZDUzMjViZTc1YzdkZWQ5MjA0N2ZmZTk5ZDdhMjNkYzk2MTU2ZjJhZjczYWEyZjYwNzY1OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjg5ZjIwMWFhMTc3NDUyYjFiOWExZWYwMDdkNjFkZWVhY2M0OTIzMDQzMjI2Nzc3YWZjMWE1Mjk2NzU3NDE2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmQzMTA2ZWI1NTQwMWIxMTE4Y2VkYmYwYWQ3ZTU1OWExMGQzNGM4ZTdiNzZhZDBjZjY4YzFhZDc0NDhlYzM3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjU0MDA5MTA4Y2Q0ZTYwZTJjOTg2M2Q0ZWJlMGEzZTJiZTc1ODFjNWE2NDAwNDVhNzljOGUyNjFmOGM3MjE3NCJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L39-L55",
+          "version": "repo-lines-v1:sha256:fb1c17315d5bff9e151ff88393d0f62c634e23ab581fcc7194495c5b0d2f4d99:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3ZGRkM2ExNDllY2ZjYzQwODM1MzdlOGJjNzFlZWY5YTBlZWU4YmY4Yjk5MDI0MWM1ZGY0OWE5OWY5NjU2MjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVlZmFiNjY3YmU0MThlYWZkMTc5Y2EyNzcxZjE1ZDk5ZDI1NzUxNTEwYWZkMTA0ZTRkMjA3YWFmMWY1MTI5MjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNTc4M2FhY2JmNzJiMGQxYWMyMjlhYjE0ZTUxZDYyNWQwNjJiMWZiOTFjMGE1NTJjMWQwNWU1YzcyZGQ3MzAifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L39-L45",
+          "version": "repo-lines-v1:sha256:6b49774911040287841a7d73b3fb17b0629230f0250f473d6e4dccb90a8a747a:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTIwN2U3YjRmMjk4ZGZkNmEyZmVmODE0ZDFlYmQyNWQ3OTM5YzBjYzFhZDdlMzliMGE4ZmZhYjdjZmFkZTIxNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGE4YjQ0YjYwYmY2NTU0ZDk1NjY4ZjMzNzkzMTdmNTY2ODBlMzMxMDJmZjY2NDYwMzQyMzk5OTc3NDFhZDQzOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWE5NGIwZTljMzE5Yzc1ZmYwYmZmZWQ5YmEyNjZmZGNiZjRiYzgxZGI2NDgwNjFkNjRlNTg0NzQ5NDIxM2Q3MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjlhYTdjZjJiYmJkYTk5MmI3NjQxYWI5YTgzNGE4NTQzMzE1YjJlMjg0MTllYTZjZmI2NDMxZjVkNzU4NWZkZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4e5e5ee59223441a84bb02375680d2e5",
+      "statement": "`adopt_hidden_wiki(repo_dir, artifact_dir)` renames a wiki shipped as the artifact directory (e.g. `.openwiki/`) to the CLI's hardcoded `openwiki/`. It is a no-op when `artifact_dir == \"openwiki\"`, when `openwiki/` already exists, or when the artifact directory is not a directory; the pipeline runs it immediately after the fetch and before `decide_mode`, so an adopted hidden wiki correctly resolves to `--update` instead of `--init`.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L81-L86",
+          "version": "repo-lines-v1:sha256:62dd8419ce5bfa7a88604b0ac1863fe08b3d308e57a1818e31ef110679e22860:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWNiY2Q3ZTJjZjAxMjEzMWEzMDFjZWYxODg2OTIzOGYxMGE2OWI2ZTU3MThlMmM0OTkzOTk0ZTU2OTYzZThhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTc5N2RiYTEzYmM2NTBkYTljNGNjZDY0ODc3MWJmNTdjZTYzOTgwZmZhM2RlN2E5MDAxY2JkMWNlMTk4Y2IwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODJjNDA2ZWIyMDEzMWFkMjA4YTQxZmI3NjFiNThmYjcyYzNhNjYyMDc5ODUzMGVkODI5ZTYwY2NlZjJkNGY0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzZiOThkMGE3MjZhYjRjMDE3OWRlMWIxYjA1NWQ1YzJkYWYxOTE1MmRjMzQ0Yjc5YWM1YTc0N2FkZDNjMGY0YyJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L78-L93",
+          "version": "repo-lines-v1:sha256:242810fd4ec155f4df4d94b394b02dc4d5fea7f8eeae850531f52b14605f5594:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlOGJjMTUwMmNhZDBmMTkxMWM5ODVhOWVkYjAzYWMxNjY1ZWYxZDk0ZGZlY2EwZDNhOGIxMzllNTQ2MzQ0ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1YmM0NzExZWNjYTA0NTBhZmM4MzI3NzlhODg2NzZhN2M2OTYwZmEzZGE1YWY0MTBlZTAyZDFlMDE1MTU5MWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwMGNkODcyYjZmMWE0YjBkYzY1ZjU4MGQ1ODE3ZWUxMTZiMzQzMzNmZDE2MmM5MzYzMjE5NGM3NDUxZjY0YWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4YTNlZDdlMDVjNDQxZDA2OWVmMmI4N2M5MzkyMzEyNzU0YjMyOTI0YmVjYTI2NmJlMzU5M2JlYTEyMjhiYzgifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L242-L252",
+          "version": "repo-lines-v1:sha256:b3ed10fad049e5a21eed14582df5616641e2f2e53b28643bab0e94a2f1140c67:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4Y2FhODcyZDlhNGFjMGMyMTI1NmFkMDI2NjNjZGViYzg4MmQ3MmRlMmE2NzY2NmUyNGZhNmU5YzE2ZmYzMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQwYmRiMzMwNmRiMTUzMGE5YjM5NmRjYTU2NjNlODAxZTVmODRkNDZkMDBkNWU3Mjk1ZmQzMjBkZDc0MDAzYTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjN2U1Mjc0YmY5ZmRkZjRkMzEwODJiZDUzYWI2MDQ5ZmM4YjI1OThmNTMwNzQwYjBhZWYzZTk2ZDMwNDdjYWIifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L21-L30",
+          "version": "repo-lines-v1:sha256:e979cd155b494342c9f1981d35965ad6703a080776543eb12f223352d708c948:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5MDU0OTM4ZTMzMDY1MDIxN2QyMjRiNjExY2E5ODY4OGViYWQxMWQxMWJmODgxZTRiMjdmOGQxMWIzNTg4MjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExY2RjNWI3YTQwZjE4ZWFmMjFhMjY5MTNjNGYxMmFlY2FiNDkzY2NiMjNkYjEzODE1YmNlMWJmZjRiMmU5ZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY4MDM3NmEyZDMwM2JiZjljOTlkNjBkMzMxMjA1YjY2MTg3ZDQ1YWI2MDZmYzNkNDUzYWQwYzU5MWMzYmFkMWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYxZGRhNDdmM2Q0NzYxYmE3ODEwODI2NWNiZGRhODcyMDY2MTVlMzMxMmZiM2Y0YjIwNDhjNTcxNThiYzdiZWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1703a189b4c6434e991d7c4c2656b7e8",
+      "statement": "`publisher._expose_artifact_dir` performs the reverse rename of the workspace's `openwiki/` to `WIKI_ARTIFACT_DIR` inside `publish_wiki`, after packaging. It raises `PushError(\"openwiki/ directory is missing; nothing to push\")` when `openwiki/` is absent, returns immediately when the artifact dir is `openwiki`, and otherwise deletes any pre-existing `<artifact_dir>/` tree (logging `replacing the existing ... tree`) before renaming, so stale pages are not merged into the source repository.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L124-L138",
+          "version": "repo-lines-v1:sha256:961068b425013bd0ecc548b1960145856cd7e19397939e0efe457adef2a8f454:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhMzIyYzNmNTZhOTdmZGZiZmFjZTRhZTFjM2ZjZjQyNmNhYTllNmVlNzFmMDJkMGJjYWRiNjc4MTk1MzU3ODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNTQyZTgyMGM4YThjNTUwY2U1ZjZkZDFlODJlMjAyMDIxNTBiYjc3OGRiOTdjMjJhODU4YWM0MTYzZDIwOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNjQ0Mzk0NzMyYTJjNGJmZTEwZTY5ZTk2ZTBiNWE5OGM3Y2IwZGEwNmNkMDg2NWY3NmU3NTdiOTExMTFjNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmYjMxY2U1M2VhYThiMjkwMDgwN2EzMDhkNDgwZGM3Y2U5N2Y5MzlmNDk0YjUxOTExNmY1M2ZlYTIzOGUwMjEifQ"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L45-L49",
+          "version": "repo-lines-v1:sha256:19daefcbf6a9ccd66d447c6690b113245b1ca4f8fc65d52bbbcff6a851018fa8:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I0MWY0NmRiMWRjZWZkZWYwNTc2NmQxYTRmZmMxNzhiNTEzNGVkZTVlZDZjNzE5MjZhODZkOTkzZGEzMjBkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTRkMzBhYjBmMjFjNjY1ZDk5YTg2ZTNhNzU4MGZkZmIyMTUwZjM0YzQzZDZkNjE4NGJkNTI1NjVlNDdjNzMxMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODJlZWRlMzRlNjA4NzA2OTA5NGNiMDk0MWUzNjFhNGY4ZDI5NGM4MjU5MDczMmNjNmI2MDI2ZWNkYmYwZmE0NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWVhYTc3NTU0NjNlOGE5OWFkMDhkOTA0OWNmNmZhN2Y1YWM4YzIwNGE5MzBmYmZlOWEyNDU0MjcyZDY4ODhjYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_aefb2967b58b483d8514b9cc54bfed4c",
+      "statement": "Pipeline ordering keeps the two transformations apart: adoption happens before the CLI run, `pack_wiki` reads `openwiki/` next, and the rename to `WIKI_ARTIFACT_DIR` happens last in the optional push block. This is why a failed push still leaves a valid, downloadable `wiki.zip`.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L116-L152",
+          "version": "repo-lines-v1:sha256:d9f763d7cf269d2aec132e8ecc4113d6fafc749c997b0c1dd77b8648e1b913fd:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxZWNhMmRkZTVkNzcxNTRhN2MwODE3NzM4MmZmZmVlZjNhNDhmNzczYjBhMjNmOTExZmE0MWRmZWY0YjJhOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDI0YmU0OTkwNmQxYmIxZGY1ODg3Y2YxNTdlMWZhNTMwZDVkYWI5ODYyZmIzMWQ0YmQ5OThhZDI0Y2IxNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyMGZlNDljY2MyZDM4Njk4OTUwZjE2OGM3MTNlM2Q4Yzk0ZmVjODMzMWEzMzE2MDNmMjlkZjJjNjk2MTdmOTgifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L110-L120",
+          "version": "repo-lines-v1:sha256:13c3372443119eefe1f71caef7e8d63db3ce87270914ee2799b2d52284ba5a72:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4MzVhYzdiN2Q2NTBhMDA1MWVmM2EwMGYzYmJiYmEyMWZlOWJhNGFlYWM3MDFiMzk3YzgzNjVmMTlmNDQyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwODcwMzI2MDU0YzhkMDViODJkMjU1NTA4MDM5NjM0ZmFmZGZkNjRiODEzMjllODczNWY1MjVjMGExYzJjYjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhMjlkYmQ2OGEwMDk2OWEwY2RmOWRiYzAyZTc4MjY3MGY3NjliODg4ZDRiYTE4ZmY2ZTllOTk1NzgxYmY5MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NTY1ZmFmNWFkOGNmMTk5ODExNjI3M2MxMjQwNDYzMTgxNjRjNjcwODJiMDZmYTUyMjgyZTIzN2MxNTFhZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f660ac195d6b46d88b4e3a8a7ccd8112",
+      "statement": "`packer.pack_wiki(repo_dir, dest_zip, *, root_name=NATIVE_WIKI_DIR)` zips the workspace's `openwiki/` tree with every entry rooted at `root_name` (`WIKI_ARTIFACT_DIR` in production), counts `.md` files as `pages`, returns `(pages, size_bytes)`, writes to `dest_zip + \".tmp\"` and then atomically replaces the target, and raises `PackError` when `openwiki/` or `openwiki/index.md` is missing so no partial wiki is advertised.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/packer.py#L24-L59",
+          "version": "repo-lines-v1:sha256:5a8fdd9021ceae91b254625d46fdea0a34bbea52349e7284f1c4a6be2dbd3e44:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4Y2UyZjQxYjUxZTY1YWJjZjY0ZTUyM2EyZTQ1YzYwZjMyNWI3MWQ5ZGExNjYyMWM3MWE1NTdjZWM1MjliOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2ZGY2MjhhMTczNTQzMDVjMjJjMjRkYjg3OTdiZDY1YzE0MGIyOTYwNDg3NDBjYWVmMWI5YjMxNzhlZDVmMWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiZWMxOGE2NjYyNTNiZjI1YmExNjFjOGQwYWVlMDVmYWFmMTMzODZlZTgzNmY5MjFmMTNjNWJkZmJjZjM1MjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L33-L44",
+          "version": "repo-lines-v1:sha256:4c3a89bab7b4445c079d35ea580ac51dd7a277d2fb6858a67592e92c73cca15a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2YTg5ODlhZTZmYTU3MjU1ODIwOTA4YWM5NDJjMWNiNzUyNmY3MWM1ZWY4MTAzYWI5OWI2NGQ5NjNjMjM1ZTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU2NzA0MzYzYWIzOTRjNTI1OTFhN2YyMzNjNTRhYmQ5YzUyMmVhNDMwMjI5MTgwN2MyZWQxMWFhMzdjYTU1NWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxOWI1ZDQ1NmY1ODRkMzk3ZjE3Y2VkZjI2NjU4NGFhNzBmZmNjMDRhYTc5YjIzM2UwMDJiMzRiY2YxNWQ3MTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ2NGFiZGRiNDZiYzEyMzQ4MDNmNmFhNzY4MjYxOTFmMjdlNjYxMGNmMDNkMGQ3Y2Y0ZmJkY2FmZTgzZGY3ZTYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ef31b0c146484ddc9ae3234b13264b23",
+      "statement": "A `--depth 1` clone does not contain the commit recorded in `openwiki/.last-update.json` (`gitHead`), so `ingestion.ensure_full_history` runs `git fetch --unshallow` before an `update` run; without it, an incremental `--update` would diff against an empty history.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L209-L226",
+          "version": "repo-lines-v1:sha256:cd81cb938ad3fc8663b62b4cd7acf922a4936bea7ca0380d6a52cefa24a41b49:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiODhmYzc5MWI1NDg4MTZkNmE2ZGM3NTk3OTA0OWMxYWM0ZTkzY2RjNWZlYTNjYjg2MGFkMGIxYzJhY2ZhMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTJhNDY1MDA5NWZhOTVkMGUyYmI0MWIyZGIyOTA5NGQzNDA0ZDI4Y2UxMjMzOWVjODhiYjRiNWM1YmU4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllODNlNmZjMGMzYjExMjMyMWQ1MTNjMjcyOTJkNjFjZDViZWE0YzE0YWU1MGNmMWNiYmJhY2ZhYWQ2NzgxMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkMmUzOGFjMmIxMTMzMGRlNDQwMjM2MzY1MTBkZDU1YTM5MDI2NWE1MGNhMTNmOTYwYjVkYmUwZGMzZDU2MzQifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L87-L90",
+          "version": "repo-lines-v1:sha256:eb44f68788c481fe2803bf0fe2ece3b8ccc52616eccc8e055f8edda821d73f17:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2M1M2MxMmM0MWExN2NjOWRhNzUzYjgyMzEwNzhkOGNmYTEwYzdiODM0ZmM2M2I5OGNiOTZmZTlhMjU1OTMwYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQ4NjNkMmUzZDFjYmQ3ZTRiNmI3ZTFhNmExM2FmYTlmYTNmMzZlMGVhOGI5YzFjOTZiZjIxY2IyOTZkMWE0ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGFiYjQwNjdkYmY0NjQ0NTFkYmYxNzAzOGQyMjBkOGNmYjg1OGUyNWMyMjVhMGE2NjFmY2NiODkyZDY5NzBhMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmM5NGFhNWM4NmUwNWQxMjYxYTI5OTU3NmEwMjY0NmU0NjJlMjU0MWNjYTlkMDljMTNjZTYyN2NmMDExNzBmYyJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L146-L159",
+          "version": "repo-lines-v1:sha256:830ae67f2557d44b8fec25636225fe1e91d0ca5b338a45aedcdc5208ffa8a600:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNmU0MmM4MjQwYjhiYjAzNTI4ZDUzNDg2NjM1MjkxYzUyZTdlYTdlMzNjYjBiNDQ3YmY0NTgzZTA2YmQyNGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ3M2U1ODA4Yjc3ZGVjMmVhZmUyZjRhNzQ0Yjc3NGJmNzJlZDI4MWMyOWUxNWU2Mzg2NzcyMDhhOWQ3MGI0NzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5ZGE5MmZjOWE3YTgwNGFmYzFlMDJmNmFhYTBlODQ5MWVhMjFhOWJlNmRjYzg5YzlhNGUzY2Q0ZDMyMzg1NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5MWFmNWU0NDUyZDA4NTkzMzM3YjkwNjIyMTZiMjA1MWFkOTBjZWQ4NDExMzY3NjMyNTkxYmQ5MDgwOWNkYWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_fabb7e607ac448ce8f5c755433332a02",
+      "statement": "`wiki_runner.prepare_instructions(repo_dir, language)` writes `openwiki/INSTRUCTIONS.md` only when a language is requested and the source does not already ship one; a user-authored brief always wins and no language means no file. The file is part of the wiki tree, so it appears both in `wiki.zip` and in the pushed commit.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L98-L98",
+          "version": "repo-lines-v1:sha256:49cce1298462c1c55b4a70208538b437de654c0f3cdfa237a95f810deb4b725e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDljY2UxMjk4NDYyYzFjNTViNGE3MDIwODUzOGI0MzdkZTY1NGMwZjNjZGZhMjM3YTk1ZjgxMGRlYjRiNzI1ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDljY2UxMjk4NDYyYzFjNTViNGE3MDIwODUzOGI0MzdkZTY1NGMwZjNjZGZhMjM3YTk1ZjgxMGRlYjRiNzI1ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQ3MTE4M2Q4YjI1ZDQ5MjljOTljY2I0MWFhMGE5YTFiMjEyYzE5ZTExMDQwN2ZiYWNmMTgyMzhkMzI0MjViMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2ZmOGE1OWI2ODJiZjNkY2M2YjFmNWI3ODUwZjNhMDI0ZmE0ZTI4ZjEyZWFjNzM4MjNmOWVmZDg3Y2E0MDRlOSJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L140-L158",
+          "version": "repo-lines-v1:sha256:79b64d2334490ca1b473c595e2f8a458cebf26f46a560ca6bc666b6c0e9d4290:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1YTE3OGQyMmU5MTgwNzQ2NDk3MTQ0YjYxNzA0NWFjNWRlNjIwMTdjMDUzMWNmMGVkNmYzMGNmNzc0MjYxYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExNmNlYTg3YTExZWI2OGU5NTVhZjgyZjMyY2Q2MjBmNzE2NDA0Mjg4ZjY2MmNlYWMzYmQ5YmMyZDkzN2FlY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3MDE0OWUwNjlhZDY3ZWNjZjQ3MzY0NmZmMWM3NTAwNTBkMzI5ZDExMDAxOGRjNTc2Njg3OGVhZmExZDYwN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZjQ4NjE5Y2MxZTUxMThhMGE2M2E5MDIyODNjMjcwMzE1MWRjODNkOWEzMTgxZGQ5MGM5NzgxNTI4NjEwYTEifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L42-L45",
+          "version": "repo-lines-v1:sha256:587407c0476ed6d148052ec30c6ede13348712393080891d7d7d8ff36fcb0340:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjg0YzFmZjYxNjdhM2MxM2JmNDc5YzViMGM2NjY3MzNmMGYxMjIwYWRlZTJhOGI1ZDBiOTBhMWEwOGU1Y2E4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVlYmNhOWUzYTMyOTE5ODlhZjFiZmZkMDY3ZTBmNDM2Mjc1MjljMGIwOWVlNmQ0ZDUzZjNjNGNhNTE1NmE0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2U2NzY3MTEyMjAxNmJjMjNiZDRjNmU4Mzk1ODU2OTg5YWMzNjgxYzkyZTkzZDkyYTM5ZTE3NWY0MmEwZjU3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM0ZTkzZWNmMDRiZTcyNTI1ZTVjNDRlYjE0ZTY4YmFlZTBlYmQxZDNiMzA5MTI3YzUzYzdjYjJiYzgwNzQ0OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_ab5f6eeb07284740959525beeb4078fd",
+      "statement": "`openwiki/.claims/` holds the versioned Claim evidence committed with the wiki and shipped inside `wiki.zip`, and `openwiki/.page-manifest.json` is OpenWiki's per-page provenance bookkeeping. Both are CLI-owned outputs that the service only carries through packaging and push - the test fixtures fabricate `.claims/`, `index.md` and `.last-update.json` to exercise exactly that path.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L149-L153",
+          "version": "repo-lines-v1:sha256:ecffc467bbf3f1ff4e3ea1d61c25820aa2816377562c5ef702c939601e605c87:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDdiNjI0YzM5YzBhZDUzMjViZTc1YzdkZWQ5MjA0N2ZmZTk5ZDdhMjNkYzk2MTU2ZjJhZjczYWEyZjYwNzY1OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjg5ZjIwMWFhMTc3NDUyYjFiOWExZWYwMDdkNjFkZWVhY2M0OTIzMDQzMjI2Nzc3YWZjMWE1Mjk2NzU3NDE2MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmQzMTA2ZWI1NTQwMWIxMTE4Y2VkYmYwYWQ3ZTU1OWExMGQzNGM4ZTdiNzZhZDBjZjY4YzFhZDc0NDhlYzM3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjU0MDA5MTA4Y2Q0ZTYwZTJjOTg2M2Q0ZWJlMGEzZTJiZTc1ODFjNWE2NDAwNDVhNzljOGUyNjFmOGM3MjE3NCJ9"
+        },
+        {
+          "resource": "repo://tests/conftest.py#L30-L41",
+          "version": "repo-lines-v1:sha256:837bebbb59e516757f7bad3f9d6b4aee999e730b823e05d6dfa28c2923fde22c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxMjM3ZjcyNTU3ODdjZjNhYmUwNDMyM2UzMDEzMGJkZTI4Mjg5NDllNTU4YTYwNzU0Y2I1ZGQ5Njg0ZWZmMDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwMGQ0NWRiMGFjNjkwOWZjNzZiNmEwNTYyOGI0YTQwZGM2Y2E5YWFkZDAzM2UwNDRlNmQyNzk4N2FiMzA3ZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmZGZmYTIxMjNmY2UxYzRjMTY3NWY4MjM2ODhkYmRmYjdjNGEwYTQxOGRiZWE0Mzg0MzIwNzJiMmI0NTMwMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L34-L39",
+          "version": "repo-lines-v1:sha256:a371f82e49adfeb5196c8f4f32ab7f73e25066846089d2b125e6996f9cfa14e3:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2M0Y2YwYjI4YzI2OWI4NDI4NTRhNzc5MzE5NWNmNGNkNGU5NDliYzUyMTU0MzI1ZTdlN2NmZjZjYTI2ZDBkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmMyZWExZDEyZjk0OTJlMmRmYzdjYjZhNGJiNGZkOWE1NThhOGU5YTJiMGViOTc5ZmFlZGQwOTJhY2Y2YzdlMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTMxYmQ1M2Q4ZjFhNGVmZTJhYTNjYmVhODk0Y2M2YWZkOTEyOGQyYjZhZWU5NDdlYzQxMjM2OGYxNDJlNTNiZCJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L42-L42",
+          "version": "repo-lines-v1:sha256:08c98d7a37af67be9a0047cf18032a6d799e17affb4a268319002a02d5ba0b5f:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDhjOThkN2EzN2FmNjdiZTlhMDA0N2NmMTgwMzJhNmQ3OTllMTdhZmZiNGEyNjgzMTkwMDJhMDJkNWJhMGI1ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDhjOThkN2EzN2FmNjdiZTlhMDA0N2NmMTgwMzJhNmQ3OTllMTdhZmZiNGEyNjgzMTkwMDJhMDJkNWJhMGI1ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGE5OThhZjg5NzE5MDE2YWI1Yzk1NzIwMTEyNTc0ZmY2YzBjZWU1MTdhZDU1NjEyOGU5MjZiYjRhOTFlODExNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTEwNGEyMTQ3OTkyYzg3ZTRmOTY3ZDYxYTViMzU2Mzc3MzVkMzRjMjliNDNiMWRjYjI5YjllYjBiMTY3ZjFhYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_578cc2b810af40b39ad65d5fb3193c79",
+      "statement": "The packaged zip is served by `GET /wikis/{wiki_id}/download` as `openwiki-{wiki_id}.zip` with `404` while the artifact is not yet ready, and its entries are rooted at `WIKI_ARTIFACT_DIR` (e.g. `.openwiki/index.md`) in both git and upload runs.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L216-L231",
+          "version": "repo-lines-v1:sha256:fd7a78bbe0daeac9cd1904c907441eeca705371bbaf7b4c63511af8c7f9199eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1NzU0MDMyYWQxY2NkNDRmMGJjZTI2MjYzNTI3ODJjMjU2YTgwZWE2MmRhYzBkYTA2YmI5MDBmNmE4ZDU0OGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFiNWI0MzEzMWI3NThhYmM5MjQ0Nzk4NmJhMjMzODBlNDRmZTZhYmU0NTY3YjFlYTZhZDRiMzAxNWMwNjRkZTMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NmMyMmIzOWNhNTFiNGQ0OGM5YzhlZjE1YTg4NWQyMzM0MTFiMWUzYThjMGE5YTIyNjc3NTU3MGFjNzE0MjcifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L35-L45",
+          "version": "repo-lines-v1:sha256:4aebbb988a0368dddce05e34258e726f1b948d1b12f1de20ec98a41abbf89a7f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQwZDM4MWFkMWFlMDAxYmViNjA2NzE1OGIzMDZlNjg0NjRkMjk5Y2Y5MDYyNTZiYzZmNGM4ZWMwNmQzY2U5YTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJlZWJjYTllM2EzMjkxOTg5YWYxYmZmZDA2N2UwZjQzNjI3NTI5YzBiMDllZTZkNGQ1M2YzYzRjYTUxNTZhNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU2M2U0YzU0NDYwMGQ3YzEyMjZiZjk4YTgxM2M5ZWRjMDg0M2Q3MDI1N2RiMDdhYTc5MTg0YzFmNTI0YjU2ODciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjNGU5M2VjZjA0YmU3MjUyNWU1YzQ0ZWIxNGU2OGJhZWUwZWJkMWQzYjMwOTEyN2M1M2M3Y2IyYmM4MDc0NDkifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L99-L104",
+          "version": "repo-lines-v1:sha256:b98fca3d2f71646fb55ab90c4a56a2ddd4f5a227128fb49d52a87821d049e4cb:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWU4M2NkZTQ0YTA1MTI5NTQ0ZmEzOWVmNmFjZTY1OTllNDAxZTQxM2VmNGNkNGU0ZDY5YzA0MzE2ZmM0NjZjNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOWU0MWQ2YzRjODA3NzNmMTFmYWIwMGMxMTQwYTBmM2QyZTI4MTQ3YzEwMzNhZTM5MmMzZDNjMWVkZThmZjFhOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2I2NTM4MGI3MjlhZGNkYjM2NzllMzdhZTMwY2I5YmM3NDU2OThkYzhlZDNmMGIzZWRhOTFmMDY3N2QxMzlkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWE4NmZiYThjMjdmMDEyNDc1MjA5YmM2MWNkYjFhYjNmYWRmNGU0N2NiZThiZmRjMWFhMTYzYWViMGRjNDczMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_227bc443451c4aaabfcc61536c752640",
+      "statement": "`Settings` derives the three storage paths the workspace depends on: `data_dir` defaults to `/data` in containers and `./data` on Windows local development; the `jobs_dir` property is `data_dir / \"jobs\"` (mirroring `JobStore.jobs_dir`); and the `resolved_config_dir` property is `openwiki_config_dir` when set, otherwise `data_dir / \".openwiki-config\"`. `resolved_config_dir` is CLI state (credentials, install id) exported as `OPENWIKI_CONFIG_DIR`, not wiki content, so it must not be confused with the `WIKI_ARTIFACT_DIR` default `.openwiki` that lives inside a repository workspace.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L12-L16",
+          "version": "repo-lines-v1:sha256:9c7bfa5d27eada0314d16b3ce076dfe117bca2aa38722b60f85c41bfe851083a:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDQ4MTUzYWMwNTM5MjBiNTI1NzFlYmEwN2FhM2NmN2YxMjIyMTQ3Y2ZhNWFiZDBkMmJkZWZhN2ZlYjM1YjQzNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmU2NjIyMWZmN2ZlMGQyYTczNjZmZTk0ZjA5NTM1Y2Y1Mjc2MTJhMzM3OGQzNjdiM2U2NTIxZTQwOWJlMWFlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmRjMTE2MjY5NGRmZmE3MDQ2NTkwMDYxMTE1MGJjMTg5NWY5ZWY0ZGI1ZDEyM2MyYWUzOTIxMjM0YTVjYTY2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzcyYzc2ZDUyZmU1OTk3YTliZTY5NDM2MjA4NmM3MDFhMWQ1NTEyZjBkYmU4ODFiNDFiOTVlYzg1ZDRkNzhmZSJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L145-L152",
+          "version": "repo-lines-v1:sha256:6b8b23b50070a918b86340f6f7a75c1d2383574da6bb142cb4b081cc691d06f3:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjNkMDBjZjI3MDk2NGQ0NGExM2RmYWM4NzUyYjA5ZmNjNDM1YjBmMTliMzE2YWJjZjgxYTdhYTY0YmIxMjJkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTFjMDI4ZDdjZmI5M2JmMWM4ZjhkYjBiMjRlMWVhZDczNGI0OTI4Y2RlNDBiN2I1ZmUyZjYzYmJmZTMwOWEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJjZTQwY2E2NDk3ZGI5ZDFkNWM5ZTRiZWM5ZTQzMzFiNTEyMzI5MDc0MDcwODQ2NTg3N2IxYTM2YWI2NzIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L35-L38",
+          "version": "repo-lines-v1:sha256:9467810aeacd1245c57ba79a0499442409a734ef2ef96862a387cb48e102e539:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjcyODc5YjIzYTg4ZGJiOGIwMzY3ZTVkNzVlOGUwOWQyMGUzMzA1ODM1N2I1YzcwZTljZjJlNTNhYmFlZmRlZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTE2NDAxYTJmN2NhYWE3ZjJlYWNmZDdlOGUxZGVhNGM0NDc5YzMyZmY5YTcwZmIwMTFmMmJhMTFkYjdhNTkxNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWM5NmU5MDdkOGJhZDMyYmY1NGNjNDZiZTkyZjg5MjVjNTIwNjk0YjY4MTkyNDFiYzgyNDBmZmFjNzFiODYwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjkzYWM4ZmIzNDdlMWVjZjkwOGIxMmFmMWViNTU3NmIwYjg0NjM3OGYzYzYyNTNlNWMxMWQ0MDI3YmFlOWZjNSJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L52-L53",
+          "version": "repo-lines-v1:sha256:be542770b9ecc8148ddf7840fc5406174117a08f4cf481f735cafa7c76afbcc3:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWIzYjcyZGMxOWFjYTNlY2M5ODNkMTk2YzNmZWJkNWY1Y2Q1NTY3MWVmZDBkNTI0ODg0NzBkMmM2MDM0MjFlNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGI0NWM2MjFjMmRiMzdhMjExYjcwMTFjOGU2NDY0MWYwZjhkNDU3OTljNjQ3NmFmOTZiYzE5NzkxMGU0N2I3NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjcxMTg3MjY0OTFmMTA2M2UxN2VhNDg1ZmVmNDM2OTFkZmU0NjhkMzQ1NWI1MTUyZTQyM2FiYzg5MWFjNzc0MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWY0OTljNmM0MWUwNWMwMjA4M2VkYTc5OTY2NDllMmI5NmUzNjA5NTgxOTI3M2NkOGQ1ZTE1YTEyMzBiOTJhMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c5f487741c174c6f84490c886ce95ab4",
+      "statement": "The two renames form a round trip that makes retries resumable: `_expose_artifact_dir` is the last step of the pipeline that mutates the workspace, so it leaves `<artifact_dir>/` where `openwiki/` used to be; on a retry or requeued claim `_fetch` short-circuits on the surviving `.git` directory and nothing recreates `openwiki/`, so the mirrored `adopt_hidden_wiki` call at the start of the next attempt is what restores the layout the CLI requires.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L165-L168",
+          "version": "repo-lines-v1:sha256:02474e2f9090eba9293d21556f08dbabe52bf08fa42aaf20556e4ca878823e89:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkyNzA4MzAwNTBjMjdiNzYxZjFjNzBhYTA3NGQ5ZDk0MTI1NGJiZGFkOTQ4ODZiZmI3NGQ2MzIxYzYwNzhmMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWI1YzgyNjMyZmM4MmQ0YjJjMzQwZjQyNTU4YmEzZGZhMzFjNzY1NWRmNmZjYzE2OGI0ZmRjZTU3ZmFjNjA0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGM1NDZlZGUxZjNiYmEyZjhiZmJlODhhY2I4YmNiYTU3ZmI2ODEyNDY4ZTE5NzI0YjYxMDk4YWEwYTk1YWE0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2NhY2ZmNmFmNTViZDNiYjJjY2I1NTM0OGY1MTE0YzJkMDQzMTE4MmQwYmQ2ZTQzNmY0ZDlmNDQ3M2JjM2Q4OCJ9"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L78-L86",
+          "version": "repo-lines-v1:sha256:9b60a4bb997ce4d97432cfc74d404dccfbae8b24e5f8b3414d6b2f98cb878927:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWNiY2Q3ZTJjZjAxMjEzMWEzMDFjZWYxODg2OTIzOGYxMGE2OWI2ZTU3MThlMmM0OTkzOTk0ZTU2OTYzZThhZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTc5N2RiYTEzYmM2NTBkYTljNGNjZDY0ODc3MWJmNTdjZTYzOTgwZmZhM2RlN2E5MDAxY2JkMWNlMTk4Y2IwOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYmMwYTBjNzc3MmJhOTgyMTcxZDA1ZjMyNDAzZjc3ZGFjZmM0MDJlMTkyMWVkMzVjMzBmNjdjNDdiYTIyYTk1ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzZiOThkMGE3MjZhYjRjMDE3OWRlMWIxYjA1NWQ1YzJkYWYxOTE1MmRjMzQ0Yjc5YWM1YTc0N2FkZDNjMGY0YyJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L124-L138",
+          "version": "repo-lines-v1:sha256:961068b425013bd0ecc548b1960145856cd7e19397939e0efe457adef2a8f454:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhMzIyYzNmNTZhOTdmZGZiZmFjZTRhZTFjM2ZjZjQyNmNhYTllNmVlNzFmMDJkMGJjYWRiNjc4MTk1MzU3ODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNTQyZTgyMGM4YThjNTUwY2U1ZjZkZDFlODJlMjAyMDIxNTBiYjc3OGRiOTdjMjJhODU4YWM0MTYzZDIwOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNjQ0Mzk0NzMyYTJjNGJmZTEwZTY5ZTk2ZTBiNWE5OGM3Y2IwZGEwNmNkMDg2NWY3NmU3NTdiOTExMTFjNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmYjMxY2U1M2VhYThiMjkwMDgwN2EzMDhkNDgwZGM3Y2U5N2Y5MzlmNDk0YjUxOTExNmY1M2ZlYTIzOGUwMjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dfca44ac671b4accba93f813d26445aa",
+      "statement": "Staging with `git add --all --force -- <artifact_dir> ...` has two behavioural consequences beyond the `.run.json` exclusion: `--all` follows the workspace state, so because `openwiki/` is replaced onto the artifact directory rather than merged, paths deleted by a regeneration are staged as deletions and disappear from the commit; and `--force` is required because the conventional root `.openwiki` is a dot-directory that plain `git add` skips (and that a source repository may list in `.gitignore`).",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L124-L138",
+          "version": "repo-lines-v1:sha256:961068b425013bd0ecc548b1960145856cd7e19397939e0efe457adef2a8f454:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhMzIyYzNmNTZhOTdmZGZiZmFjZTRhZTFjM2ZjZjQyNmNhYTllNmVlNzFmMDJkMGJjYWRiNjc4MTk1MzU3ODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNTQyZTgyMGM4YThjNTUwY2U1ZjZkZDFlODJlMjAyMDIxNTBiYjc3OGRiOTdjMjJhODU4YWM0MTYzZDIwOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNjQ0Mzk0NzMyYTJjNGJmZTEwZTY5ZTk2ZTBiNWE5OGM3Y2IwZGEwNmNkMDg2NWY3NmU3NTdiOTExMTFjNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmYjMxY2U1M2VhYThiMjkwMDgwN2EzMDhkNDgwZGM3Y2U5N2Y5MzlmNDk0YjUxOTExNmY1M2ZlYTIzOGUwMjEifQ"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L51-L55",
+          "version": "repo-lines-v1:sha256:530c6e0b182d51cc675ca43c94920247b7bbe3f8dbe2195668c3917017fa23b7:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzNWZmZGJiZDRlYzAzNTAyYjk5N2IyODgwYmZhNjc3NGQwMWEwYzNkMWQ2OGRkYTI1MzFlNmVlOGJmZWE2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdmNjg4OTI2M2Y4YjU0ZDZhNWNkYTQxMzE5NTFkZjM5NTllZWIyYjM3NTBkMmFlNmQzNGE5MjdlNjg5MzNhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2U1NzgzYWFjYmY3MmIwZDFhYzIyOWFiMTRlNTFkNjI1ZDA2MmIxZmI5MWMwYTU1MmMxZDA1ZTVjNzJkZDczMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_31d20e7e1d6b4037b716a756d88e00e4",
+      "statement": "The coordination database `<DATA_DIR>/openwiki.db` is a sibling of the `jobs/` directory inside the single `Settings.data_dir` root: `JobStore.__init__` sets `jobs_dir = data_dir / \"jobs\"` (creating it), sets `db_path = data_dir / \"openwiki.db\"` and opens that SQLite connection with WAL enabled, so both the API and the worker containers share one file plus one `jobs/` tree on the mounted volume.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L1-L13",
+          "version": "repo-lines-v1:sha256:ed0787ae4b4a29bdf3b6a8ee61785490b1ee6a07336265e3985e5bfd28eb8579:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjOWM2MmI4M2JlMWFhODQxY2Y0YWJiODE1MzQxNTM5NGQ3ZjBkMDg3ZTRkNGYyZTI1MzAxZWQ3ZmE3ZjBjODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1YjZlODcwNmI0MzA0N2YyYTZkYjY3ZjEzMjYzODU5NTYwNGU2N2YzNjk2Njg3NmNlMDE1OGYwMDUzZTZiZDEifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L106-L122",
+          "version": "repo-lines-v1:sha256:e0c8a3e79bb5f6d7f8910af63fe1c83bb25f8e8bb243a8f3e2627b4674c7215a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMzYWI2YTM2YTYxMzI2MTUyNzdhMWM2ZmFhZTdjZmFhYzRlNWFmOTdiY2I1MThhYzY1MmMzN2Y3OWE4M2VmZTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkNjEwMmU0NWNjZTliNGViODcxNWViZDc4NzZlZThjOWFiNzllZWU3NDRhYjQ4NmEzZTY2YjUxYjljODg0MzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4ZTUxZDJhOTJhYTU2ODNkNGU1OGJjMWQyMzUwNTVmYWNmMjk3OTFhYTc2M2Y2NWQ3YzY5YWY2YzhhMGMxMmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmY2QzNzg3OWQ0ZGYyNDE5MmM3NDk3NGI1ODAwNjY2ZTI3MmIyZTk1ZmQ5MjBiNDE3MmIyOGEwNzc5YmVlMTMifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

@@ -1,0 +1,454 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f743928dcc20e0e6f7f841cb8de1b3ba9172b528350fbeaddd886cc544246790",
+  "claims": [
+    {
+      "id": "claim_d1bb952d5ba94a6a88a1fc6f1439c734",
+      "statement": "create_app builds the FastAPI app and publishes the shared collaborators on app.state — settings, store, model_cache (factory) plus worker and proxy (lifespan) — so the routers stay stateless and resolve everything through request.app.state.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L86-L93",
+          "version": "repo-lines-v1:sha256:014bc145afd2eec2c003375ceffddf356a1a37e28d03f9f69c68aaaf5a69e258:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDdmOTU5ZTU2OGZlODQyZGFlYzM0ZDc2NGZjOGM5YjRkOWEwZDlhYmE1Mjk4Y2Y0MTcyNWRhNmJlZTUyZWFkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjljMjE3NWQ3MWM2YzdmMmE3YTZmMjI5MWI0OTlhZDcxMTQ1MDBjNTYxYmY0NjkxNDFhMWVmYTY1YWVhY2Y4YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjY4ZjgxZDFmZmM1MDk1NmZiMWZlZTJhYjM4YzhlYzc4MWNjMGZmYjc3NTgyYjA4NGFmM2Y3ZDAyNTRjMWU1YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDhlNmY0NGRhNjNkOWYwNGEyZGViZjUzZTc4ZmEzYTVlODk0YThjNDQxZTM0YTk3ZjdiODRmMjhjYWJmMGMzOCJ9"
+        },
+        {
+          "resource": "repo://app/routers/health.py#L19-L21",
+          "version": "repo-lines-v1:sha256:7f9a9cec5938c93c268a8b8b2fa5560078f6a09351c57f5ac729724041b61855:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDcyMzUwYTgwNTg1MmE0NGM4Mzk1ODQ2OGE2NjViOGE5YmE4MzViOGI5ZDQ5MjhhMzRmMWJmOWVkN2E2NTE5OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTg5ODU3YWZiOTU5ZDM3OTk4NTI5ZTFlYWM0MWMwMDc0NGViMzkyODNiZTkwOWEwMWY1ZTE2MjE5MmYyZWY2ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDFmZmVjOGU1ZTU1YWIxNzMwYzE4Njg5YzFlNDY2Yjg5MTg2M2U1MzE1NDVjYTFiM2M5NzBmNDVlYTE2NGU2ZSJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L40-L41",
+          "version": "repo-lines-v1:sha256:794d5ea9e629e3b36d0c1dceb94fd600771e33b0a99d1247108eb132a2dd3e7d:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWRhNGNhYzE5YmE2NGI0OTY0MjE3OGUyMTc1MmFkMTA5ZjY3MGNmMTdhMzE1OTZlOTE1ODQ4NTkwMDlmZWIyMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGZmYzNlYTkzNzlhNmZmYTAyM2JkYjllZjM1MzYwNjc4ZTk2Y2M0YjRjNTE5MjcwYWIwMDU5ZjI2NzMzMzMzMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGNiOTM0ODliYTIwZGRmZmQzYTExZjUyYmEyMTNjY2UyNjA2NDMxZmNkN2ZiY2ZiNDcxNzNiNjczNzZkOGRlOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM2MDAyZWY0NzY1ZTI3MTg3OGUyODg4YzU4NGNhYTY3ZTRiOWVkMDIxYzA4NTg5YWE1ZjcxZDQ1MjhkMjVlZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_423f6d6efbe74dad812b1ef254daef56",
+      "statement": "When OPENAI_COMPATIBLE_EXTRA_HEADERS is configured, create_app parses it during construction so malformed JSON aborts startup instead of failing the first request; routers register health then wikis and a root GET / returns {service, docs, health, wikis} with include_in_schema=False.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L43-L48",
+          "version": "repo-lines-v1:sha256:c025383ba0fd9262738bcf2894ccb6193decd677455f02aeb2d03501bdc7295f:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjU1MGM1YzY4OTA0NjU2MzJmMGZlMjgwMGFmNjc3ZTA4NjExYjA2NGY1Mjg0MmQ0MDI2ZTQ2MDk4Yjk2MzFiNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODdmNjY2MTFiMTEzNjliN2MwYTAyNDg0YmQ0YThmNmZjNWMwZDZhNjI1YThlNjg4MzNiMmFmNzVlNWY4NTc1OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTQ2Y2JhMDFhMDQ1ZGVlODU5ZmVlMzBjYTM1ZDc5MzZmYzgzMjRjNWU4MGEyZjQ5MmE2YTMwZjAzMDBlMjE0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTNmN2E1MTVjZWVmNjg2N2EyNWQwMTEyNGY4YWMyNWNmMmMxZDk2MjAxNWRmMTlmNTU4MzRhMGQxODUwYjU2NSJ9"
+        },
+        {
+          "resource": "repo://app/main.py#L92-L102",
+          "version": "repo-lines-v1:sha256:42f5246ba07d530d33a917b5fc3206536b7aff68f77a08880aee29076a54992d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyMzlkNGMxMjZmZTU2Yzc0ZTQxZThkNzc2ZTRjNzA3ZjQxZTJkYTYwYzg1ZTlhMTUwNWQxNDBmMTI1ZDU5ZTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2YjA0NDkxNDY5NzIyZTgzNjNhOTRlNDA0NDUzOGUwMTNhMmEyMTdlMzZiMWU1NjhiYTYwYWNiN2I0YzhmMmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViZjQzM2QyMjliMDFlMDMxYThmZDAyNDkyNTJmMmQ1Nzg5Yzg1YzM5MTlhMDAwODBkYTgwMTA3ZWI3NzM4ZTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoyLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAzYmM2NTJlM2I0YTIxZTdjNWVkZTgyZTkwZTUzYWZiNmViZjU4NWQ2YTY1MWY2MjQ1YTc1MTU0NWMyNzViZDIifQ"
+        },
+        {
+          "resource": "repo://app/services/provider_proxy.py#L51-L69",
+          "version": "repo-lines-v1:sha256:5b7483f0aeaa42d5e3cd2b456681811776572f8a2901c218b40d02b152c99b5a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNkYjhmZjlkOTU4ZGE5OGQ5ZjhkMjM5YTAwMWVmNWU0Y2E2NjBjNmM0MTQ1MjZkYWVlZGJlMWE3ZDUwYzMzNGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhNDZiN2M4MDg5MmQ0ZTQwZjIxZjc2NzlmNDdjNGUxNmE5ZDhmZDgzODM4M2QxMmI4OWM0MzFkYWE3ODMwZWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzYjJkY2Y2ZTliODE4ZDYxYmJiZTQwNjk3ZjBmYjFhOWUyYzNiOTcxNGQ4YWJlNTlmY2E4YzMyM2RjMWJlMmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZkMWM1MGQ2MjY5ZTg5OGVmNDhhNGQyYWFiNjM0YzY0NzgwYzg2ZmQwODI4MWU1YzQ2YmQ4ZTYzODAxNWU1YzkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f0f99cee102240d2a52773a51aa970d1",
+      "statement": "Lifespan startup purges expired terminal wikis with purge_expired(job_retention_hours) and requeues claims whose heartbeat is older than worker_lease_seconds with recover_stale, then launches the asyncio task openwiki-reaper running _reap_loop, which repeats recover_stale plus prune_workers every worker_reap_seconds and suppresses all exceptions so reaping never stops.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L229-L240",
+          "version": "repo-lines-v1:sha256:57baa631d1c71884efe15aed636f4ee43f9a0169393a22c568c616a80c3d30c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNDFiNjJjOWY5MTIxMDM5NDZlOTk1Nzk1Y2RmZWI1OWZkZjgyNTlhZTk4MGNmMTBhODcwZDg1NjY5NmY2ODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwN2I0YjM0ZThhNWVhNTNlNzVjMWEyZGI2YTQ5M2Q4Y2IyMWQ5ZjU5NmNiMjhmNTBlM2I5ZjFjY2JhMTY5YWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MWIxOWY4M2QzMzU5MTFiOWY1YjJmYjQwYjRkNTk3YzVmMGY5NTY3ODUwOTk3ODg1MzNjMDg2ZTNhYTI3NjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0NzUxNzIxY2I1NTE1YjlmMDE3YmE2YzQ0YTZmYWQyYzk2MDk1YzViM2JhNDg5MTdkNGJkMjFjNTQzYzc5M2IifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L345-L371",
+          "version": "repo-lines-v1:sha256:4ec0840b5fdbcca698923e2dd3221e5f4ecc074df0270f17f70df22a827a4278:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyZDZmMTE3NGIzZWYwNTY1ZmJmZTJlNDU5ZmEyY2Y5MGFlODBlMDdlMGUzYTAwYTRjOTExNTRjNzdmN2NmODkifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L32-L60",
+          "version": "repo-lines-v1:sha256:0ff63b34d419307902031c591de4db915e0819430b4b30f789b713f3f67ad2a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjNDQxM2MxYzkyNWNjZTUzNTczMWQ3MGNmNmRlYTYzZjgxOTMwNzFmMzZlYWQ3OGU5MzczY2MxMGIxOGM1MDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhMDYwYmM1M2FiYmNjZmQ1MDMxOWEyMGQ1N2M3ZWZhMjUxMzMwNTZkYzkzMDVkYzhjYWY5ZmMxMDdlNjM5ZjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViNGQ0Y2JkZDU1NTkyMzFjNjU2OWZhZWFmNDFlMjI2ZTUyYTEzOTZiMTdiNzJmMTBiMGZkMDQ2NzhjOGE2ZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZDM5Yjc1ODNmMjJiYWZlMTUwMTM2MzVkNjIwN2EzODVkNDRmNTRjZjYxZjVjMzlhMWQzODU2ZGM1OGY0MjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d5e0d63c574b4462b6612488d6d0196b",
+      "statement": "Only when RUN_LOCAL_WORKER is true does the lifespan start an in-process WorkerLoop (the same loop used by python -m app.worker) and publish app.state.worker / app.state.proxy; shutdown cancels the reaper and stops the worker, and app.state.proxy stays None otherwise.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L61-L74",
+          "version": "repo-lines-v1:sha256:6d8a14104f494d76cdd5cafd098f3254b2c45cf909fe77e67987eb3dea65ddd4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI1NjljYjA5MjgwZWUwNzgxOTQ1ZTQ4ZDQwNDFiZDJkZmFhZTY5MWFkMmVhYmY1ZDNjYmEwODQ2YzcyMTZjYWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3N2JiYjU5NWI2ODFjYzBjZGUwZDlhZTEyYzgzYWJlNDhlOTQyMGUyYjA4YjlhYjMwNTQxMmZmYjE5YThkNzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlNjZkMmNjNDU4NDlhYzkzNDAxYzA2NzA5YjE1MWU2OTZmNWM4ODRkNTk5ZjdiMjhmMGJkYTIyZmExOTBhYWUifQ"
+        },
+        {
+          "resource": "repo://app/worker/__main__.py#L27-L35",
+          "version": "repo-lines-v1:sha256:14a3d22248f12ed6da1e5db50b628afca0a13179977b69ecfed2e5580efca498:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWIzOTc5MzNhMjRhODAxZWU5MjMzMjdiZDY5YTAxMDQ5YzA3NzkxNTAyMWNmMmVjMzlkZGE0ZjgxYWE4MzdlNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTYyMzNiM2ZmZWEzMmEyM2RmNTMwNjUzNDM0OGYyZGVlNzc2YTVhNmY3NGZiNTMzMTc1ZGRjNTM5YThmZTQ2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2UyODJjMGZhMjdiMTBhYzczZDM5ZGY3YzliNGU3ZmIyOTMxOWQ5YjRiYTgzYzhiZTRlM2I5ZDE2NjMzMzkwNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Q0MTM0MGNjMjM5YTE1OWNlOWI2MDIyZTlmNjMyMjgzMmUyZWFkNzZjYWU5ZTQ3NTRkMjEwZWI4ZmI2ZDVlOCJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L35-L67",
+          "version": "repo-lines-v1:sha256:7b3aeadcd91fa043da6b71272e6768ed908671ca03888dda624561392164eff4:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNmRmYmI3NmM1ZmNjNGJjZDM3MjU4OTUzNThjZThiY2VhYjVjYjVlYjEyNjMwNzZlYzljYWExNjdlZWMwMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzN2I0YjBhNmViZmUwNThkNDg0ODM4NWI4OTU1NDIzYzZhZmJkNjVkYTg1MzgxOTk4ODZmNGJmY2VlNjJiMjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0YzIwOTY3MTc4NDNlNzRkMTNhMjkwMjAyZTBkNTE1YjJlYWEyNGEwMGJiMjJiOTY1NGM5YTEzZDg5ZDEzMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEyNDM1ZGEyNDE4ODdjNjk2NDQyNjYxYjNkOGQ1OThkYzgzNTRjZjM1NGYxOWIwZDNiMDhlMjQ4OGU5OThmZjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8e156dc3d9924e1581de19dccf56230b",
+      "statement": "POST /wikis validates source.url through ingestion.validate_git_url with allow_local taken from settings.allow_local_git, translating any IngestionError into HTTP 422; unsupported schemes such as ftp, empty URLs, and local paths or file:// while ALLOW_LOCAL_GIT is false are all rejected before the job is created.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L50-L55",
+          "version": "repo-lines-v1:sha256:8cfca76732b83c2a9e0c78fe19573bb7e88b86a695a91f893d25c55fdc9e2f4a:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTU3Yjc2NTYxMGQzNzE4MTIxZTU0ZDRkZDRlZjY2YmYzMjM2OWM5NDY2MzViNzljYjgyNTk4YTNhZTQ5OTE5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTc1NGI3N2JmMzkzZDE0OGFmNDkzMzJkMzZhOWE3Yzc0OWViOWU4Njc4NDZlMWI2MTZiYzUwMDFkZTRhNWEwYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTIxMGI2Nzc0NTRkNzJhNWRmZTc1NTY0M2E4OTcwYzJlNzI3MDhhNmVjZWQyNTAyOWJhYzUwYjFmNmRkZmFjYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjBlNWU4YWFlZDFkYjI3MTAzNmRlODQwN2I0NjM0YzBiZDBhZjk1OGI1MjhiN2U1NzJhMWIyMTE4NGFkODg5YSJ9"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L49-L74",
+          "version": "repo-lines-v1:sha256:262d32b0792de71b3912578c8d932cf45df8cd83f5d98355d327d094a57aec40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NzkxZThiYWRjZWZiNWM3YzFlYjhkOTU5NjY1ODdmZmFjNjQ3ZTE5YmI4Nzc5MWEwZTI0MGIxNTlmYTBiOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTI4YjNhNWFlOTM3MjBkZDcwYmUzODcxYjlhM2I2ZDAyYTZjNjhhMjNiNzc4MjdhMzY4MDg2MjQwZjkxNTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMmU0MjY2NDcwNmRiYTBkZjUyNWI1MTMxZDc0MWRhODc4YWVhNGYzNzQzMzhkNDIwOWU0ODA1ZjM4MTRmODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ3NWVjMzNjZmUwMDQyMzhmZDk2MGM4YWQwN2U1OWI3ZDNmMDE4ODQxMGU1ZDBmMzExOTkwM2U5YTQwMzBlZmMifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L13-L20",
+          "version": "repo-lines-v1:sha256:1792cd5a591c8b8086f5f5771666d02e0146b26ee6189029aa13d13691d512eb:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzU1Y2M2OGJiOTk0OTcyNTM1NDQzMWFjYTZhYzdhMjBjNGYzYmZhMzZkZDRhMWEwZTBhMWYwZGQzMTVjMzMyYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzgwNzU3YjgzNmI2MTJlYmFmNjNlMGYzOTM1YmJkYWFiZTliYWM2NDE0MDA0NTAwOTcxN2U4MGJjYjc2MjE3NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzU1N2I3ZDJhNDRhMjE1MjhhY2RhMDJmNTFmMTYxYmYyY2FiMWJkMjE0MjYwNmM3YjM5YmE4MzEzYzlhN2M4MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzc1ZDA5MGYxMzM5NDcwZjk4ZTI2NTE1MDRjZWVmZjFjOWZkMTdhZWU5NjJiMjE5YmZjNDg1ZTA4MmUzMDExOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_51f4686880bd4b0fb6a4170de7819b20",
+      "statement": "POST /wikis rejects auth.token unless the validated URL starts with http:// or https://, answering 422 with \"auth.token is only supported for http(s) git URLs\", so tokens are never used for SSH or local sources.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L57-L62",
+          "version": "repo-lines-v1:sha256:2d1bf4c47bfeedc287a2c5f2bb03b82ffe528957ca3779a5b13615241c87982c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGYwMjE4NGJkOTRiMmNiZmMzMTUxMTYwMmJhYjUxZTdiYjA0YWU0NjBjYWJiZjAxMGQ4NjM1ODUxOGJhMzcxOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTQ2Y2NlNzVmMWU2MzBkZjc2ZGM2MzkzYjFiNzQ3MWI1ZjM0ZjQ0MjMwYzgyN2FhMjA4MGQ0ZDQ1NTRiOGFiYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjg3MTRiMjA4YjRiZWIzYWU4ZGUwOGE0M2ZlY2IyOWE4NmQ4ZmM3MmExNjZjYzMzOTVjODY5YTJjZTdjOTI4NSJ9"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L190-L195",
+          "version": "repo-lines-v1:sha256:76628bb2cd05554cbbfb3a85a4007fd02cee31aee5df4a02e02c6fdf87378fa9:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I3ODA0NmE1MzI5ZjgxNTFjZWEwZmJiNjZhODYwNDlkZTNjNDZjMTFkNjViYjViZDJiZjhlZTlkYmE2ZjhkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzgwNzU3YjgzNmI2MTJlYmFmNjNlMGYzOTM1YmJkYWFiZTliYWM2NDE0MDA0NTAwOTcxN2U4MGJjYjc2MjE3NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzAwY2YxZmE4NDZjNDdmMWM0NjY1ZjkyYzRmMWRlNWE2YmZjOWQ5ZTBlMWIzNTE3YTU3MDFjMTUwZjQ5ODcwNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjhlZTA1ODA5ZjY3N2Q5ZWFmMTI5OGYzY2QxNzM0MDc5OTFkMGI4Y2YxMDdmMjgwMTk2NDU3N2FjOWRiMGE0NyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_694e721583c744b5ad8746afce520e2d",
+      "statement": "When push is enabled, POST /wikis enforces three additional preconditions with 422: scp-like git@ or ssh:// URLs (no SSH keys in the service), git:// URLs, and http(s) URLs without source.auth.token; an invalid push.branch or empty push.message is rejected earlier as a schema validation error.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L63-L79",
+          "version": "repo-lines-v1:sha256:184bbe7623afeafa12961fcad457b8cd1172bf290f70762f89636c08a4318dd4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMjQ2MGVhYWQ5NGIwZmMxYjFlZjgzZjI1OWYzNTIyNzI2NDhmZWI0MjgyNGEzMDA1NDIxMDcwNTIwMTQ3OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MDMyZTk2NGQwOTMyMzUxZTVkMTg1MjY5MjgxYjE3MWEzYTA5YjA4YjI4NmU2NjFlYTQ3MDMyM2M4MmViNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMzgwMThkNmYzMTZhMTE5NWYyMjFlOTQxN2M5ZTIwNzMyZDc2NGVjMzhhMmQ2MWUxOGMzYjczNTcxYTg2NTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmYjI1MjI5MTQwNWYxMzAwMDMzMWQyM2Q4MjQ4ODI2Zjc5ZGQ4MjlhNGFhMTkzYjIxOTIwOTkyYzljNWE1MWUifQ"
+        },
+        {
+          "resource": "repo://app/schemas.py#L41-L85",
+          "version": "repo-lines-v1:sha256:e3091fc6ba40d33f90e1c4a5cd52cfb1ca302c2b78a615992c69f13c3fc0ccc4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjZjRlZWZkMDUwMDZhMjg0ZDAxMzM0ZWY0MjFhZGNjYTk1MTZmYzBmMTYxYmQ3ZDM0M2NiNzA1OWUyZmJiZmEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlM2NmY2ViMzNlMDExZjliNjk1MDg4ZTBiM2FhODNiMTYwM2Q2OWRiNGRjNjU4MDNhYTgzNjM1M2U4MWIwZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIzZTA3ZDMyNTBmNjJkMTkzYzhjYjFjZjU0NWRkNDQ3YTU5MzY1YzMxOTA2MDZiZWFiMzhkZjY2M2UyYWM2M2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwZjhmNTQ3MDYxNWNhZmM2MWFmZmMyYzUxYWMyZTYyZDE1YTAxYTU2OGM2ZGZlMjNjOGU2YmI1MDNkZGYyYTgifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L90-L107",
+          "version": "repo-lines-v1:sha256:7010c2ad7d8fa69f0c211a70913a67f8726528c8663b485b7e73cfec45d7eda3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNmQwZGI2MTg2Y2Y0Nzc0OGFmMTVjOWJjNTU0MmVjOGY1MTdhMGZiNDZhMmVjNWEyMGZmMjI1ZTU2ZTZlMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3Y2U0YmQ2MWJhZWE3YjMxZWYzZDU4ZWRmYjVlYThkMGZjNGExZDUzODJmNTg4YzVlMjY5MDhjN2Y2ZWZlOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5ZGE5MmZjOWE3YTgwNGFmYzFlMDJmNmFhYTBlODQ5MWVhMjFhOWJlNmRjYzg5YzlhNGUzY2Q0ZDMyMzg1NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYzU2NjQ4MzE5ZTQ4MWZjMzRjYWExNDZmMDg1NzVlYmQ0MjM4MzAwNGQ4OTkxMGUzMmM1NmEwYzAyZjkyZTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_832737e074d14dcd9deacb6d1dacf0fa",
+      "statement": "POST /wikis persists a source dict of {\"type\": \"git\", \"url\", \"ref\", \"token\"} together with language, concurrency, mode and an optional push.model_dump(), then returns 202 with _accepted(wiki_id): a WikiAccepted whose status is always queued and whose links are {status: /wikis/{id}, logs: /wikis/{id}/logs, download: /wikis/{id}/download}.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L149-L173",
+          "version": "repo-lines-v1:sha256:1d49d7c5e204565c241f483f06593520c83928794e38698cf0468bbb03684466:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4NjNlMjc3MzBjMmNiMDY1ODY2NDFiYThmNWQ2ZTdiOWU5NzUyYjMwNWZlYzc3ZWYzMDBkYWRhZjM3ZTkwNWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyNDBmMTc3MDllNGI5MjAzNmJjNWQ4ZTFkNzRhNWNiYTI4YTQ0MzFhYzA1NDEwYzkxMGQxNWI4NWM3YzYwMmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0YjRlODY1YzU4MDQxODc4MjUxMjU4YTIwM2IxOThiNTE3ZmI2YjkxZmFkNWUyNTZjNTE0MDU4NmQyYjAwN2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY2ODFmYjJjMjZlYzVhYzM3NjFjNGQwNzAwNjFhOGE2ZDA1MzcxNzExY2M4MDY5YzYzNDQ0NmE4Y2EwZmYzNmIifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L22-L32",
+          "version": "repo-lines-v1:sha256:276fabfe318e6bd72c9832c925ab7e44682daf9855c49c71cae7090c8653bb4e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc0Y2Q5Yzc4Njk4NjhkNTNmNmVmMDE4NzdjNGU4NGJlMTBlOGFjZTc2ZTVjN2RkNDI5NjI3NjFmMDZiZmU4ZjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0ZDU4NWVjNWY1Mjc4YjIwZjY5MjZjNDZlOGNjZmE2NTg2ZjFlNTE2Y2UyMzI2MDRiZDE5MTQ3YTVhOWMxZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2ZTdiZmQ0MjRjMTlhMzEzZjdhODI5MjI3YTQ2OTJhMzkwNDM2MmUwZjZmZWI4OGZlN2VjMTdhZjA0NzQ4ZTYifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L81-L89",
+          "version": "repo-lines-v1:sha256:c9456f2439503a37681e1b297412db92711dbff05702610c437381735624b31f:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTcyZjM5NTE0N2U1ODZiZGI5MTY0ZGYyMmVmMjM4MTYxNTNlMjYxOTZhY2MxNjBjZWE4NmIyM2ZmOGEwMWNmYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Y1MGJhMzcxMDVjNmU2YzNiMDIzODcxMjk1Mzk4YWI2ZDBhODVjMjBjODgxZDMzZGUxODUwM2JiN2IyOWEyYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGIyNzcyMTRjNzEwNTAzODYwNmZjYTQ5M2ZlMjdiMDcwN2I2YmNhOWYxODI1ZmM4MTIwN2JlMjYwMmNjY2Y3ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM2MDAyZWY0NzY1ZTI3MTg3OGUyODg4YzU4NGNhYTY3ZTRiOWVkMDIxYzA4NTg5YWE1ZjcxZDQ1MjhkMjVlZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b7b25419b6d343c88cdb35723a78dce8",
+      "statement": "POST /wikis/upload normalizes the client filename with Path(...).name, requires a suffix among ingestion.SUPPORTED_ARCHIVE_SUFFIXES (422 otherwise listing them), creates the job row before streaming the body into jobs/<wiki_id>/upload<suffix>, and enforces MAX_UPLOAD_MB while streaming; exceeding the limit deletes the partial file and the just-created job and answers 413, so no orphan queued job survives a rejected upload.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L98-L135",
+          "version": "repo-lines-v1:sha256:1af7573d566a9c1b66eaa5875d44c7a026f1c0cbe09aa56ca2ad5403a4931a74:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3NmZjNTQ1ZDM2YWJiZjA2NGYzY2MxMmE1MDhkMzM2MTZiZjkxNzJiMWUwMWRjNzU1NGE4NTIzODRhZjYxODAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNTBiYTM3MTA1YzZlNmMzYjAyMzg3MTI5NTM5OGFiNmQwYTg1YzIwYzg4MWQzM2RlMTg1MDNiYjdiMjlhMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI2NDI2MWQxN2I1YjQyMDUxMTg4Mzk1OTVlMDRhNTExOGU5MGJlN2UxM2Q2ZWM1MDRkNjhiZWUyNjFjMDE4ZWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4Y2EwZTQ2MzM0N2I2MWYzM2E3MzdjMjJkYmUxYzdhOGI0MWE0Mjc2YTEwZDI1MDljZTIzMTgzMjc0NDM1MmYifQ"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L251-L273",
+          "version": "repo-lines-v1:sha256:5c5d46fb9f58799f833092c06239d06961522a9accfd2ed7b93daacfd63cb62b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1YThlZWQ2NTZmZjE2NmVjYWNiMTkyYzA1ZmU0YzAzYjFhMmM3Yjk0ZjZlYTExZDkxZjMzMGVlOWJiNTNhMTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTYwMGE3M2QyZTAyZjM1MmI5MGZlZjFkOGQ2MzgxMWJhNGE4ZWUwYzFiZWFhN2FlNDY1OGYzNmFhMmUxOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzViNWMzZmIxNzRhZGM3YmJiZDY0NzcxYTIyNWNiZjg1YTQ5ZDFlMDlkMDY4ODExZGYyNjU0NmJkMDI3YmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhYzM5ZDU1YjFjNDA5YWVlN2MzMThhZThmZWU0ZjEyOWVlODM1OWViMjczNjU3NWJlYmI4MDcxN2E1Mzk2OWQifQ"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L27-L36",
+          "version": "repo-lines-v1:sha256:19f3c7ddd690858b1decb9156aa9acc2c298bf73dc843c2e4834347dc2eff1ef:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwZWNiY2M3ZTEyM2MzZmFkMGNlMzBiYWQ0M2U0MDQ4NzU5MmE1YTM4MTViODUyZTI2NTliYjU0YjQ3YTc0MjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhZmJhMDUyN2MzOTUzYzRiNmUwZTViNTczOWJhODM2MTJmODA1M2JjZGM5NDY2NzMwMTkzY2QxZDU5MGI0MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkODA4MmYwZDM3M2I5MzNmZDE0MDdmMWY1NWM0ZTVkMGRmNjZmYTFiNzlkMDVlY2FkMjM0NTM3MWFhZTFkNTYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4ZGZjZmI5ZmYzYTU3ZjVkYTEwYWJhNTg1ZmVkZTBlNTBmMGUxZjc3ZThiNzdjZjFhNDFiMjM4ZTIwMDE1NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_993311e0527d4735a0dd10da6817a770",
+      "statement": "POST /wikis/{id}/cancel maps store outcomes: a queued wiki is cancelled immediately with error \"cancelled before start\", a running wiki only sets cancel_requested=1 and returns \"cancelling\" (cooperative cancellation detected at the next heartbeat), a terminal wiki yields 409, and an unknown id yields 404.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L271-L308",
+          "version": "repo-lines-v1:sha256:c0451c6dd807cded94d8ca706ded480fd6d1db5ae09ef36202e437e1669ec677:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMGVmOWIzMzdjNGEyMTY5MTQ2NjRlNjM1NWMzMGUyOGU4YzY5MDM3ZmEzOWVmMWIzM2YwYjM3YWE0ODc1OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NjJhYjU0ZGU2YTJmNjNlNzRjNzk5Nzg3ZGNmYmZkNzI2MTIzNWQxMzUxNjRiYWE1MjZhMTc0NTA2YjZmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0OTE5NjY5ZmU4YjQ1NmU3ZDkxODE2YzkyN2ZmMTVkNzg4Yjc4NTY1NjA0MDE1NzNhNTg0MTkxMjk5NjA4ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYTM5ZTJmZTUyODU2MTg3OTBiN2QzNjczZjZkYzcyZjJmNDI3MGNhNDg2MDdjYTUyYmE0YThkMjRmNTI1NzYifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L386-L397",
+          "version": "repo-lines-v1:sha256:0e45c6601726e7de8238ec13caed9c0acc98a10d6ac7d37a5af47d798cce3d3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5YjNjYmJmYTk1NGI5MjlhMDg4YWQwM2MwNDExMWRjZDBkYzExZDI3NTk2MmIyZWUwOGVmNDdkMDQ0MTZjNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMjIyY2UzYTVlMzUyMDA5NTY0ODdlMzM3NzgwOTI4MGExMTk0NDk0YWUyMzcyNTY1ZTk4ZWRjZTgxYmFkOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5ZDA5Y2JjMTk3NTM0MGYxNzI5YTEwMDQ1ZmJlYTIyMWI4MjgzZjMzY2U5YWM2OGFlMWM2ZDNmODYyYTVjNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOGViYWZhNzNiZjhhYzkyMjkwODllNDc4NmM4NzM4Y2M0YjIwY2JhOGZhNDg5YzgwYjMwMDk1NGViMDNlMGUifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L146-L157",
+          "version": "repo-lines-v1:sha256:0f190e2b2076bf06291976fb9e27631105d73059289cda02d324f185e08e7171:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmODEzY2I5YjJmZDQ4ZTRmMTc1YjYwYWNjZTJhNWI2YjU1M2M0MzAyMzQ0YWUyOGIyNGNkNjdkNjYxZDBjM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4NmVkMzdlNTVjN2E4ZDEyM2ZiODY4NDk5Njg4ZTcwOTYyNDYxZmZmZDE4MzBjMjk1OWZiMzk0OTFjNDI3MTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNWQ0Y2RlNTc3MTNkZTc2ZjViMmUzMzRiNzg1OGVkNWUzNTc1MmNjZDllZjFmNzk1ZDZkNDRlZmM3YmMwNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjNjAwMmVmNDc2NWUyNzE4NzhlMjg4OGM1ODRjYWE2N2U0YjllZDAyMWMwODU4OWFhNWY3MWQ0NTI4ZDI1ZWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2c77117f16ce48f1a813624c1fcde6f6",
+      "statement": "POST /wikis/{id}/retry re-enqueues only failed or cancelled wikis — clearing error, progress, finished_at and the whole claim so OpenWiki resumes from its own openwiki/.run.json — and answers 202 WikiAccepted; not_retryable becomes 409 with the current status in the detail and an unknown id becomes 404.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L399-L418",
+          "version": "repo-lines-v1:sha256:0c268d0f3f2c2191393835127df6aa2e7b58ddc980537951f6f6331235dda061:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyODJlNzAxZWFiMTJhOWQ3ODMwMThlZmQ4NGZjMjRhMWNlZDVhM2EwMjdhMzg2NWRkOGQ1NTM4NTcwZTgyNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWE3NGNlYTJjYzhjYjAxZDNhM2E5ZWFkNzU4OWRlMWNiZWViMWIxM2EwODRlM2MzNWQwMTU4ZDRlNzQzYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMWU0ZGRmM2QzZWFmMjgzMWI3OTI3YzhkYzEyODVjYzhjMTQ4MjQ1NDQzYmVjMWQxOWM1MzZmYjZkOWEwZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwZWQxMTRmN2I3ZTRhYjI1MmY0NTlhMTE2MTVkMzE4M2M1NDUyNGMyMTgwZTAzMGJmNTA2ZjNjNmQyZjkwYTMifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L160-L179",
+          "version": "repo-lines-v1:sha256:3b34114c815e929ceed2ce426b95eb06afc10337898661760689be0857615bbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MzI2OTVmZjkxMTMzNTM5M2YyZWMyMjNmYWE0OWMwZTFjNTJjNDU2YzQ3MmU0ZWE0MzkzYmRkMTNmZDgxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MWJmODMzMjc3NzU1OWZmMTUxNmZhOTY2ODIyNGIxMzA0NzVjYTRhNDIxODFlZDY4MTU4OTAyYWZiMzg5NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExZjU3ZmZlYzEyZjdlNTI0NTM5OTY5NzI2YTYyN2NlMTA0MWZiNmQ5YjY5ZjY4Y2ZjODg4NmVlOWM0N2FlZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNjZmZDY4NDkyN2VlYTczN2FiY2NkZjY0OTUwNThiNjc3NDRmZGZmNWVjOGI4ZTViYTZmNTE0M2Y3NTIwM2MifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L125-L138",
+          "version": "repo-lines-v1:sha256:92b761b1587952f685c80446ccbae4bcabd4f04196d81c38dba63f539e081488:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZjFmM2IzOTg3ZmFkMzViNGY3NDYzODFlMWU4OWMxZWYwYTljNDQ0OTY5ZGY1OTQyYjYyODM0YjdkNjRmMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwODcwMzI2MDU0YzhkMDViODJkMjU1NTA4MDM5NjM0ZmFmZGZkNjRiODEzMjllODczNWY1MjVjMGExYzJjYjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhYWY0YTgxNDQxNTNkNzczYzYwZTc3NGIxNGM3ZTRmMmQ5NWQ5NDc2NDJkMWRiM2FlMjdhMzgxMzNiMTExMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI1M2ZkYzIwMGU4MzQyMmYwNGVjZGMwMTY0ZDMzYzFkMWVmNzk1N2Y4OTRlY2IzY2I1MDNmMGZkMjNiMDBlNzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d18d538a968e410baf6d52f0993b4aef",
+      "statement": "GET /wikis lists wikis newest-first as list[WikiView] with limit constrained to 1..500 and defaulting to 50, backed by the store's ORDER BY created_at DESC query.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L182-L188",
+          "version": "repo-lines-v1:sha256:51be1cfda1784195410e98910e23445e2ea4a3ff01ba29d5c91ce08fbe26f5a0:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTYyNDYyMWM0OWRmOGIzZGNkMmJjYTY4ZWNjZGY4MDk1Y2NlMjAyZDE0YzEwZTgwODRlYTE5NjQ4NzU4MjI3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWNjZGJkZjIwZTQwNTk5ZGE1NjVmNTA3OWVlZWFkOTc0NzEyZjc2ZTc1OTg2ZmRhMTcyMjY3MGUzODM0YWQwMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDVhYzJmZjBlNjk5MzExOGMwN2EzOTFiYzZjZGUwZTVmY2Q2NzcyZmZkNGI2ZDg1MzI5YzgzNGJlMTY3NmI5NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGFmMTlkZGExNDVlNDA0NTY1ZjUyMTA1NTRhNWJjZGRkMDQ2YThiYmI5MjgyOGMxMzY5MDI5YWVlYzA4MzlmOSJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L35-L41",
+          "version": "repo-lines-v1:sha256:5a571c5ec28913b452ad57fa0b9878cd925b7ff974fa7dc9f7067ebb56bf85a2:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTIxMzc5MmQ2YmE5YWI3YmRiMzI1NDIwNTE4Zjk1NTk4YzNmZDQ0YTcwNGM4NjU3NjhiZTVhZWU2YjgzOTI5NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGZmYzNlYTkzNzlhNmZmYTAyM2JkYjllZjM1MzYwNjc4ZTk2Y2M0YjRjNTE5MjcwYWIwMDU5ZjI2NzMzMzMzMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGNjNGE3ZDFjYzc5NmFiYTNlNDY3MjMzMjdmNTE3ZTlmODExOTgyZDI1MGYwNzAyOTg2ZTRiNTc2NGFkOTU4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM2MDAyZWY0NzY1ZTI3MTg3OGUyODg4YzU4NGNhYTY3ZTRiOWVkMDIxYzA4NTg5YWE1ZjcxZDQ1MjhkMjVlZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_eb257b175f8b4d8da7b14e19299a5891",
+      "statement": "GET /wikis/{id}/logs requires the wiki to exist (404 otherwise), returns an empty body when the log file does not exist yet, and tails the file with collections.deque(maxlen=tail) where tail is constrained to 1..MAX_LOG_TAIL (2000) and defaults to 50.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L19-L19",
+          "version": "repo-lines-v1:sha256:54b3b61e71f54ce13bb8d70009de626050c87bf32938f6667ed5ea29b5078c93:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTRiM2I2MWU3MWY1NGNlMTNiYjhkNzAwMDlkZTYyNjA1MGM4N2JmMzI5MzhmNjY2N2VkNWVhMjliNTA3OGM5MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTRiM2I2MWU3MWY1NGNlMTNiYjhkNzAwMDlkZTYyNjA1MGM4N2JmMzI5MzhmNjY2N2VkNWVhMjliNTA3OGM5MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWY2ZmFhZTE0NDNjNmJjM2Q3OTBhODQyNmJhYjJhN2ZlMDdlNDBkOGRhZTNlNDA4NmFhMjliOGE2YTEyM2MxYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmQxNzM5NzY5YWU2MDk3ZTY0NTMxMTNiODY3OTVjNDNkNGM0ZjVmMjA2Mjg2M2EzZmY1ZTU5ZjZiOWQwMDVhNyJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L190-L208",
+          "version": "repo-lines-v1:sha256:81870aadd82b5cda7e612e179303be0e09ebf41725da28dcf5fa0a4ac3b8edc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxY2Q5OWE1YTFmOWM0N2YzMjg4OTcwYTI2NWVmM2QzNDg3ZDYzMWJiNjY2ODNkN2QxYTRmNzViNmI0NTM4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3OTc3MDBkMGEwYjZhZmUwYmMyMzBlODY2MmVhNWJkNTg1MTA0NjFmYzBjNDMzNWNjNjdlMjk0YzA1MzQxYjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyNmUxZWYxODY3YThmZjAwZmI2NTZhYWU1MTc3NjFkOTVkNWRiNDk3YmZiMWU0NGM0YmIzMDA3ODM3ZTg2NmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiZDE4NmIwMzg4YzA0YmQ0YmUzNjlmODU2NmJhYmI4MmYxZjY5ZGU3MTllYzc2MGU4Mjk1NDhlMmM2Y2U2YWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_43f58ffbad964e60976e76f6d269dfe6",
+      "statement": "GET /wikis/{id}/download distinguishes an unknown wiki (404 \"wiki not found\") from a known wiki whose wiki.zip is missing (404 \"wiki is not ready (status=...)\", which is the case while a generation is still running or after a failure before packaging), and serves the artifact as application/zip with filename openwiki-{wiki_id}.zip.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L211-L231",
+          "version": "repo-lines-v1:sha256:e583ca450cced7c8d53c41db7fc8cae121ca143452cba1fa4def7d4d45522d27:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxY2Q5OWE1YTFmOWM0N2YzMjg4OTcwYTI2NWVmM2QzNDg3ZDYzMWJiNjY2ODNkN2QxYTRmNzViNmI0NTM4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlYzhiZjA0MjQ1MGZjNDA4ZTkzZGM4NWU2YWQxMWYwOGVkMjk2YThmODFjNjhlMWM5YzA3MTI1YTllZmEwYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NmMyMmIzOWNhNTFiNGQ0OGM5YzhlZjE1YTg4NWQyMzM0MTFiMWUzYThjMGE5YTIyNjc3NTU3MGFjNzE0MjcifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L69-L79",
+          "version": "repo-lines-v1:sha256:a20275e2c67e35f54011ef4328d19c5db7026701b1409c1fab6fdcd1c0235a8e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgyZGM3YjI0ZGM0NTUwNGY0M2Y0NDZmZDI4ZDZjNTE1YzNkZmQ2ZTJlMGRjOTkwZTdkN2YwMWE3YjY3MWVjMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjYTljYzMyNjgxY2JmNGQyMzkyNjg5NDQwMWQ2NzNkZmRhNGVjOTg1MzUzYzViZWRjMjJiZDE0ZGJmNzczMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2YjBiMDZlMmY1NDdlM2FmMTVlNTExOTJiZjllMGUzOTRlZGFhZDhjYjM3MjI5MzkyM2YxNzZlNDQ0YmEwMzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxOTY4ZjRlMTY2ZDIzMmRiYzgwYmNmMGFhNjkwM2U5YzVkZGVkZTI2ZDliZjQwM2YxOWRjNTMxZDZkZTU3YTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_becf7465a592451ebd4d40d99e01db36",
+      "statement": "DELETE /wikis/{id} returns 409 with \"wiki is still running\" unless the status is terminal (done/failed/cancelled), and on success removes both the SQLite row and the whole jobs/<wiki_id>/ directory before answering 204.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L219-L227",
+          "version": "repo-lines-v1:sha256:eec47ad246bc29d8b4aa9b806c08a1fcea6f52990ee2ba036e994cc56cd5ecad:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk2MDdjOWRlY2E5MDBkZmFmM2JiN2M4OTNhNjlmYjI0ZjkwMWE5OWFlN2YyMzBiN2FkNGM4MGQ2MDU2YjViOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTIxOGMxODBiMzA3MmI4ZmY0MjY3ZmM0ZGVmZmFmYjA5ZDg1ZmE2MWQyYzU3YmNjMDIxZDI5ZDBlYTZiZjk2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTRlODhmMjJkM2ZmNTg0ZTMyMzZkODgwOTU1NTdlYmZmZDlkNDMxYjk4MmQ5ODRjMTQwOWYyMDIyODI3MDkzOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTM3NWUzMzVlOTZjNWFjNDE3MTkxOTQ3NzM0N2Q0NTQzODkyNTViYWNiNjY2ZTU0YzAyMDcyYTQ1ZWE4NzQzZCJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L234-L245",
+          "version": "repo-lines-v1:sha256:88f6c3847b55147002f2b456c10162febf605b5b86651c06a05721057a6f3e0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5MjFmZmYxYzVkODZhMTJlMjJhODVlZmZkYTZiNDhhMzY5MzlkNTY0YTk5N2VhNWYwNDlmYmRjZmFmMzRjMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlNWEzNDQ2YzExMjM5MDBkMDU2MzcwOTI2NjIxYTExMWU0NWFjYjM2Yzk1YWIwOTUyOTRmMmU3ZjQxNGZkMjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L174-L182",
+          "version": "repo-lines-v1:sha256:4e39509e915f0a32ac91e003d342b40c0e930550a51a5964ba17d1340a219514:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjA2MWFlOTU0ODA4OWZkZjEzOGVlZWRhNzdhMDg0MmMzZjhmNDliZmI1NjZhYWU1NmI2MDQ2YmQ5ODhkNDY5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjM4NTQ5ZWM4ZDhiZWUzYTQ0ZDAwN2JlMmY4ZDUzNDc0MzUxZDU1NTA5NjUwYzdhZjQyYjY5ZjQ3MmRjNWUzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTA5ODY0MjJiMzRhOWQ5YWE5NjUxOTc4YjlkNGFjMTRkMWQ4ZTFjOTEzMzc1NzU3NzZkZTNjMTQ5ZDhlOGM5ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWZkYTc3MjZmYTE4YWUwYmFhM2I1NWZiMTUyMmJjNWQzNTI3NGQ3OTcwZTI5ZDYzZjE0N2QyM2MyMDdmZWVhYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4547f8df8bbc4ede98c9e33de73d7784",
+      "statement": "GET /health is deliberately cheap and never calls a model: it reports status ok, the app version, openwiki_bin plus openwiki_found (resolved by splitting the configured command and calling shutil.which on its first argv token), data_dir, pool = store.stats() counting recently seen workers, and the passive model configuration snapshot from describe_model.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L373-L383",
+          "version": "repo-lines-v1:sha256:855d1af3a207312acf05d155a1aceb469da50e2ec7fad74529ce1a4afb0d1414:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiNzIwN2UyMzQ0NTI3ZTdkYWQ3ZWZiYTZhOTNlNzg4OWIwNzBkMDlmYWE4ZDA2NmRiOTYxNTBkMGIwOWYyMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlYjAzZmE3ZmZlNDE3MDY1ZTI3NWY0ZjkwN2EwMThhNWY2YTk5NGIwYmIwNjU4MTE4MmFhMDQ2ZDc3NzQzNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmYTc4MDA3OWY5OTk4NjhiNWQ2NWI5NWI5Njg2ZTAyOGU4YjBmNDZhNGIyOTMxODNiNmFiM2Y0ZjZjNTU0YjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMTU5MWJkNDEwNTEwNWUyYjg0NmZjYjlhOGY1YTVmN2VjNTVhOTMxOTcxMDc5MGUwMGVhYTk1NDU3MjZlZTYifQ"
+        },
+        {
+          "resource": "repo://app/routers/health.py#L17-L35",
+          "version": "repo-lines-v1:sha256:00cdecd70f96ce7df0b11685895796c2035b236c99ce2079c121d2b1580a7003:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0ODUwMjY2YTU1MDg3YjlmZWQ5NjZhODBjNjdhNDc0MTM3MjBlZTJkNTMzYWIxYTAxNmZiZDk4MDE2NzFhMDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE1MDVhZTg4ZDMwNDc0MjE0ZDJhYWM1YmQ2N2Q2YWRiMDc4OTMyMDY0MmQxMmYwOWJmNDI1NGI0Y2Y0MmIwYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiZDE4NmIwMzg4YzA0YmQ0YmUzNjlmODU2NmJhYmI4MmYxZjY5ZGU3MTllYzc2MGU4Mjk1NDhlMmM2Y2U2YWEifQ"
+        },
+        {
+          "resource": "repo://app/services/model_status.py#L128-L197",
+          "version": "repo-lines-v1:sha256:b9eb0b79793a2a68acece2514f09b664b743dbd9cddac9fa30bc7981858dda41:eyJzZWxlY3RlZExpbmVDb3VudCI6NzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiZWEwOGYyN2ZmMGY4MGU3OTA2OWYzZjc3YjIwZDQzNTcxZTU0ODc5YzRkNjA5M2FjOTc5YmU5ZTgxNDY4MjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY0YTNiYWNjMWEyMzI1ODFlMGI4YTE2NzJhZjI3NDA0ZGY2NjE3MmVkYjlmMzRiNmU1NzJiMGYyZTBjZmZkZjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhYzM5ZDU1YjFjNDA5YWVlN2MzMThhZThmZWU0ZjEyOWVlODM1OWViMjczNjU3NWJlYmI4MDcxN2E1Mzk2OWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d356e3ea260a4fc8a7d68cbd96904f41",
+      "statement": "GET /health/model runs the active probe through app.state.model_cache.check(force=...) and maps the probe status to HTTP: ok and unsupported return 200 while not_configured and error return 503; the JSON body always carries status and detail, and provider errors and endpoints are redacted so credentials cannot leak.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/health.py#L38-L49",
+          "version": "repo-lines-v1:sha256:c5da0da887acb4ce4093ecfe947b660bd53146c94607e3c9599c807fb9ce90cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxY2Q5OWE1YTFmOWM0N2YzMjg4OTcwYTI2NWVmM2QzNDg3ZDYzMWJiNjY2ODNkN2QxYTRmNzViNmI0NTM4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3MTYxODdkMmIxMzgwZTA4YjRmMzQxYTdiYjE4NTk1MmVhYzUwYThmYjYxMDAwNWI1MTg0MGE3NjdkNGRmNmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRmYmQwMDkzMTRiYzI3MDg0MTY3MzRhMDJhZTVmZjM5YTFlNDhhMDUwYmU5MWY0M2IyZmFhOTIwMDJjNjJiZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://app/services/model_status.py#L491-L527",
+          "version": "repo-lines-v1:sha256:963af1422bc48e9d19cf9966440d7224abc0e5505fd07839e2e464653896b730:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2NDY0NTQ1MTA4YzQ3NTc4OWMwZDQ2ZTI2YjFlNDYyODhhOTI1MWZjMDM5OWM3OWQ2NDA4ZjRiYjUwMjcyOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MmY5Njk1Yzc0NjdjNzQ3NzNjOWNlN2ZjNDI5YzVkMGQwZTQ4N2YzYzUxZDE1ZDY2NjhhM2QyNDA3MmJiOTUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3Y2E2NTIyYTZiNDllNzE5ODJiMzE5OWU3NGM1MDE4ZWVmOTBhYTI4OTE2YTdmMzJiMmI4MWIyYTViYjljODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_model_status.py#L129-L145",
+          "version": "repo-lines-v1:sha256:3520c5bbe961b5f0f86cdf7bb0c6d5c44a90820b7fea73b1b9cb6dcd965526c2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5NDQ0N2FkM2IzZmNlMWRlMWUxN2QxYjE5NzExYzliOWNlNGUyOWFlMjdlNjQ1NDQwOWVhMzRjN2VkZmU0MzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzZGFiNzIzNTc3MDNhMTExNDlhNzMzZmQxOWIyNGNlZTkzNGI3MTMzNWEwOTgyNmYyY2JlNzZhNmI0NTk1MjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwYWE5NTk4NDE4YjRlZGZjMjZmODlkODY4ZGQ3ZGEwMzUwNzViNjAyMTAyZWQxNTA3MmMzYTNmY2FmNjVlOWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwZDI1OTcwOTEzMDJmMzE2MzFkZDliYWMwYWJjNDU4NTM5M2ZjMWJlZjJhNzk2ZDdhNDhhZTQxYjJjYjA3MjUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_70b2fd05d84a4226b22556c06dbb884e",
+      "statement": "ModelStatusCache serializes probes per app instance behind an asyncio.Lock and reuses a result for MODEL_CHECK_TTL_SECONDS, returning it with cached=true; force=true bypasses a fresh cache entry and re-probes, so concurrent /health/model calls trigger a single upstream request.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/model_status.py#L384-L412",
+          "version": "repo-lines-v1:sha256:6acb8775663b0af71dabe830c8083adaa360b6f042c8f134307d052cae807d21:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNDhiODVjMDM1N2VmZDU0ZjlhMWVlZDhhMjRiZWM3MWZkZjU5YjY4ODFlODM4NjQ5NjFhYzhjODZmMWViODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxYzczNDI2YzQ5NTc0NGVhZWYxMzEzNWY3OWEyNDdlZDYwYjZhNTNmNjdmM2FkZWY0YWE4NmUwOWZlMjdkZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0YzE1NWEzMGZiNTM3NjNmZWFmYjlhZTE2Y2Y1NTQ2OWRmOThjYTU0OGI0N2ZmYjZjZGRhNjIxYjI5ODVmOTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkYzNkZGE3NjkwZDgzOTJkYmVkNTU0YTg0MDNlODgyNjFjYzQ2ZDkzYjc0MzZiZmMzY2RjYjZhOGU1ZjY1NzkifQ"
+        },
+        {
+          "resource": "repo://tests/test_model_status.py#L102-L126",
+          "version": "repo-lines-v1:sha256:61b7a3f5846f75010e59d905f5b68cf1cdc1277626cd9fd51b8bff2d75b78abb:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyNDNmMGRhNmRhMTkwYjA2Yjk0OWE2N2VlMjhkZGE4MzAxNzM3NWVmZThhOGQxYWI4MWY0MWQ3OGIyN2YwZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3ZmZjMGQ0MTIzY2I4NjdmN2Q0ODUyZDA3NTc0Y2I1NzMxYWQ2YjJiMGE4NmQxNTc1ZGVmNmE5YzIzM2M4MWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmNGU5ZGRkY2VmZTI5MzI4ZTRmMWQ0YzU0M2ZhNTdiYzBhNmQxNzhlNDBjYTgyNmRlYzFjYzk4ODZiYjJiNjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4ZWFlM2YyZDkxZjdjNWRiMjAwNGQxNjEyNjUzZWEyNmNmOTE0ZTE2ZGJjYWRiZDFmYmQ1ODA0ZWNlOTQxNjAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_579504d2c51d46a282ba0adda0d8e395",
+      "statement": "The request/response contracts live in app/schemas.py: WikiStatus enumerates queued/fetching/generating/finalizing/done/failed/cancelled; WikiCreate requires source: GitSource and constrains language to 2..32 chars, concurrency to 1..8 and mode to the literal auto|init|update; PushOptions validates the target branch name and a non-empty commit message; PushResult.status is one of pushed/no_changes/failed/skipped. The /wikis/upload form fields reuse only part of that contract: concurrency is constrained to 1..8 and mode to the same literal, but the language form field is a plain optional string with no length constraint.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L98-L104",
+          "version": "repo-lines-v1:sha256:4e93ed77eae063aebe29b52605d406afce7fbf79856fdf07df8edc39b24e9942:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjc2ZmM1NDVkMzZhYmJmMDY0ZjNjYzEyYTUwOGQzMzYxNmJmOTE3MmIxZTAxZGM3NTU0YTg1MjM4NGFmNjE4MCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTQwYmM1MzdmMjg1NjE0Njk2OWVkYjUyZWNlZjc3YzQ5MGMyNjA5ZDA5YjcyZGE0NzAzYzI3NThjNmY5MzNkZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjY0MjYxZDE3YjViNDIwNTExODgzOTU5NWUwNGE1MTE4ZTkwYmU3ZTEzZDZlYzUwNGQ2OGJlZTI2MWMwMThlZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWU0ZTI2ZTk3OGNiNTUwYTJiNWM4YWFiMDM3NTcwNjdjNmU0YTkwMzExYmM0MWFmMmJmNTk4Mzk1NzJlYzhlOCJ9"
+        },
+        {
+          "resource": "repo://app/schemas.py#L13-L127",
+          "version": "repo-lines-v1:sha256:a12788de8b68ccbd21dc0667baa7cf4391c93113bb8adc6598d05a0595bea711:eyJzZWxlY3RlZExpbmVDb3VudCI6MTE1LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiI3NjRlYjVhODBkZmFlNmFjMmY3MWI2ZDQ1OTQ1NmU1YzJhYzU4MDI2NGEyZWRhMjY4NzNjNWYxNWRlNTkxZThiIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiIzMGMxZjE4OGYxNDJlZDdhODI0NjgwYjIwNzE3MmM1NTE5YmM2MTRhNDhmZGE3Y2YxNjdlZGI4ZGRmNzk5NTZjIiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiIzNTBjNjBlYmQxN2U3MThkMDQ4Y2I4YjVkYTA0NGZmZjJkZTg2NjdjNWYzMTZiMDhjYTQ5NzJhZDNlOTk5MjgyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MywiZm9sbG93aW5nQ29udGV4dEhhc2giOiI4ODcxMjY5OTYyYTVlODFiOWNhNWVmOGMyMTRjNTM1NTcwYmM3MWNmMDMzYzdjYjI4ZDQyNTk4MDM3Njk2NTdkIn0"
+        }
+      ]
+    },
+    {
+      "id": "claim_64600c17907a4f95a56e9f9d4f2a70cf",
+      "statement": "wiki_to_view is the single mapping from the internal job record to the public WikiView: it redacts git URLs and drops the stored token, renames claimed_by to worker, coerces attempts to int, re-validates the push/push_result JSON columns into PushOptions/PushResult only when they are dicts, and exposes filename with an empty source_url for upload sources.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/util.py#L14-L16",
+          "version": "repo-lines-v1:sha256:b8bc8c8967582abe2bfbc8d2612714192226cccd2e9af60ad1b791210bd0d441:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjA1MTQ4NWU4YTM0MzgzMTY4OTEyODNjMjY1MjQyNThkMjJhMjQ5OTQ1NWE1ZjZlNWNiYjkyMDU5Yjg0N2I3NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTBmODkzZDU2ZDFjNjUzMTc0Y2NhMGJkZDIwZjcyODU4NjdjZmM4ODBkN2RiNzE0ZTVkNjQ3MzBlY2Q5ZTZmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI5YzBhZjI4MGE5ZmUzMDNlMzU2OThlZDk2N2ZjNjE3NmJkYmUzMzI3MTJhYjFmMTc2NzI4MTBjNzg5NzcwNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTU2YzVmYTVmZmY0ZjVkZjE1MTVkMTViYzAzZDAzZDE5Y2IwMGQzYzQ5ZTU4MTkzNmE4YTI1MmNiNDU1YTI2YiJ9"
+        },
+        {
+          "resource": "repo://app/schemas.py#L159-L197",
+          "version": "repo-lines-v1:sha256:edc4334c6bdc38a700b02305abd985a6a8fc0430daf5f4ac682be6b0dc206ff5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMWE4OGVlNjZlOWJiOWRkMTM5NzI2MjQzOGU3MDc2MGZhNzFjM2NhMDFlOWY4NDNkOGQ4MjY2NWEyNmRhYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNDA3NzcyMzJiMWQ4NmFiODM5NmYwYzU5N2Y1MzkxMWQyN2EzOWVkMjkzMzQxOGVmZGI5YWRlNWI1YjIxNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkMWNhOTgxNzZmOGUwY2FiZjdlYTA5NGVjNTdjODFiMzAyNjY0ZWE1NDA1Y2FiYzUyODg3MWZmNDAzOGZmN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_815e6aaa94424557b1bb608ddfa54335",
+      "statement": "Because the API only enqueues and the store is the coordination point, domain failures never surface as 5xx: routers translate typed store outcomes and IngestionError into 422/404/409/413, and the wiki status lifecycle (queued → fetching → generating → finalizing → done, plus failed/cancelled and requeue-on-stale) is produced entirely by claim_next, heartbeat and complete.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L243-L269",
+          "version": "repo-lines-v1:sha256:25fdf753945a0b032263a0bb88cf92fc75616b0a43aca9352feab12d8ad2e0f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTk3OTE0NzNiNzkxOTIzNzY1MzkwN2IwMmM2ZWZkYjg5NzU5YmMwMjAzYzRhZWE4NzNkMGY4OGU1YTQ3YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwMjEzODY1M2EzZDVlMWU3MDVlMjBkN2ZlMWExNjZlZDk3N2Y0NjJlMDkxOGUwOWI1N2NjNzVlN2U2ZTQwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMDQ1ZDY2N2E2ODBmZWRiN2ExMjUwN2JjNzIxZTEwNzQ2YmIxNDgwY2ZjNjExNGU4NDIyNWQ4MDY5YjM0NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxYzhjOTg2NDg3NTg0ZGNhOWY1ZDBkNjNlMmU1NTljY2IyNGI4ZWJiZmJlNzcyNzNkN2FiZmNiZWM2YzIzZjkifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L30-L32",
+          "version": "repo-lines-v1:sha256:dfbc00a6df1905a8666225f97919ec04e647b1fb86eef5be70f31886fe3f35c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmFkNTg1OTMyZmUwYmVkNTUzNGI1NjQyMzM0NDdjN2QxNTZhNWM0YWQ0ZmZmYTRjNjllMDI2ZmVmOGZjMGZkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTdkMGU5NGE1Y2ZhNzFiMmMwMTQzYmVmOWI5YzBlMjdhZTJkYjdjYjdjYzBkYWIxZTMwYjc1MjhiN2ZiNjJmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDhlM2FlZjJjM2UyOGY4ZWE1MTRmZWNmODE4MzkzYTBmYTE4YjVhYjI0MzAxOTg1NTg0OWFkZmYwOWY4NDYyMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzIxNTZmMjE5Y2NmMDgxMTgxMjI0YzAxNDlmOTRmYzQzMjNlYWUyZjM2NTEyYjNmZDcxZTJjNzY0YjNjYjYxZSJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L78-L130",
+          "version": "repo-lines-v1:sha256:9cd5bbade63fb0982e854da9b4fda48ab880eabddaf5d8f9c070936656600ec1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ZDMwZGZmZjk4OTQyODU1MjViYjgwM2Y1YjljYzMwNjI2NjMxZjNmMTM5NzI3MGY2NDg5Yjk0NmE3NjI1Y2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4Njg2ZmY2ZmVhODVhNmRjMmEzZjg3MDgzNTk2NmIzMTBhNmUxMzRiMzUzNzExODE1N2JmMWRlZWI0N2ZhNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhNDVmZjFlZGJlYTY5OGEyOTZmZTY5OWZmNjllYzk5YmNjZGRlMDZhZDI5MmVkY2FkODE3ZDhkMmQxMWJkNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1M2Y4NGQxOWFlMTg5MWQ0YzRiMTc4M2JhNTdkNThkYTRhMDMyMDk4ZWU5NjZkZTUyMjVmZmJkODNjZjBjN2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f6edf584da1a42e69a19a38f9b03c78f",
+      "statement": "Settings in app/core/config.py directly change API behavior: MAX_UPLOAD_MB bounds the upload stream (413 threshold), JOB_RETENTION_HOURS controls startup purge of terminal wikis (0 keeps them forever), WORKER_LEASE_SECONDS and WORKER_REAP_SECONDS control stale-claim requeue, RUN_LOCAL_WORKER decides whether a worker runs in-process, ALLOW_LOCAL_GIT enables local/file:// sources on POST /wikis, and MODEL_CHECK_TTL_SECONDS/MODEL_CHECK_TIMEOUT_SECONDS shape GET /health/model.",
+      "evidence": [
+        {
+          "resource": "repo://.env.example#L27-L48",
+          "version": "repo-lines-v1:sha256:9eab734ced1d566520c593832a0ca8a4856ab722e8075f80e5005a353f19e835:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2YzJlOTIxZTNlZDI1NmY4NjRkMWYyMzhkMWExNDVlN2M1ZTQ4YjZhNzIyZWQ0YTJmZjRhMWRmNmJjMjViMjciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVhNDE0MTY3ZGZjZmQyYzIxNTczNjdjNDUwNGM0MmJjYTE0ZDVjOTBkNjZkZDdjNzA2YjBjNjg5MTU2MDMyZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRiNWM1MjBkNmZkYTU4NWQzYWE5M2QwNjgyMDQ2Y2QwZDQ1YmY1NDEyYjJkZGIxNmVjMzE4ZjE3ZmQzZjEzYTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY1MmM1MjM4NmU5ZDNhNGQ1NWU3OTVlOTlkODgxNTk3NWQ0MTc5ODJlODRkNzI0MDc0OWYxOTYyZjNjOGMyYjEifQ"
+        },
+        {
+          "resource": "repo://app/core/config.py#L40-L82",
+          "version": "repo-lines-v1:sha256:5e95f65dec95ff07b9313482c7e67da6b62b5c2029d7cfe579a6880491164892:eyJzZWxlY3RlZExpbmVDb3VudCI6NDMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4YzkzMWNhYTE4ZjdlNDE0OTk0ZjllZDQyNGY0Yjk0ODI4OGUxNmM3NTYzZGRkNWM1ZDA3ODM0ODFmYjc4NWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhMTQwNTdhY2QxMDM2YTNkZjRmZWI5MGU2MzI2N2YwYTRkZGUwMTc5ZmFlNWIxZjNkNmE2ZWQ2NjU1NjA4MzUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhZGU1ZGU0ZjA0YzM1OTA3NjZjMGEwNzkyMTVmNzdkZTU4M2QxNjNmYThiMTg1ODU3M2U1ZDE2YjdjMmM3OGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU2YWJkZDAyZjg3MDEwMzZmNzEwNzJjMTRjNTc4Y2RkM2Y3YzgzZjAzMmM5Mzg5OTRhZWMyYTZmZTM1ZWJlNTMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_783806a1f388477eafee92bbba5179a0",
+      "statement": "The service is designed with no authentication on the API — it is intended for an internal network or behind an authenticated reverse proxy — and the container healthcheck probes /health every 15s, so /health must stay fast and model-free.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L47-L48",
+          "version": "repo-lines-v1:sha256:ec4acfa8b05caebe9a402e3a4c8672e10b76fea43cbf5e62532ee67f4ff496d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjAwZTZkNzhjNWRmNTk1YjljYzJiNTI1ZWFmN2ExYWJmYzIxZTA0M2I5MzFhMmNkNGFlZmU3YWIzMTIwNWYyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmFkYjQwMjUwOGZlNGRiYzY5MDM0YjRjYWQwM2U2MzczYzA2MGZlZTE0OThmMzg2NGIxY2UzNDFiN2E2NTc3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJkNDg0ZjZmYTM0MzczNGIyMDdkMTQ1ZjkyM2E0ZGZhZmRlM2NhMjVlOGJkYzIyMmYwMGUyZDY0ZGVlYjEzZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjYzZjczOGU2NDRkNTllNjVmZTg5MDg1NGJlNTBiYjQwOTE3MjhhMTViOTk1ZmE0Y2ZiNTY5MjY4YWU5OWQ2NiJ9"
+        },
+        {
+          "resource": "repo://README.md#L405-L408",
+          "version": "repo-lines-v1:sha256:3f8d51a45a0503f38926255d553fe883f9d8e7865d2f09015d5769d22f805f61:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2JiODAyMTEwZWU0MzExMTBhMjc5ZjMwYjI1ZjQ4ZGU2ZGMyNzE4YTc4OGU1MTRmYTE0MTdjNTRlZGVmZTc4NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzQ3ZGJjMDBkOGQ1N2RhZjFhMmYxYzI2NTVlMTU0ZjBiNzgyYWRjYjFlMjRlZjMyYWI2OTIwODAwMjMzNmUyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjBjODE5ZGU1ODE0YTdlNGFlMDMxNGM0MjVlOTllMzVmMmViODVlZGFkYmNmOGYyNjQ2NDNjMDIyNzZhMjQ3ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWNiNjlkMDIwY2M5ZWU2OTRkMTQwMDMwY2RiMWU1ZTBkZjlhNGMzMGUxYWMxNjM0NzIzNTVjNzBiMzRhMzQ5NCJ9"
+        },
+        {
+          "resource": "repo://app/routers/health.py#L17-L18",
+          "version": "repo-lines-v1:sha256:23c50b165ce5d5326fbd5c6e607cf939ae7680f13edf1fa88bdc34a30ba93114:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDQ4NTAyNjZhNTUwODdiOWZlZDk2NmE4MGM2N2E0NzQxMzcyMGVlMmQ1MzNhYjFhMDE2ZmJkOTgwMTY3MWEwMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjkwYjFkMzRmZTBlZDBiYmJlZTMyZTBiZTRhNTJmZjhkZWMzZGNhZDFlMzlmYjcxZGUyODdkMjhjZGY5MzgyYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTUwNWFlODhkMzA0NzQyMTRkMmFhYzViZDY3ZDZhZGIwNzg5MzIwNjQyZDEyZjA5YmY0MjU0YjRjZjQyYjBhZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2Y5YTljZWM1OTM4YzkzYzI2OGE4YjhiMmZhNTU2MDA3OGY2YTA5MzUxYzU3ZjVhYzcyOTcyNDA0MWI2MTg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2129bd77e78c4f0ab0b1ce8f44171d83",
+      "statement": "The HTTP surface is covered end to end by tests using fastapi.testclient.TestClient with the fake OpenWiki CLI and RUN_LOCAL_WORKER=true: tests/test_api_wikis.py exercises 422/202/404/409 outcomes, polling to terminal states, restart persistence and crash resume; tests/test_health.py asserts /health returns pool.workers == 1 and / points at /docs; tests/test_push.py covers the router-level push validations and the push_result contract.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L44-L67",
+          "version": "repo-lines-v1:sha256:73671faadb9e917110bb4795fccdd69a1bf2b3bfbcaaef389b5d977cdb57e109:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5MTczNDQ2Nzc1NDNhMGE0YzY1YTdiMmE2YWQ0ZTAyODg4YmVjNzBkNDUyNjgyMWNiZTI1YWJlMzFlMTAxMDEifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L23-L55",
+          "version": "repo-lines-v1:sha256:764760a6e6fd96811807dafbd2198fd875043411dabd16d6363b30a10d278d5e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwM2Q4Yzg0NjdjYWI3YmJiMTg5YTI5OGIyOTUxNGFkYTUwZGU4ZjEzMjYzMDBiYTJiYjhjYTFlZDc2NjQ4OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjliOTNmZjY3NGE1MDMxYmIxYmNkYjQ3MWIwYjBmYmFlMTY0ZGNhY2YxZTdhZDBhNzJiOGVmNzVlYTgwMjI0NGEifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L259-L304",
+          "version": "repo-lines-v1:sha256:c06ef9156b837b391d5652833d58fe4ececb0c4088bbd463ed5b057bfca309b4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNTY0NTYwZjRmNWMyOTFkMTE3OTZhMDZhYjhiNzhkYzUxOWFiNWZjODE0ZDczZTA2ZTMwNDUxMjBlMTRkOTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNTdkNDAyYzUyYzBmMmM3ODQ4MzAwNjI5ZGM1ZDQ4ODk3MDdmYjEzYTJlNWJhMjUwMTUzYThhOTk3Zjk2NjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzN2ExNmFiZDE5YmYyZjQ4NThhMzUyMTIzOWEwYmQzNGQ2YjUzZGY1M2ZlYmVhNmExNThhZDkxYjk3ZjA5NzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_health.py#L6-L17",
+          "version": "repo-lines-v1:sha256:f2a13726e1c51077b5ec772df0867b0e6c036a36720d7a9ed2b52720ab0b1ed7:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMGQ3Yzk4Nzk3YTQxYzg0MGZkYmE1ZTNkZjdmNjg1N2QyZGEwYTE5YTk2OWQ1YTEyNDU1M2VmN2JkYTk1MDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyOTUxNDkwZDg3Mzk3NjJlNDFkYWE0YTA5ZGRiZGQ4MTViMDFlNGI1YzIxYjhhMzlmZTdkODY2YjllMjM5YTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkYjQzNjM0NTNhNDU4MDA2ZWY4MzY3YWYyZTMxMmVhODU0NzY3OTBjODQxODViN2ZiY2Y1OTY0MDI3ODk0ZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgzZjE3OGQyODk1Y2UzYTllZjgyYjk0N2RkMDUzMDlhYzBkYzkwMzY2MDQwY2U4ZGZmOTM1Y2JlYTU2NzEzNWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2ca713ce4fd64d97837eab42fa847510",
+      "statement": "Every {wiki_id} path parameter is resolved through JobStore.get, which rejects ids not matching the 32-hex JOB_ID_RE pattern, so an unknown or malformed id (e.g. deadbeef or ..%2Fescape) yields the same 404 \"wiki not found\" without ever touching a filesystem path built from the id.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L175-L180",
+          "version": "repo-lines-v1:sha256:d56d7e4fb381791a79756c447dfcfd0bfe6d3bc05f22a3f192d91d414684ec9c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzNhY2E1Zjg0NmQ2ODkwNjBmZjA2Njc4OTI4MDViNzRlYTVhYzg5YjdhMmVlMWEzYTMyMjE2ZWU0MjYwY2VhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWQ3M2Q3ZjFlM2FmMTNkN2YxYmUxMmE1MDRkZmU0ZjRiNmQ0NzI0ZTI0OTk2ZmI3NmI1MzY0MzIxY2UyNzdlYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWIwM2EzOGJmZjZmYmI0YWYxZDIzYmQyYjg2NTAyYzdlNjI4YzkwNTc1NmU2NzY1MjVjOGYwMWEzZDIwMmFiNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjI2NTFjYTNiNGMyOTJjMzZmN2U5OGU3NjI1Mzg3OTgyZTNkY2E0Mzc4NWEzZWE0MWJiMWQzNmE0MmJlMjhiMyJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L28-L28",
+          "version": "repo-lines-v1:sha256:f5002489dbe0d73ffd11c733c489f940349a8fd0c6af2f36642a8e159dfb551e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUwMDI0ODlkYmUwZDczZmZkMTFjNzMzYzQ4OWY5NDAzNDlhOGZkMGM2YWYyZjM2NjQyYThlMTU5ZGZiNTUxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUwMDI0ODlkYmUwZDczZmZkMTFjNzMzYzQ4OWY5NDAzNDlhOGZkMGM2YWYyZjM2NjQyYThlMTU5ZGZiNTUxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjM2ODJhMWFhYjAwOGQ0M2ZlYmQ4MWEwYjFjNTVkYjMzY2I3YzgxMzdmMGNkMmUzNDZiNGU4MWI5YTJjZDM2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTBjNjU3ZDBmZDVjNDUxM2IzODg2YTBlZjg1YmYwYjRmZTA2NmJkZTIyNzAzYjJkMjliMTNhMTg5MTYwODNhMSJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L182-L187",
+          "version": "repo-lines-v1:sha256:09ec86db681771c104a7d0b3c60b931b0fe8d6e43ef3fc3be8e00302f169f279:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ZiMTIwYzZmYTY0OTRkM2IwMWU3NjhiNWE3ZDNmYjYwZTI0OTQ1NDEwNzY1YjNlNTZhMWFmNjRiZTkwYjQ2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTFmZjhjYzU4ZWU1ZDllOGRiMmMwZWJhMDU1ODZlNGJkNmNiYjZjZmI4YzZkZjAxYzc3NjhiOGQwZWI2OWFiMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2RmMTZkNmI1NzZhYWVhM2E5ZTU2ZGViODA3OTZkMTk1YjM1MDUwNTU5MDA1MTBkMWJjZjAwNjAxMGRiMWE4OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGJkMTg2YjAzODhjMDRiZDRiZTM2OWY4NTY2YmFiYjgyZjFmNjlkZTcxOWVjNzYwZTgyOTU0OGUyYzZjZTZhYSJ9"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L185-L187",
+          "version": "repo-lines-v1:sha256:3766f5e9b91af673a58f3c3d664f4800195867fe4206c99f538a4198ae64bc3a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTJjYzJhMDNkOGM5NjQ1OTQ0NDg4NGQ3NjZiMzgxZWMxOTIwOTVkZWY0OWNiOGQzYzBlZjA5ZThhZjVlMzcwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGMzMWQ4OTExMmJlYTBlNzMyYzNhMTJhYzQ1ZTNhODg0YjlmZGY3YmRiMTQ1OTAwNzA1YjhkZDc5YTk2NzViMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTdhODkyNDk1NzliYTQ4ZTZjNzE2NzNmYjVmNjk1MTU0ZDA2OWU1ZGU3MTIwODY0NjFkMWFhNjExZjU4M2RjZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWE2Y2Q0ZGI1MmFmODkyZDAwNzkxNWFkNmI5ZjYzN2VjZDU0NWY3OTc2ZjZmMzJiYWRhMDA0Nzc2ZDZhNmYwNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_424302fac73848c79823b6c3067b9d82",
+      "statement": "tests/test_provider_proxy.py covers the factory fail-fast on malformed OPENAI_COMPATIBLE_EXTRA_HEADERS and the loopback proxy wiring: with an in-process worker plus extra headers and a base URL configured, create_app exposes a non-None app.state.proxy whose base_url addresses 127.0.0.1, and OpenWiki receives that loopback URL as OPENAI_COMPATIBLE_BASE_URL.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L61-L66",
+          "version": "repo-lines-v1:sha256:1f26e13ba3a8480d3dd927e4499211a3b0998948779b995f51bca58d1103fb4d:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjU2OWNiMDkyODBlZTA3ODE5NDVlNDhkNDA0MWJkMmRmYWFlNjkxYWQyZWFiZjVkM2NiYTA4NDZjNzIxNmNhYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDVhMmU0ZDVmMGRkMjM5NmEwZTBiMWY4MWQwMTUyZTU1OTQyZjA5ZjM2MWE1NDAxZDc4ZGM3YzZiNGMxYjAwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDc3YmJiNTk1YjY4MWNjMGNkZTBkOWFlMTJjODNhYmU0OGU5NDIwZTJiMDhiOWFiMzA1NDEyZmZiMTlhOGQ3MCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjI1NDY2YjRkMDA5ZjczMzJlMTk1ODIxYTEwZGMzZGZhYjM2MjdkZjVjNjkxMjFjZTE0YzZkZDFiOTc0ZjU5ZSJ9"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L110-L140",
+          "version": "repo-lines-v1:sha256:b21da69c5b6f989a33839d2cad22f450dd2ca302b9d30887491569d63ae80924:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0NzA1MmMwZTdjNWFjNDU2NjA2NWVkY2M0MGM1ZDljZDYzYjRiNDk5OTJkYmY4YTUzMWRhYjY0M2MyYzdmOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MmE2NjAxMWNkMTQ1ZTYzYTVhMTlhYzNjNTQ1MzJlYzliN2RlYWExZTZlNTdjZDBlOTA5M2Y0NWQ1OWM3MjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5YjgyNzE2NTdjODVjMDI0MWUzMWQ4MDQ2NzQyMjFkNmJlODc2ZmM2ZmY1OTM1NTNlNjFkYTZjN2Q3MWE2MjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L41-L44",
+          "version": "repo-lines-v1:sha256:2654598d38a5e1c3e8a14cd3eb30ef31c717d3ac042621aa1904cc7ee768dac6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDM4MjJiNWNhZDkxNDQ1YzE1YmQ5YWIxZTUzOTIwODUwM2RlMjA4MjJkNTE4MGMzNWFhMTg0NzYzYTRlZDdiNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg0ZDBiMDVmYjg0ZDEyNTE1N2ZlNDg3ODk5ZDQxMmIzNTBmZmY4ODYxYTlkNTk3OTdiOTZhMTBhNzYwN2MwYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjRjNzgyNzM0MzUxM2I3ZjcwNTRiZjZkZWQwMDgzZWQzYjEzN2QwOWNlMWM2YzNiYmY3YTEwMDM0NjBmOGM0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjA2NDcxZmU2ODBmMWJjNTRiM2VhMWM2MWUzOWIxYjgyNjEyNGJhOTEwNWI2MjVkNzQ1YTNlNjNmYzNjZDhmZCJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

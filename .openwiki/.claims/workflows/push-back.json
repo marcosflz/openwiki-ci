@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:e184845d7a08b06c83f84f0d799868fbc06a0d7038350c6bf4bd97a12b7ec2f7",
+  "claims": [
+    {
+      "id": "claim_b2beef6050d04c3e8725658df97f2c02",
+      "statement": "app/services/publisher.py::publish_wiki is the only code path in the service that writes to a remote repository: it runs at the end of a generation (after the zip is packaged), returns the push_result dict recorded on the job, and excludes the transient openwiki/.run.json resume state from the commit.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L116-L152",
+          "version": "repo-lines-v1:sha256:d9f763d7cf269d2aec132e8ecc4113d6fafc749c997b0c1dd77b8648e1b913fd:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxZWNhMmRkZTVkNzcxNTRhN2MwODE3NzM4MmZmZmVlZjNhNDhmNzczYjBhMjNmOTExZmE0MWRmZWY0YjJhOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDI0YmU0OTkwNmQxYmIxZGY1ODg3Y2YxNTdlMWZhNTMwZDVkYWI5ODYyZmIzMWQ0YmQ5OThhZDI0Y2IxNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyMGZlNDljY2MyZDM4Njk4OTUwZjE2OGM3MTNlM2Q4Yzk0ZmVjODMzMWEzMzE2MDNmMjlkZjJjNjk2MTdmOTgifQ"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L27-L106",
+          "version": "repo-lines-v1:sha256:a2d13b444e940888429c24f0a6a804a1b40ed5fb012eb7aa89402186e0c3cfa5:eyJzZWxlY3RlZExpbmVDb3VudCI6ODAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBkODFjNTEwZGY2YTc4MzEzMmQyOWMwOGJiNWVlNjMwNWExMzdjYjUyNmJlMDVkYTk0MGVjYjgwNGZlZjRmYzUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBlYjliNGEyNTI0YTlmZmFmMjg4Yzk4MmFjY2UwMWJiOWZmZTBlMTU2NzhlMTM0NDUwNGNlZjc2ZDY1NzE0NDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzMGNhMWVjMjZkNjQ5ZGYxZGE3NjgxMGQ5MWQ5MWIwMDUzZDI2ZDRiNmYzZTljNTNmMDJkOWVhYTczNDU0ODcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c64ed53ce42843bb87c537a4c1122e24",
+      "statement": "The push block in run_pipeline runs only when the job carries a push object AND source.type == 'git'; push.enabled=false produces {\"status\": \"skipped\"} without calling the publisher or touching the repository, and upload sources can never push.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L92-L135",
+          "version": "repo-lines-v1:sha256:ac88f339fdd1948813e77c07803004c07f5c3088d3cb368e89b6c0173afd355d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MzI2OTVmZjkxMTMzNTM5M2YyZWMyMjNmYWE0OWMwZTFjNTJjNDU2YzQ3MmU0ZWE0MzkzYmRkMTNmZDgxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNTBiYTM3MTA1YzZlNmMzYjAyMzg3MTI5NTM5OGFiNmQwYTg1YzIwYzg4MWQzM2RlMTg1MDNiYjdiMjlhMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ0MTYwNWEyNWZjNDEwNjgzNWM3M2Q1OWE4NzA1MzM0YTg1NGRiZTg3NzU2NWU5OTcwNjgyMDk2OWU4MmM5N2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4Y2EwZTQ2MzM0N2I2MWYzM2E3MzdjMjJkYmUxYzdhOGI0MWE0Mjc2YTEwZDI1MDljZTIzMTgzMjc0NDM1MmYifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L127-L150",
+          "version": "repo-lines-v1:sha256:5887d8b5e8da2ee746ca092a4afac67b7cafee1bb41cd56f00073ce53cb2d5a8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhMjlmMzllNDdkNGJhYjgyNTEwZGVhYjcyYjU4OTYzNjNiMGMyMjcwZTA2ZGM2MzgzZDM3NzQ1OTZhNmZmNjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkOGMzNTc5NWI5NDM0NDY5YWUzZmI3MWNmNGRhMWQ3MTM2ZDNiNmE0ZGMzNjc2OGZlYWNlZWU2YTc0NDNjNDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwM2I4M2RmMTc2MmEyYjUyOTAxZGZjMTA4YTA2MDkyMDVjNTdlOTg2Y2RlZTBjMGFhMGJjZWM4MDc3ZDk2MjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjM5NDU0Njc5ODA2Y2VjMzgxYjg3OTFmNDg4M2U0M2YwYjJlYWNhMmFiNmQ1YzU3YTc2ODliOGNhY2NkOWJlNWMifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L134-L143",
+          "version": "repo-lines-v1:sha256:7f734c6d34e1833d53c2927c4be0de0ddbea339349670ebb1b622daa3165de46:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkYjZkOGE1NzkxM2RjYTk4MWQzY2I2MDMzMDNjMjkwOGJjMjk0MzE2NWE1OGZhMjQ3MzgzMjlmNWM2MWNkYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2MzNmM2Y3YWUzNGRiODExNjQ2MDllNDRkNDNhMDljN2VjYzFhYjQxODJkMjMyYzE1ZGM4Y2U1NmYwZDUwMzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkYjZjMjFlNzRmOGQ0NWNiZmJmNTMzYjE5ZTkzYjU5MDg0YTBlNWZmNjJmZGU5ZmE2YjRhYjJjY2RlYjhkMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4YjBjNzUzYzdiMzEzYWI1MzZjMTE5NTBjMzg0Mzg4NzM0ZGViNjllMzIyYTYwZDcyNTZjMzE4ZjZmYTgwOWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_39955150adfa492b936e97275dd6ff18",
+      "statement": "POST /wikis enforces the push preconditions as 422 responses before any job row exists: an SSH (git@ / ssh://) or git:// source is rejected, and an http(s) push without source.auth.token (a write-access PAT) is rejected; local paths and file:// targets are accepted when ALLOW_LOCAL_GIT is enabled.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L63-L79",
+          "version": "repo-lines-v1:sha256:184bbe7623afeafa12961fcad457b8cd1172bf290f70762f89636c08a4318dd4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMjQ2MGVhYWQ5NGIwZmMxYjFlZjgzZjI1OWYzNTIyNzI2NDhmZWI0MjgyNGEzMDA1NDIxMDcwNTIwMTQ3OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MDMyZTk2NGQwOTMyMzUxZTVkMTg1MjY5MjgxYjE3MWEzYTA5YjA4YjI4NmU2NjFlYTQ3MDMyM2M4MmViNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMzgwMThkNmYzMTZhMTE5NWYyMjFlOTQxN2M5ZTIwNzMyZDc2NGVjMzhhMmQ2MWUxOGMzYjczNTcxYTg2NTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFmYjI1MjI5MTQwNWYxMzAwMDMzMWQyM2Q4MjQ4ODI2Zjc5ZGQ4MjlhNGFhMTkzYjIxOTIwOTkyYzljNWE1MWUifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L90-L101",
+          "version": "repo-lines-v1:sha256:fae1be078fbb3abeb89a6341950fdb6486494797b133d2de64ac0cb51fc3f439:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNmQwZGI2MTg2Y2Y0Nzc0OGFmMTVjOWJjNTU0MmVjOGY1MTdhMGZiNDZhMmVjNWEyMGZmMjI1ZTU2ZTZlMTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0MGI5ODNkYmU1ZmNhN2E0NTFhYjA5MTM5NjdkYWMwMDg5MGYwZjFiZWQ2NWVmODY1NzI1YzI4ZDcxODg2ZTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5ZGE5MmZjOWE3YTgwNGFmYzFlMDJmNmFhYTBlODQ5MWVhMjFhOWJlNmRjYzg5YzlhNGUzY2Q0ZDMyMzg1NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ0MDEyNDZjMzc4YmI1NmVmNWMzM2E4ZjRhOTM3YTEzMGZjYmFkOWUyMGJiYjNhODE3OWI3MDg2ZjY3NTg2ZGQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45cc16cbc6bb4ee18d9847b63ecb6146",
+      "statement": "PushOptions.branch pre-filters invalid git branch names in the request model (no leading '-' or '/', no trailing '/' or '.', no '..', '@{' or '//', none of the forbidden characters, max 255 chars) and PushOptions.message rejects an empty message with max 500 chars, but git itself remains the authoritative validator via check-ref-format at push time.",
+      "evidence": [
+        {
+          "resource": "repo://app/schemas.py#L38-L85",
+          "version": "repo-lines-v1:sha256:4f043f1f355d3112d006ae70ef8d8545a0ed310a468a89895d73efb3df45f9df:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzYzVlNjc5Yzc5OTQ0NzdlY2JhOTJlYmJhYWZmMzAxOWQwZGE2MDM0MzY0ZThlYWZjMTcwYWEwZWE0ZjVhOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlM2NmY2ViMzNlMDExZjliNjk1MDg4ZTBiM2FhODNiMTYwM2Q2OWRiNGRjNjU4MDNhYTgzNjM1M2U4MWIwZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM2ZDg2MTMxMzg4NzMyM2E3N2U4NDE3NGE0ODcxNGE3YWE3MWYxZGU0YWYxOTNkNGZhMzdjYTI1YzM1NmJmY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUwZjhmNTQ3MDYxNWNhZmM2MWFmZmMyYzUxYWMyZTYyZDE1YTAxYTU2OGM2ZGZlMjNjOGU2YmI1MDNkZGYyYTgifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L104-L107",
+          "version": "repo-lines-v1:sha256:8d296d727e1b60ba9ac59befff9304f9bf55adf290f389bdb7c2c15cd8fb2ee4:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU0ZTU1ZjE3MjE1ZDg3ZjAwMjUwN2I2NTU0MDgxMDUxZjQwMjZlYTNjNGNlNDkzMWQ2ODYzOTdkY2E3MjAzYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYjdjZTRiZDYxYmFlYTdiMzFlZjNkNThlZGZiNWVhOGQwZmM0YTFkNTM4MmY1ODhjNWUyNjkwOGM3ZjZlZmU5YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjhlMDM4NjljNDEwYmQxMzBmZjhmMTU5ZThjZWE5OWI2MDM3ZjY5OGY1ZTNkYjQxNmQ2Y2IwZWFkY2RkYWM0OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTBjNTY2NDgzMTllNDgxZmMzNGNhYTE0NmYwODU3NWViZDQyMzgzMDA0ZDg5OTEwZTMyYzU2YTBjMDJmOTJlMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bc2ebb0b6f9940d0ab0017a292e4cfe2",
+      "statement": "_target_branch resolves the push branch from options['branch'] when given, otherwise from 'git symbolic-ref --short -q HEAD'; a non-zero exit (detached HEAD left by a tag or commit-SHA checkout) raises PushError('push.branch is required when the source is checked out at a tag or commit'), and the resolved name is then re-validated with 'git check-ref-format --branch', whose failure becomes PushError('invalid push.branch ...').",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L109-L121",
+          "version": "repo-lines-v1:sha256:01fcf1dc39bbcdce651f9fee24a03bfd799e527bfe70754c5fd08066a5459292:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc2Y2QwNzYzMzQwMDBhNGM3NjZhYzVmZmZiZDI2YmNjYTViNzg0MzdkZmNlNTI3ZjNlOTIxMDJhZGQwMjFhOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYxMTQ4M2U5ZjU0MzI4M2VmODVmOWM5MDhhZjA0NmQzYjY5NGYyNjIwYjE1MGZkZDdhNDhiZWYyN2E4YTQ3OTEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjRmYmQwMDkzMTRiYzI3MDg0MTY3MzRhMDJhZTVmZjM5YTFlNDhhMDUwYmU5MWY0M2IyZmFhOTIwMDJjNjJiZmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIxZTAxMmFiZDYxODZlZTlmZTM5NWY3ODhhZTM1MjQ5ZTc5ODI0NWQwMDQ1ZjE5Y2EzYWE1NzliNDU0NGFiZTgifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L123-L131",
+          "version": "repo-lines-v1:sha256:79fb0d6e53791d827328bea4b6c99ec225176fef11fb8f3d0e5b3ffd0a1cde7a:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmIwYjQyMGM1Yjg0NzQxZGVjOTU1OGM2ZDcwNjA1NjM0M2FlNzQ1MGY1OTk2NDg0NDI3ZTkzOGY0NzQ2NzRmYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBlMTJlMzNiNzY4MTFjOGRkZWI4YTc4NjJkNTNmZmFjNWFjNDY2MDdjZjUwNjFjMGViZGRlNzFmM2IyYWRjYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGI2MTBlYmRhZmZiYzJhY2ViMzI1ZjY4ZWJiZmQ2NzM0YmJhOTc1NmU5MTA2ZDUzNmIxZDA1MDZlMzEyYWZkMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWRlMmVkOThiNDdmY2VjYTIxNTViY2QyZDkwODE0YTc1OWU3ODE2MDY1ZDA0ZTlhOTU2NTc4ZjU3Y2NlNjNhNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a652ef584b02439c9e3f7751b492a308",
+      "statement": "push.branch names the target ref rather than the checked-out revision, so pushing to a separate branch such as openwiki/update (typically for a review PR) creates that branch and leaves the cloned branch untouched.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L92-L97",
+          "version": "repo-lines-v1:sha256:3f79d1b527b4968110f04f2243659772034043b9e98c55b02bc210eede81a9ae:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzNWZmZGJiZDRlYzAzNTAyYjk5N2IyODgwYmZhNjc3NGQwMWEwYzNkMWQ2OGRkYTI1MzFlNmVlOGJmZWE2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGJmMTM4YTM0YmExMzUzMjYzMzljNjRkZDg2NTNjNzQ2NDFkYTRkM2NjN2YzYzVlZDU5OWY0MmZmZjdmOTdiYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYThmNDUxMTc5NDRiYjIyODQ5NmFkY2JhZTgyMmMyNGRmYzRhMDIzZmE2OWY3YmVkZTNiMjc5MDMzNzhiYTJlYiJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L57-L72",
+          "version": "repo-lines-v1:sha256:79b6270edf24ccf1126b581be3c77cd97a34900db06d07ad6f94c5b1acb960f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0OTk1ZTUzMDA0N2NlZjU3OTgzNmY4ZTllNzRhYjYyZDZiOTcwNTgxZDMxOWNiN2MzZTUzOGExNWQ2ODJkN2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlNDE1NGQ3YzAxNGY2MGQ0M2MyNDc5YTk4NzZiN2NiYjU2MjUwYjNjNjQyMTgyNjg2NWJmNjJmYzFlYTEzZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4NTBhY2JjZjNhYTUxZGMwNjk0YmMyNjE4NjE5M2I2MWNmZWYyZjg4ZmQzNzg1ZjA2YjA3YjM0OGQ3MTJlNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNjA4ZDcyYTNhYjg2NjY0ZThhNWZhNDJkMWM0ZTE2ODg4NzUzYjUyN2RmZDQ2MTM2N2I5ZjY4Y2ZhZDAyNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_26a6f3a52f6d474885fee8ee99a831db",
+      "statement": "_expose_artifact_dir raises PushError('openwiki/ directory is missing; nothing to push') when the workspace has no openwiki/, is a no-op when artifact_dir == 'openwiki', and otherwise deletes any existing <artifact_dir>/ tree (logging 'replacing the existing <artifact_dir>/ tree with the updated wiki') before renaming openwiki/ onto it, so the commit reflects exactly the regenerated wiki including deletions.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L124-L138",
+          "version": "repo-lines-v1:sha256:961068b425013bd0ecc548b1960145856cd7e19397939e0efe457adef2a8f454:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhhMzIyYzNmNTZhOTdmZGZiZmFjZTRhZTFjM2ZjZjQyNmNhYTllNmVlNzFmMDJkMGJjYWRiNjc4MTk1MzU3ODEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhiNTQyZTgyMGM4YThjNTUwY2U1ZjZkZDFlODJlMjAyMDIxNTBiYjc3OGRiOTdjMjJhODU4YWM0MTYzZDIwOWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNjQ0Mzk0NzMyYTJjNGJmZTEwZTY5ZTk2ZTBiNWE5OGM3Y2IwZGEwNmNkMDg2NWY3NmU3NTdiOTExMTFjNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmYjMxY2U1M2VhYThiMjkwMDgwN2EzMDhkNDgwZGM3Y2U5N2Y5MzlmNDk0YjUxOTExNmY1M2ZlYTIzOGUwMjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0ddf46b49f024e13a206b9f1d8200178",
+      "statement": "Staging uses 'git add --all --force -- <artifact_dir> :(exclude)<artifact_dir>/.run.json': the pathspec scopes the commit to the wiki artifact tree (repository scaffolding such as AGENTS.md is never committed), --force stages it even when ignore rules would normally skip the dot-directory, --all also records deletions, and the exclude pathspec keeps .run.json out — all asserted against the remote tree by tests/test_push.py.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L51-L55",
+          "version": "repo-lines-v1:sha256:530c6e0b182d51cc675ca43c94920247b7bbe3f8dbe2195668c3917017fa23b7:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzNWZmZGJiZDRlYzAzNTAyYjk5N2IyODgwYmZhNjc3NGQwMWEwYzNkMWQ2OGRkYTI1MzFlNmVlOGJmZWE2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdmNjg4OTI2M2Y4YjU0ZDZhNWNkYTQxMzE5NTFkZjM5NTllZWIyYjM3NTBkMmFlNmQzNGE5MjdlNjg5MzNhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiN2U1NzgzYWFjYmY3MmIwZDFhYzIyOWFiMTRlNTFkNjI1ZDA2MmIxZmI5MWMwYTU1MmMxZDA1ZTVjNzJkZDczMCJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L26-L51",
+          "version": "repo-lines-v1:sha256:a6adcedc2f9057d3468c5e947ef89212f6373495e319e78328641df4b0c6e3ff:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmZmM2NzZiNDVhNjEyNGJiYmZjMDViYmJhM2Q1ZTQ2ODI5OTI0OTYxZGJmMWU1MmQyZjZhNzA1NmQ1NjU0MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzZGI0OGRjYzJlZmNhMWFlNTQ5MmI0MzU3NDRlODJlNDA4OWZjYjFmNzBlMzI3MzUxOTkwOGMwNDVmNjMwMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE4Mjk2MGY1Mjg5NDRlNDQzOGQ4NzkzOTRhZTk1M2NhYzFjNTBjMTgxN2U5ODMzNDM2YjI5MWEyYWU5OGQyMGEifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L39-L45",
+          "version": "repo-lines-v1:sha256:6b49774911040287841a7d73b3fb17b0629230f0250f473d6e4dccb90a8a747a:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTIwN2U3YjRmMjk4ZGZkNmEyZmVmODE0ZDFlYmQyNWQ3OTM5YzBjYzFhZDdlMzliMGE4ZmZhYjdjZmFkZTIxNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGE4YjQ0YjYwYmY2NTU0ZDk1NjY4ZjMzNzkzMTdmNTY2ODBlMzMxMDJmZjY2NDYwMzQyMzk5OTc3NDFhZDQzOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWE5NGIwZTljMzE5Yzc1ZmYwYmZmZWQ5YmEyNjZmZGNiZjRiYzgxZGI2NDgwNjFkNjRlNTg0NzQ5NDIxM2Q3MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjlhYTdjZjJiYmJkYTk5MmI3NjQxYWI5YTgzNGE4NTQzMzE1YjJlMjg0MTllYTZjZmI2NDMxZjVkNzU4NWZkZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bd4b87185f84ad0bb1e0e871db3b097",
+      "statement": "The commit is conditional on 'git diff --cached --quiet' executed through run_git_status because its exit code carries meaning: 0 means nothing staged (no commit is created, which is what makes a repeated generation of an unchanged repository a no-op), 1 means there are staged changes to commit, and any code greater than 1 raises PushError('git diff failed (exit N): ...').",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L56-L77",
+          "version": "repo-lines-v1:sha256:804f31b71132933a4c3b390e35a5ee76f21ee050bf2f25eefa2a17ed5348307f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJjZDNhMjExODQzNDZiMDhmMGU5YWVlN2NjYzQwMjIzZTViNTRjNzZkZTY2NjUyMWJiNWUyYzQyMWI1MWNjYzgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3OTliZjMzYjFiYWE4MGZhYzk4MmQ0YWI2ODFkNGZmODAxZjkxNWU0YzlmYmFiZmRkMmZmMWVlMDBiM2Q2MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM4NTRjZDczMjNiN2RiOGMyNzhhNDAwYmI2NGJlYTRiNmQyZTcxNDM2MmExNDc0YWJiNWY2NmI3MzY2OWYyZDIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlNTk2NWMwYWVmMjAzZWVhNmZkYmQ2ZTQ5MzBhNDY5MDQyNDA3NzU1NjcxYTQ4ZjE0OWY0ZWY2NmM1ZmQ0YzcifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L75-L87",
+          "version": "repo-lines-v1:sha256:84affda3afbed6d8ff7014f6cf09285fa511b8011a7714681e6383bf8da3fb2a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4NzY2MGRkYjRlODg3NGM0NjViYTQyNzM5MTFmM2NlZjIyZDJjY2NkYjc3NDMyOGIzOTI5OTg5MzU0MWZkY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2MzNmM2Y3YWUzNGRiODExNjQ2MDllNDRkNDNhMDljN2VjYzFhYjQxODJkMjMyYzE1ZGM4Y2U1NmYwZDUwMzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlOWFkZjcyNGQ2ZDQ2MDIyOTczMzBmN2VmNjJmOTI1MjIwMjFlYzkxMTZiZjkwYWZlZjc0OTQxMDdkZDA4NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjNTA1MzgxZjg0YzIyOTNmNDYxNWE1ZjgzMDM0NWQ5ZmVlODk1ZmY5NjA1Njc0MmQ4YjJjNjNmMmNhZjliNTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ff3baaae3e9f494ba4263cc4f8076eeb",
+      "statement": "The commit identity is PUSH_AUTHOR_NAME / PUSH_AUTHOR_EMAIL (defaults openwiki-service and openwiki-service@localhost) passed per command as 'git -c user.name=... -c user.email=...' so the image never depends on an environment git identity, and Settings rejects empty values after strip() because an empty identity fails opaquely inside git.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L137-L143",
+          "version": "repo-lines-v1:sha256:7c3b53ed1f9f18d3546719fc8f90a84203fb21da18be1afd9fa4c1160bf21fb3:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDlkYzY1YmMzZTYzNzBkYjU0Y2QxNTBiNTQ2NDY1ODQzYzJlYmNkZjc1MTEzMjVlZGYwZjk3NmU1ZGM1NDZkOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWUzY2ZjZWIzM2UwMTFmOWI2OTUwODhlMGIzYWE4M2IxNjAzZDY5ZGI0ZGM2NTgwM2FhODM2MzUzZTgxYjBkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMGZjODdmMjE4OGQ5ZTIyOTZmYjFhOWMzYjI2ZGVmMWI5ODhjZWI3MjdkZjI0OTBhMzcxMDY5MTVmMzUzNjVkNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTI4OWRlOWI2ZDU1YjEwYTRkMzg3Y2JlM2VmMjE4MDE1NWRkN2FkZDEzNGE0MmIzZWQ3YTVjN2ZhYTJiNDVlMyJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L84-L87",
+          "version": "repo-lines-v1:sha256:80febd2db4fa79d1bdcdd22efa6380a860beef1dd3c2f36af3ddff580c5b8eab:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjBkYmY5MjhiNWJiNTYyZmE4MGRhZTFlZWE0OTk2NWJmM2RmMmFkNTYwNDM3Y2FhYjM2MGViMmIwYjRjYWY3ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDYzNzEyMGMwNjAzOWJhN2UzMjFmNWUwN2E3Yzc0ZmE2NGQ5ZjdlZTY3NWQ0NDc5M2I2MjJmZjkxOTdhZWQ1NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2QxMGI4OWU5OWEzMDlmNzg0YjI3ZWE5ODZhYTU5MjFhMmMyOWE2YmQyZDRhY2QzODFiZWUzNTk1MjIwNmY4OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDY0OTI3ZGM2ZjdmZmJiNDE3ZjVjZGMzMDA2NGRlMGY1ZTFhOTRkODE3YzcwNjhjYmQ2ZWUxYjEyMjNjYTUwNCJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L63-L77",
+          "version": "repo-lines-v1:sha256:6ca6e23e4aa8e9e8e7efaf2713af4e958099bea4428a6620a698154ef7978caf:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4YjA3NjFhZTUwOGE2YjM4ZjEwZDI1NTNmNGQxOWM3MTM4NjJiYmZhN2FlZDY1Njk5MjU2ODY3ODg4YzUxNTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ3OTliZjMzYjFiYWE4MGZhYzk4MmQ0YWI2ODFkNGZmODAxZjkxNWU0YzlmYmFiZmRkMmZmMWVlMDBiM2Q2MDgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiYzE3OGE2ZDllMWEyMDlhZjEzZTk3NjY4OTdmZTIyMWQ3MzlmNThhMmFiMjNjNmY0OWExMTdiMjEyNDMzM2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjZlNTk2NWMwYWVmMjAzZWVhNmZkYmQ2ZTQ5MzBhNDY5MDQyNDA3NzU1NjcxYTQ4ZjE0OWY0ZWY2NmM1ZmQ0YzcifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L47-L51",
+          "version": "repo-lines-v1:sha256:136b146d10f9eaf81915ff109a321908bec248ccb9e694593e333f84c61c06af:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzJlMjI0ZjEzNmY4YmM4YjgyYjkzMDUwNzA0MzZkYjY1ZmNjMmY5MmY3ZjA2MjJiMDIxZmU0ZDQxY2E4NTJjNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzMzMDdiMGNlMTcwNWJmMTllOWY3Nzk4N2I1YzUxODNhNGI0NTgxOGFhZTc2MWIzMmMwNzQ1MDM0ZWZiMjQ3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTgyOTYwZjUyODk0NGU0NDM4ZDg3OTM5NGFlOTUzY2FjMWM1MGMxODE3ZTk4MzM0MzZiMjkxYTJhZTk4ZDIwYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bcb705eb9cc46ac832d9b0f5e25021a",
+      "statement": "The commit message is push.message when provided, otherwise DEFAULT_MESSAGES keyed by the resolved mode the pipeline passes in ('docs: generate OpenWiki wiki' for init, 'docs: update OpenWiki wiki' for update) with 'docs: update OpenWiki wiki' as the catch-all fallback.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L14-L18",
+          "version": "repo-lines-v1:sha256:e4277b9a04585a6099ee58968950323c09a3ddd0067948f224bc9b894476c94f:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTRjZGVjMzQ0MDQyZjQwZmY0OWQxZGY2ZDRlNTQxZTFhYzEwNTk0YTczZDI3NjUxYTg3ZjI0NWYyNGFiYzQxNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEyY2EzNDVjY2Y3NWJmOWMwODA2YmNlNjk1YmU4ZGU4MDhiNzk5ODQyNTFhN2E1NGQyMDJjZjYxMDFkZDQ1MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTU1ZjNiZmI1MmEwODU2NzJjNmM0ODA4ZTgyZTJiNzM1MTZiNzFkMzJkZTgwY2EyN2I3ZTU4MDIzZGMxMTJjZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTQ3ZTY1NzFmYzdkZmZmOGEzNjIxNTdkZDQ3YTM0ZjliMzY0YzgwZmIxMmQ0MGRlYjBkNmVjMzg2N2ZjYzQ5ZSJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L60-L62",
+          "version": "repo-lines-v1:sha256:bbc178a6d9e1a209af13e9766897fe221d739f58a2ab23c6f49a117b2124333d:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGNiNzU4ZTdlOGMzNjZmZWNkMzgzODNhZTllNjU1MmY5M2VjNTc5OWRmZmFmOWJmMDk1MDBhNDE2ODY0MjU3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUwMzJlOTY0ZDA5MzIzNTFlNWQxODUyNjkyODFiMTcxYTNhMDliMDhiMjg2ZTY2MWVhNDcwMzIzYzgyZWI0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDkwOWE1Mzk0YWVmZmRkM2VlZWE1M2JiMGNkNWJmMjFhYzI0MjQ0NDczNGJkN2RhMzJiNGRiOWFlMTczZDJhYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjkyYzg3NWJjYTNhODUyNmExM2Q3YjAwODJjZDdiNzlmNDQzYzMzMGE4M2QyMTdhYjMwOTUwYjA3ZjFmMjNiOCJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L57-L72",
+          "version": "repo-lines-v1:sha256:79b6270edf24ccf1126b581be3c77cd97a34900db06d07ad6f94c5b1acb960f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ0OTk1ZTUzMDA0N2NlZjU3OTgzNmY4ZTllNzRhYjYyZDZiOTcwNTgxZDMxOWNiN2MzZTUzOGExNWQ2ODJkN2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlNDE1NGQ3YzAxNGY2MGQ0M2MyNDc5YTk4NzZiN2NiYjU2MjUwYjNjNjQyMTgyNjg2NWJmNjJmYzFlYTEzZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4NTBhY2JjZjNhYTUxZGMwNjk0YmMyNjE4NjE5M2I2MWNmZWYyZjg4ZmQzNzg1ZjA2YjA3YjM0OGQ3MTJlNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMxNjA4ZDcyYTNhYjg2NjY0ZThhNWZhNDJkMWM0ZTE2ODg4NzUzYjUyN2RmZDQ2MTM2N2I5ZjY4Y2ZhZDAyNGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0946e430808d4e8187e61c475a2ea6ca",
+      "statement": "_remote_commit runs 'git ls-remote --quiet <url> refs/heads/<branch>' with the auth prefix and a 60 s timeout and returns None (never raising) when the command fails, times out, prints nothing for a missing branch or git_auth_prefix raises; publish_wiki returns status 'no_changes' only when nothing was staged AND the remote tip equals the local HEAD, so an unknown remote degrades towards pushing rather than skipping it.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L141-L159",
+          "version": "repo-lines-v1:sha256:6b38aa1f80ae35783d82a752e5dffd8af421daa939f12a62f7ac2c8d9a0dcd24:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5NDAwOGYwOTQ2ZjQ2NzE3YmNlYzYwMzI0ZThmODhmNDVkMmM2ZmRiNjM2NDE3MzRhZWU4Y2ZkMmY4M2MzOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVlN2M5NTdiY2I0NGZiNjczYzk4YjAwNTBhNzVkMzgwODJkYjgxZDkxOGRlMzEzYTNmMDdjMTIzNTMwNmQ3ZWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3YWNlNjNhZDdkNzE5ZDQ3MWEwNGVjYzU5ODY4M2FkNjMzNmNlZGQwNzYzNDAyMzcxYjM3MjUzMDNiYmQyZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjYwZDhjMzlkMmMwMDFmNDRlMTQ1MTk1ZTA5ZWUxODM5ZGFjZWJlZGYyMzNjMGIzYTE3MjUzOWFjZDFkYTkzZDEifQ"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L79-L89",
+          "version": "repo-lines-v1:sha256:2a82b023d9512a19023e66e1606ee1910b711fdc08c2e00311b21c78df62f94c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVhNGQzMjRlYWJlMWY4ZmY0NmJmY2MxMzhiM2I5NTVmZGQyYzk2ZTY1NzYzZGVjZWUxYTY0YWU3NGZiODBhOGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MjJjNDJjZDE5YzZkMDNkODA4YzQ1MjcyMDU1MjgyNWI3ZWExYzViNDkxYjIxODUxMWNhYzc0MTVjZjlkOWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiZDZiYTIyMTE0NTQyYTU4Mzc3NGUxNDU5ZTRjMmIyMzIzYTc2NThkM2EyNjI2Nzg2NzAyYzhjOThiOWU2MDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU3MDYzZWJiYWRhOTBkZDJjYjEyY2U3MjVhMzYzNjNhMWRmNDJhYWZmZTkyZWRiMTJkOTVlMWJkZjZjM2U5NWYifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L75-L87",
+          "version": "repo-lines-v1:sha256:84affda3afbed6d8ff7014f6cf09285fa511b8011a7714681e6383bf8da3fb2a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4NzY2MGRkYjRlODg3NGM0NjViYTQyNzM5MTFmM2NlZjIyZDJjY2NkYjc3NDMyOGIzOTI5OTg5MzU0MWZkY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2MzNmM2Y3YWUzNGRiODExNjQ2MDllNDRkNDNhMDljN2VjYzFhYjQxODJkMjMyYzE1ZGM4Y2U1NmYwZDUwMzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlOWFkZjcyNGQ2ZDQ2MDIyOTczMzBmN2VmNjJmOTI1MjIwMjFlYzkxMTZiZjkwYWZlZjc0OTQxMDdkZDA4NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjNTA1MzgxZjg0YzIyOTNmNDYxNWE1ZjgzMDM0NWQ5ZmVlODk1ZmY5NjA1Njc0MmQ4YjJjNjNmMmNhZjliNTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cf786213bfdc45c9ba42e557c5f38965",
+      "statement": "The push itself is 'git push --quiet <url> HEAD:refs/heads/<branch>' prefixed by git_auth_prefix so it authenticates exactly like the clone, targeting the URL the job was submitted with (not the origin remote) with a 300 s timeout, and every IngestionError raised anywhere in publish_wiki is converted into PushError so callers handle one exception type.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L97-L106",
+          "version": "repo-lines-v1:sha256:dd10f63679699bce35e3c581dd4288c5c6ac4b75e027b32a31bf9ffaeef96d25:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjZjdhZGQ4NDAzN2RjOGU5M2JlY2ZmZGEyZmFkODQ1OTY3YWU1ODQwOGQ5ZDdhZTg3MmQyYmVjZWU3Yzg1OGYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlOGE2ZDBmOWY0YmQyZDU1ODg3NmIyZDlkOTcwMTY0MjliNGNhNzE4YmEwZjhjMjlhNjNkMTAxYmFhNGI5ODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJiYWRmOTczNTRhOTM5NDhkODcwZDQ5MjNhNjE4YTdjZjI2MjllNTQxMjMwMjQ3OTYyNjNkOWFiNDJkYWFhYjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhYzM5ZDU1YjFjNDA5YWVlN2MzMThhZThmZWU0ZjEyOWVlODM1OWViMjczNjU3NWJlYmI4MDcxN2E1Mzk2OWQifQ"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L19-L20",
+          "version": "repo-lines-v1:sha256:038ba2748a1f94f03d13707234c9dec4c5e806e2da2aeea1fe8ff841afb06912:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWE5MmUyODVjZWQxNjVlNTNkNzc3NDBmOTRjYzNhMjUxYTRiYzI2ZTFkZDE0NThlZDJmNWYyM2UyYTY5N2QzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTNhYmQxOWVjYzE4ZGM1MGUzZmQzZjI0Y2I2MTcwNWU3ZmNkNjY3OTVkMTEwZTYwYTMzNDg3YWRiYjQ1ZjljNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWRmMzBiNzFhOTI5NTZlOTY3MGU1ZThhYjg4MjYyMWU3YzJhNDIxOGI4OWViMDE4MmU3Y2M4NTE2MjcwYTk4YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2IyMjJhODgwZTNkMGIzN2Q5ODg3ZmJjZjc1NzhmOTE1NDZjZDA1MzQzZDA4MTM1ZjFmNGU4ODQ1ODQ5MTgyMyJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L91-L99",
+          "version": "repo-lines-v1:sha256:4234331b80fdfcc8ef05edc07e029f69d1d0e57a785480ed26e245a50de0fc3d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTFjZThkMGYxYmZiOTM0NDIwYmE0MGU5OTllZGYwMzc0MjA5ZGEwMjg2Zjg4YjZkYWU5NzE4MzA1NTkxM2MyNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzUzNTk2NjlkMzI0YTczMDRkOTU2N2RhOTY4OWJmOGQwMGU3YmVhZWYxNjdmZTBiNDc5MDUzOWU1ZDVkMDUwZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDRmMTMyMzgzODhiY2EwOWQyYTM0Zjc5ZGRiYTQ4OWIxMTA4NmE3NGI5MmY3OTg5MGM5MzY1YzhhNTZhYWY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWE0ZjA1N2Q3ZTJjZTQwMzE3ODE4NGQyNmFkYzc5N2ViN2U2MmMyOTUyZGFkNjQ4YmMwNWNiNGY4N2IyM2Q1YSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_27386c9dbc9548a69fa0f6f1038006cf",
+      "statement": "PushResult fixes the four-value status vocabulary: publisher.publish_wiki returns 'pushed' (with branch and the 40-char commit) or 'no_changes'; run_pipeline produces 'skipped' when push.enabled is false; and WorkerLoop._run produces 'failed' when it catches publisher.PushError.",
+      "evidence": [
+        {
+          "resource": "repo://app/schemas.py#L88-L95",
+          "version": "repo-lines-v1:sha256:cd84d51ee49f660f964f7c26ca9b788805b9bc9b6cd30954154249cb42d51e6f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDhlODY5NzI5MjA1NDM0ODRiYzA3Mzc4OGExNWVhYjllZTdjMTc5ODRmOGFkMTBiNTU5MjA2YmNkMTJiZjY3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzgxYjc2ODFmODUyMzUxMTFlOWM0YTVhOWY4YWJkYzg0MDk1NjNhZTU2YzBhZjQ3NjY0ZGFkNGQxZmQwNDNmZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTY1YzkxZDEwZjU0OWY1YTBjMjVhZDA5Nzc4OGVmYjUxZGM5MmE2MGFmMzM0NjdiZDc0Njc4ZjVmM2ExYTg5ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjZmNjkyMTAzOTI2YzJmMWM0NTVmZmJhNGE1YTgxN2Y5OTE2YzJhZmY5N2NhYjViODg0NzViMTAzNDZiYjUyMSJ9"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L130-L136",
+          "version": "repo-lines-v1:sha256:2eec882952182ca0687702a359891b48bd6ed162dc00295777b2cb7d20a3984a:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTlhMjZiNzdlMGYxMmFkYzNjYzcxZWI1YzU4NjAxZmNjOTAwNGY1ZGVhMDQ0MWQ1YWI2MzFjMzE1ZDhjNDUxOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODQ5N2VhMDg0MzA2ZDMwZDIzOTUxMjdhNDFlMTRmODIzNzA1ODcwYWNmNDZhYzY3ZTdmMGFlYmM2M2M4YzIwNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDJmODg3MmNhY2VmNGRhZDRhNWEwMTZlZmI0ZWRhMzMwYTE2YjA2YTM1ZjVmZmMyYzY0MjVjZDcwMjY3Y2I2ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2QwMWQ0Njc5MTdhZmMwYzUyNzNlMTY1Yzc0ZjZkOGI1MzcyZTVhMTQ1NTY2YTU3OTU1YTdkZmE2YjhlZmYzYiJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L82-L106",
+          "version": "repo-lines-v1:sha256:afe091f1f81038b58b2353925546ed70d8d6d56b35ec79b5bae34cad59cc4e74:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA0NGEzMTU2NzM5M2ZjMTU3MDM2NzYwMzM0Yjk4NGI2N2UzMjcxZWFkYjNjZWQwYzk5NDJjMzFjYmQxNThkZjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTNmNDBlMzc4MWViODk2YzgyZDA0NmEwODA2N2ExMWUzNWNkZjJmMWRmYWYyNmZlYTkwYjhkYjY2NzY0MTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkwNTUwNWZmYjU2YjU4ZDI1NjQwOTMzMzU2MjU1YzA1ZDQ5NmVjNWRhNDg3OGUyMjdjNmZiMzE5ODk5NjRmMjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImMzMGNhMWVjMjZkNjQ5ZGYxZGE3NjgxMGQ5MWQ5MWIwMDUzZDI2ZDRiNmYzZTljNTNmMDJkOWVhYTczNDU0ODcifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L104-L114",
+          "version": "repo-lines-v1:sha256:2ab3c748da8bf55ebfd63851aeaa511a278c2605a5dd76d62913146b767c449e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5ZDA1N2VhZmZiYjAzOTFkNzAyNDk4OWFlYTJlZmFjODU0MjgwMzM0ZjBhNTZhOGJlMDI3M2ZiYjZhYTk1ZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxMDM0ODFjNTdkMGYwZGMwZjc2Y2QyY2M4YjM2MDRjNGU4Mjk2ZGE0MTIyYWRkMTllODE3NDVkYzdlMzMxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2Y2IzMzJlM2VmZGE0MjJkMzY1ZWQzMGM4NmM2ZTA1ZDRjOTZhNTBiMzRjNzAyODE4Mzg2ZWRjYzgwNjZmNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNjM0Zjc1ZDQwNDYxZDE5OTdhMzE1MDU0NjQwNzAxZWY2NzNhZmEzMGY2Y2NmMTFkMWE5ZDJkZDEwODljY2QifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_39ce1d51e16048e6a5896a0c825dfc41",
+      "statement": "A failed push is a recoverable, non-lossy outcome: WorkerLoop._run marks the row failed with error 'push failed: ...' and push_result {\"status\": \"failed\", \"detail\": ...} (both truncated to 500 already-redacted characters, and with no branch/commit since neither may be known), while the wiki.zip packaged before the push stays downloadable through GET /wikis/{id}/download and POST /wikis/{id}/retry re-runs the generation and the push.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L117-L125",
+          "version": "repo-lines-v1:sha256:9aeda96f4f9c0943933fe95cdae3dd80ddb1676fad9c81862dcd1887c54a0799:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGY3ZWNhY2Y5N2EzNDhjZTEzYmVmYWQzZjcyMjZkNzVhM2E5ZWE1MzVhMDI1Mjc0MTEzY2RmMjkzZDM3MTg1MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmNkZjJlODVkNWJhMzk3NTBmNTlhZDZhMjViMzkyMWNkNGVlZjZkYmM3YjY4MzFhNTY3NzliOTBmOWM1YWIzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjVjMTMwYjQwNGM5ZjQ5YmQzMzIyMDBlNDIyYzljOTFjZmFhN2I3ZWEwZjAzMDhjZmZkZjA1ODViN2RmMTk4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjYwNTYxMGY4OWY0YmFkYzczZjMyODk4ZWZkNjJjYjYyNTIxNDJmY2VjYTBjMzY2Yzg3Mjc1MGZlYWFhYzcwYiJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L106-L114",
+          "version": "repo-lines-v1:sha256:379793de22536807c39c8e0af83497186d050297848ef09d6ef7b2e01dbd2521:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWQ1NWM3MzU1MWZhNzFkMjE4MDBiYTk0OWQ2YmQyNTlmMzU1MjE4ODk5YzAxYjUzMTk4ZjE1MTQ2ZGZiZTE3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTEwMzQ4MWM1N2QwZjBkYzBmNzZjZDJjYzhiMzYwNGM0ZTgyOTZkYTQxMjJhZGQxOWU4MTc0NWRjN2UzMzFhNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjc5YjdiMTQ3NmJhNWE4NjJmZDczOTU4MWEyNmVkN2IyY2MxNmZlYmNhYmZiMDA3MDJjYTZkOTY3MThmNGU0OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Q2MzRmNzVkNDA0NjFkMTk5N2EzMTUwNTQ2NDA3MDFlZjY3M2FmYTMwZjZjY2YxMWQxYTlkMmRkMTA4OWNjZCJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L110-L120",
+          "version": "repo-lines-v1:sha256:13c3372443119eefe1f71caef7e8d63db3ce87270914ee2799b2d52284ba5a72:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4MzVhYzdiN2Q2NTBhMDA1MWVmM2EwMGYzYmJiYmEyMWZlOWJhNGFlYWM3MDFiMzk3YzgzNjVmMTlmNDQyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwODcwMzI2MDU0YzhkMDViODJkMjU1NTA4MDM5NjM0ZmFmZGZkNjRiODEzMjllODczNWY1MjVjMGExYzJjYjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhMjlkYmQ2OGEwMDk2OWEwY2RmOWRiYzAyZTc4MjY3MGY3NjliODg4ZDRiYTE4ZmY2ZTllOTk1NzgxYmY5MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NTY1ZmFmNWFkOGNmMTk5ODExNjI3M2MxMjQwNDYzMTgxNjRjNjcwODJiMDZmYTUyMjgyZTIzN2MxNTFhZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4d28121c6abd4afb9802f85d16d8ace6",
+      "statement": "The publisher's dict is returned by run_pipeline as push_result, persisted by JobStore.complete into the push_result JSON column of the wikis row, and re-validated into PushResult by wiki_to_view, so GET /wikis and GET /wikis/{id} expose status, branch, commit, detail and at.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L57-L57",
+          "version": "repo-lines-v1:sha256:a7e370fcfc3a5843ffa8e2f33d9604ad9a1e645ec537b5ae6d80cc6cd5d6bcd1:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTdlMzcwZmNmYzNhNTg0M2ZmYThlMmYzM2Q5NjA0YWQ5YTFlNjQ1ZWM1MzdiNWFlNmQ4MGNjNmNkNWQ2YmNkMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTdlMzcwZmNmYzNhNTg0M2ZmYThlMmYzM2Q5NjA0YWQ5YTFlNjQ1ZWM1MzdiNWFlNmQ4MGNjNmNkNWQ2YmNkMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTE0NjU2MGExOTgxNjhlMTc4MWYxNjVmNjQ2Njg1NGEwYWIwN2I2NGM1MmI0NzlmOWNlMjU0YTE0NjkwNWRiNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjA2MjJkMmQ5MzYyMDdmNjljMjEwNWVjZjljN2NjOTc5MmIwYWQ2YjkxMzE3MjMzOGI4M2RjNDllYjY3YTU3MyJ9"
+        },
+        {
+          "resource": "repo://app/schemas.py#L175-L188",
+          "version": "repo-lines-v1:sha256:07aa57a1f4067d4830836ac896fb42d5f4a07c29521fd9887604280700f111bc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1ZjJlOTY2ODM4MTc5ZDk3NTA3MDQyMDdmZjhlNjIwMTdlNDE4MDUxNjU2YzZlNjgxMTI5OWYzY2M1NzM2NDkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg4NmI1ZDY2NzZiZmNlZDc5OTYxODA0YWQ0MzJjNzNjMDkwMGFkOWQ1MmI3ZDQ5NGZlMWNhMzZlMjM2NTNlOGEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIwYTE3NWFiZWY2MDllODEwZGQ4ZGNjYTUxMjIxZWZhMGM1MGU0YmI2OWE1ZDUwMTA5NzZlNjFhNGM0NDVlMGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhNjI3MDBmZmYzODNiMWM0NWQ3ZGU5MjkwODVkZTdmZWI2OGMwZGY2ZTBmNWE2NjE1Mzg4MGVkYzhkZjJmZjQifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L152-L152",
+          "version": "repo-lines-v1:sha256:51eca2dde5d77154a7c08177382fffeef3a48f773b0a23f911fa41dfef4b2a9c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTFlY2EyZGRlNWQ3NzE1NGE3YzA4MTc3MzgyZmZmZWVmM2E0OGY3NzNiMGEyM2Y5MTFmYTQxZGZlZjRiMmE5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTFlY2EyZGRlNWQ3NzE1NGE3YzA4MTc3MzgyZmZmZWVmM2E0OGY3NzNiMGEyM2Y5MTFmYTQxZGZlZjRiMmE5YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNThmZjQ4Mjg4MWUwY2NhZDMzZGE5NGZjMWRkNjNjYzc0YTgyZmMyNjZlYTAxYmE1NTVkNTA1OWZjN2YzNzBlNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTIwZmU0OWNjYzJkMzg2OTg5NTBmMTY4YzcxM2UzZDhjOTRmZWM4MzMxYTMzMTYwM2YyOWRmMmM2OTYxN2Y5OCJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L96-L103",
+          "version": "repo-lines-v1:sha256:88b7a4dfdf5c4c20b03cf589c8dba63735f88dbe6b357a8146df6f158ea8c984:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzg4MzY4NWFhY2YzMDZkMGZmZjRhZTMyZGNlZDRmYmY0MzQ4NmNlYmIwYTdjNmJmMGZkMTE1ZWM3NmUwMzQ5MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUwMzJlOTY0ZDA5MzIzNTFlNWQxODUyNjkyODFiMTcxYTNhMDliMDhiMjg2ZTY2MWVhNDcwMzIzYzgyZWI0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjMwNmMzNjczZTYyNjIxMTE3OGE1ZGExNzVmOTljN2FjZDA1NTBiMTUzNDdhNjkzZDIwMWFjNTk1NjIwZTQ0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDc4NDU0ZGE4ZDA2NDQ4NTM4OGNiYmQyYTIxMDY5M2UxY2EzYzhhZWUyM2FmMTk0ZDM0OGE3NzQ5ZTRhNjZmMCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6fbf2ce068a24adab6f2227e34d2ba3e",
+      "statement": "A retried wiki can still push after a previous attempt renamed the workspace: run_pipeline calls adopt_hidden_wiki(repo_dir, settings.wiki_artifact_dir) before the mode decision, moving <artifact_dir>/ back to openwiki/ for the next CLI run, which is why the push-back rename is reversible across attempts.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L80-L84",
+          "version": "repo-lines-v1:sha256:8462e543e35f269e7d258cae765eebd0792a5a6eff7207f48401c2bc26bc423c:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiN2IzNzNjNGZiOGM1MzgxMTg0ZGM2MWQwM2NkNWIzYjhmNGMzZTUxYzIyNTA2MDZkNWIxZjhkYTNiODA1MGZlZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjljYzlhZmQ0ZWQ5ODg4Y2E1ZmQ2OTY5NTgzZTg0M2YyNDdkMzdkZWNmOGRkMTkwNTU4NzNmMzhlZTM2NTk5NiJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L78-L93",
+          "version": "repo-lines-v1:sha256:242810fd4ec155f4df4d94b394b02dc4d5fea7f8eeae850531f52b14605f5594:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlOGJjMTUwMmNhZDBmMTkxMWM5ODVhOWVkYjAzYWMxNjY1ZWYxZDk0ZGZlY2EwZDNhOGIxMzllNTQ2MzQ0ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1YmM0NzExZWNjYTA0NTBhZmM4MzI3NzlhODg2NzZhN2M2OTYwZmEzZGE1YWY0MTBlZTAyZDFlMDE1MTU5MWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwMGNkODcyYjZmMWE0YjBkYzY1ZjU4MGQ1ODE3ZWUxMTZiMzQzMzNmZDE2MmM5MzYzMjE5NGM3NDUxZjY0YWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4YTNlZDdlMDVjNDQxZDA2OWVmMmI4N2M5MzkyMzEyNzU0YjMyOTI0YmVjYTI2NmJlMzU5M2JlYTEyMjhiYzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1bf636c3f6874b20b807530830d0ee14",
+      "statement": "The push reuses the same source.auth.token as the clone: the pipeline reads it once from the job's source and passes it to publish_wiki, where git_auth_prefix places it in an 'Authorization: Basic' HTTP header via -c http.extraHeader for http(s) URLs only, so the push never embeds credentials in the URL and log lines are redacted.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L139-L149",
+          "version": "repo-lines-v1:sha256:ac0d42208e4c86acf6f996a482ce30a6575982a965906806d81bc92021560f76:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM2M2MxNjU1NGUyNTFhMmEyYjEwYjVlYjc3YTZlNjQ0NWI0ZDhkNDgwZjg5NGMwMjQxNzQ5NTAwNGI5OTQ2MjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1MDMyZTk2NGQwOTMyMzUxZTVkMTg1MjY5MjgxYjE3MWEzYTA5YjA4YjI4NmU2NjFlYTQ3MDMyM2M4MmViNGQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk1ZTQxNjBmNTg2MGM1MTc0MTk4MDYxZmIxYWI4MmRmNDAzNDM0NDUwMmZiNTVlY2EzZTkwN2IxM2Y0YjBmYzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxNDNmMDM2ZWFmYWIzM2ViODgyYmFlNjMxMTNlOGY3ZmMzNGUyN2M2M2ZjNWM5MmM5Y2ZmYjFlOTViNTJmMmYifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L60-L62",
+          "version": "repo-lines-v1:sha256:1bd33f56b13ad0123f72350a49409f7522fc46773cd2a2c73ba537eff1ee7a5c:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNGIzZTI3M2VlM2VjMGE3N2JlMDdkZjM0ZDAzY2Q1MTI1MmRiZTQ5YWE0MWJjMjgzMDVmYmYyNGNmOGIzOTYyZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDc3MGI2MGQxZmI1YjRlOTM3NjIyZmU1YWVjYWQwY2FkMDM3NWVmZTY3N2U2MTY1ODAzNzNjYzU2ZjgwNWMzYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWMwODlkODA1MWVmZDYwODJjZjcxNDQzMDVjYTBiODQyY2E2MTkzZTY1MjlhYjdkYTc3Zjk3NTMxZDI1OGM1YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzk1YTRjYzE0NzhmYjBkODhhN2MyZmZhMTk5MDA3MjNiMjM5YTk3N2ZiNmI3OWIzOGQ2OGZlYTdjMGUxMzY2NiJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L45-L46",
+          "version": "repo-lines-v1:sha256:7fa42be18c73943af061d83e9c1585652d4e764f96e382d392c9bc03e4026519:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I0MWY0NmRiMWRjZWZkZWYwNTc2NmQxYTRmZmMxNzhiNTEzNGVkZTVlZDZjNzE5MjZhODZkOTkzZGEzMjBkMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTk1OWRjNDUyZWZlZmE5OWJhM2QyMDA5NDg4NTAwMGY4ZmQ4YmM2MjhlOGU3MTg1OGQxMmFkMTkzZWRkOGNlYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODJlZWRlMzRlNjA4NzA2OTA5NGNiMDk0MWUzNjFhNGY4ZDI5NGM4MjU5MDczMmNjNmI2MDI2ZWNkYmYwZmE0NCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTE2YzgzMDliYjk0NzdiNTdkYzRmYzA0MWQ2NzE4MThjN2NmMzU2YmUyMjZiNzhiYTk0OWJjZGRhMWEwNDk0NiJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L17-L23",
+          "version": "repo-lines-v1:sha256:2cdf647250ce6bad9fd31e400654bf77ce1bc32aa4a60fe74beccf5c2113dbdb:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNjN2M1YWQyY2M3MDg0NDg5MjMxYTI0YjIwOGNhNWExZDRlNmI4MjY1MWMwMDVhMWIzZTcwNzJhM2M0NzdiZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmRhN2YzNWI1Y2IzZWJmMjM5MTU0MTI0M2UyNDUwY2IyMzk3ZmU3MTU2MDA4YzU2YjA1NjdiYTM2ZWY4MTVhZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTJjNjViYTJlZmU5ZTc0NDI4MDBkZTI5YjAxZDdmZTdkZmQxY2NkNDUwNTQ2M2FiNjdjMjEwYTJkOGQyZDA5NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjQzMTk1ZWEyYjNiMDkyY2FhMjg1MDU5OTUzZGZlODllOTdmYTk1YWEwOWQ2ZTY3ZDM3YWVjZDE2YjZjOGNkZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f7844b58406d4b14b4f6dd773ed5088e",
+      "statement": "The publisher's git command timeouts are per call site: 300 s for push, 60 s for the read-only ls-remote lookup, and the 300 s git default for add, commit, diff, rev-parse, symbolic-ref and check-ref-format.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L112-L118",
+          "version": "repo-lines-v1:sha256:64afecc1e685d57fbde1842f192fdf031862212800f04a58b07c776cf6496f67:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWZlNWMwNDAxNGY5ZDkwMWUzYzY0ZWIzNjg2ODRlOWI5NDM1MWU2Nzg2NjViOWRkMjJkYTQxODA2ZTZiMzJlOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiY2I0ZTA4MjE5MDRjNzEwMjM4YzMyZWRiNTIwODhmOGU2ODNmYmViZjRmNjUxNDhlYzgxMzIwZjE1MzAxNTA1NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzE3YWUxYTQ0NGMwNGIwY2JmMmUyNjA3ZTRmMzJjM2JhMWUxYTA4YWNmMjJmNTM4MWI5ODU2YmU3NGZlMmJmZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjQyOTBlZTM1ZGE3NGQ2Yjk4YTQ0MmJkZjUxMTBkYTk2MDRjMmQyOTBlZmM4MTVhZTdjMjBkZTA0YWJlZTFhYSJ9"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L38-L39",
+          "version": "repo-lines-v1:sha256:bc96f1ee180b697de589edb4307f6f4914886debc4ef37b6abe21f4320102d51:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzc4NzIyMjZlZWRjODc1MGM2MjkzMzYxODllZGY0YjljYTU5MDZlMzQxMGUyODEzNmRiYTRhYjFiNDlkNTNjYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2UwMzE3NDRkZTQ3MWEwZGUyZDVlNzYxNGRjOGQ4MjQ2YzE4NzA0OTEwYjI3NjQyODNhMmYyOTAyY2Q2Y2U3MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODFiYjc4MDg2YmQ5NDA0Nzk3ZjliNWM0ZDE5ZTQzZjIxOWJkMDIwMDdjZjZjNGZkMjM1YjY1MzFmNzljYWMxNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTdjYWYzNDc0Mzk0N2E5NzA1OGVjMjdiZjlhMTAwZjk5OWNlNDhmYjI2OGE2MmY5NzI3ZTU3YmZhNWQzYjRhZiJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L19-L20",
+          "version": "repo-lines-v1:sha256:038ba2748a1f94f03d13707234c9dec4c5e806e2da2aeea1fe8ff841afb06912:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWE5MmUyODVjZWQxNjVlNTNkNzc3NDBmOTRjYzNhMjUxYTRiYzI2ZTFkZDE0NThlZDJmNWYyM2UyYTY5N2QzNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTNhYmQxOWVjYzE4ZGM1MGUzZmQzZjI0Y2I2MTcwNWU3ZmNkNjY3OTVkMTEwZTYwYTMzNDg3YWRiYjQ1ZjljNCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWRmMzBiNzFhOTI5NTZlOTY3MGU1ZThhYjg4MjYyMWU3YzJhNDIxOGI4OWViMDE4MmU3Y2M4NTE2MjcwYTk4YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiY2IyMjJhODgwZTNkMGIzN2Q5ODg3ZmJjZjc1NzhmOTE1NDZjZDA1MzQzZDA4MTM1ZjFmNGU4ODQ1ODQ5MTgyMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_4af66534cd3846ccbdd2c550006f9e85",
+      "statement": "POST /wikis applies its push preconditions (SSH/git:// rejection, and the requirement of source.auth.token for http(s)) only when payload.push is present AND payload.push.enabled is true, so push: {\"enabled\": false} is accepted with any URL shape and stores the configuration without ever validating it as a push target.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L63-L88",
+          "version": "repo-lines-v1:sha256:3c00e26f45c0c61226a9531dfff8d505ad34dc53302d41955f6f1be53ae1243a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImRjMjQ2MGVhYWQ5NGIwZmMxYjFlZjgzZjI1OWYzNTIyNzI2NDhmZWI0MjgyNGEzMDA1NDIxMDcwNTIwMTQ3OGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImZlMzgwMThkNmYzMTZhMTE5NWYyMjFlOTQxN2M5ZTIwNzMyZDc2NGVjMzhhMmQ2MWUxOGMzYjczNTcxYTg2NTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ0MTYwNWEyNWZjNDEwNjgzNWM3M2Q1OWE4NzA1MzM0YTg1NGRiZTg3NzU2NWU5OTcwNjgyMDk2OWU4MmM5N2YifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L134-L143",
+          "version": "repo-lines-v1:sha256:7f734c6d34e1833d53c2927c4be0de0ddbea339349670ebb1b622daa3165de46:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjlkYjZkOGE1NzkxM2RjYTk4MWQzY2I2MDMzMDNjMjkwOGJjMjk0MzE2NWE1OGZhMjQ3MzgzMjlmNWM2MWNkYmMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2MzNmM2Y3YWUzNGRiODExNjQ2MDllNDRkNDNhMDljN2VjYzFhYjQxODJkMjMyYzE1ZGM4Y2U1NmYwZDUwMzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdkYjZjMjFlNzRmOGQ0NWNiZmJmNTMzYjE5ZTkzYjU5MDg0YTBlNWZmNjJmZGU5ZmE2YjRhYjJjY2RlYjhkMjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY4YjBjNzUzYzdiMzEzYWI1MzZjMTE5NTBjMzg0Mzg4NzM0ZGViNjllMzIyYTYwZDcyNTZjMzE4ZjZmYTgwOWQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e02c2f141c8948429a425a640fee3780",
+      "statement": "The token's git -c http.extraHeader=... prefix is attached only to the two network commands of the push path (ls-remote and push); the staging, commit, diff, rev-parse, symbolic-ref and check-ref-format commands are local and run without it.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/publisher.py#L149-L155",
+          "version": "repo-lines-v1:sha256:0d14b71c4f700390a4e5f93eca02c87b0c928880e583b8f55207834d71686423:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRhNWM2NmUxN2IxNDUzOTc4MzRiOGM4NTRkYzQxOTNlMjEyNTE4MGE4OTk2YTE0YzMxODgzMzI2YjJlZmJjZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdhMjhjYTAzNDVmNzg3ZjAzNmExYzQ1Y2YzYjRjN2VmZmRhN2NhNTZhYzAwNjRkNjI2OTFhMGVmZDc3NjYwZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGM4NmIzYWRmZTU2MTBkNDdhNjNjYmUzM2Q1OWRiOWFhZDI1OWI4YmM3YjU5OTMzZTFkN2NlMTYxNDEzMmM5YiJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L51-L58",
+          "version": "repo-lines-v1:sha256:41a287b50ee87e72e8b82556149f9b0974c986abbb9e3df7a70760178cd8f2bf:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzNWZmZGJiZDRlYzAzNTAyYjk5N2IyODgwYmZhNjc3NGQwMWEwYzNkMWQ2OGRkYTI1MzFlNmVlOGJmZWE2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjk3ZTRlOTI1YTE1NjU5MTFlZjgyMTAyMTY1NjVhY2JlNmFlMTVhNDgyM2QyYTViNjVjZGQwYzY5NDFjMmM5YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZDdmNjg4OTI2M2Y4YjU0ZDZhNWNkYTQxMzE5NTFkZjM5NTllZWIyYjM3NTBkMmFlNmQzNGE5MjdlNjg5MzNhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODM4N2EyNjg4MmVhMDY2NDViZDQ3MTc2MDhhNmE1NzFlOTIyNDQ5YTNlMGQwZDgxYmQyZGMxOTVkMTg0NTg0ZSJ9"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L92-L97",
+          "version": "repo-lines-v1:sha256:3f79d1b527b4968110f04f2243659772034043b9e98c55b02bc210eede81a9ae:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOWIzNWZmZGJiZDRlYzAzNTAyYjk5N2IyODgwYmZhNjc3NGQwMWEwYzNkMWQ2OGRkYTI1MzFlNmVlOGJmZWE2YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGJmMTM4YTM0YmExMzUzMjYzMzljNjRkZDg2NTNjNzQ2NDFkYTRkM2NjN2YzYzVlZDU5OWY0MmZmZjdmOTdiYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYThmNDUxMTc5NDRiYjIyODQ5NmFkY2JhZTgyMmMyNGRmYzRhMDIzZmE2OWY3YmVkZTNiMjc5MDMzNzhiYTJlYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_30c571f9329f422eb1735e336352ac47",
+      "statement": "git push is not forced, so a protected branch, a token without write access, or a non-fast-forward because the remote advanced past the cloned tip is a normal git push rejection, which run_git turns into an IngestionError and publish_wiki re-raises as PushError; the workspace's only view of the remote is the clone, so a normal successful push is a fast-forward.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L149-L164",
+          "version": "repo-lines-v1:sha256:507db6f74d532fa884005043df7fa930fda393e4925faba72f4be16dff7c03cd:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYyODlmYzQ2NWUyMmQwMWMxZDU3ZmIwNDEyZmM4MTUyYWZmZDcxYzgxNzM0Njk0MzJlZGQwMWJkYThkYzgxNzAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNzQ4YzRiZmQyNmZiMjAxMzgyZjkwZGUwYjQxYjRlMGViMzE3NjRkNDdkMGQyYWQwNDY1ZTZkZWZkMGY0MWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjViY2RiOTcwYjk1YjIwZmQxYzIzY2U2MmI5NjM5NGI5YTZmODdlZDMwMWUyN2NiZTJmNjhjMWE2MmE4YjEzMjUifQ"
+        },
+        {
+          "resource": "repo://app/services/publisher.py#L91-L99",
+          "version": "repo-lines-v1:sha256:4234331b80fdfcc8ef05edc07e029f69d1d0e57a785480ed26e245a50de0fc3d:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTFjZThkMGYxYmZiOTM0NDIwYmE0MGU5OTllZGYwMzc0MjA5ZGEwMjg2Zjg4YjZkYWU5NzE4MzA1NTkxM2MyNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzUzNTk2NjlkMzI0YTczMDRkOTU2N2RhOTY4OWJmOGQwMGU3YmVhZWYxNjdmZTBiNDc5MDUzOWU1ZDVkMDUwZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDRmMTMyMzgzODhiY2EwOWQyYTM0Zjc5ZGRiYTQ4OWIxMTA4NmE3NGI5MmY3OTg5MGM5MzY1YzhhNTZhYWY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWE0ZjA1N2Q3ZTJjZTQwMzE3ODE4NGQyNmFkYzc5N2ViN2U2MmMyOTUyZGFkNjQ4YmMwNWNiNGY4N2IyM2Q1YSJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L110-L120",
+          "version": "repo-lines-v1:sha256:13c3372443119eefe1f71caef7e8d63db3ce87270914ee2799b2d52284ba5a72:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4MzVhYzdiN2Q2NTBhMDA1MWVmM2EwMGYzYmJiYmEyMWZlOWJhNGFlYWM3MDFiMzk3YzgzNjVmMTlmNDQyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUwODcwMzI2MDU0YzhkMDViODJkMjU1NTA4MDM5NjM0ZmFmZGZkNjRiODEzMjllODczNWY1MjVjMGExYzJjYjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhMjlkYmQ2OGEwMDk2OWEwY2RmOWRiYzAyZTc4MjY3MGY3NjliODg4ZDRiYTE4ZmY2ZTllOTk1NzgxYmY5MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjY3NTY1ZmFmNWFkOGNmMTk5ODExNjI3M2MxMjQwNDYzMTgxNjRjNjcwODJiMDZmYTUyMjgyZTIzN2MxNTFhZjkifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

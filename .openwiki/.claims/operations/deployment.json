@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:c6c6dc52d2f5e0dd0613b291ad846be12e8b1a9e7d9e54dca6004dbda376dae4",
+  "claims": [
+    {
+      "id": "claim_c62a93810e3646bea2bc508e311c617e",
+      "statement": "The deployment is a single image built from the repository Dockerfile and run as two services in docker-compose.yml: `api` uses the image CMD (`uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8000`) and `worker` overrides it with `python -m app.worker`, so both containers execute identical code with different entrypoints.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L45-L50",
+          "version": "repo-lines-v1:sha256:01b67deccf1aa2940ffc79e555c2b9749a65a514324def72e4b097f704cc656c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTVhYmNiODIzYTVmZTY1YWNlMzc1Y2NhMGYzMjk1OGMyMjEwY2RhMTM4NzE4MzYxYTI1OTVlMzg1YjI5NzQ1OSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmEzNGRlMTM3N2JjNWU3NTlmZjIxOTEwYmJkZjYyZDlkNWI2NjJiYTkxYjUyNDU5M2UxM2M3Nzg1ZThkOTgwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzYwYjU1OTQzZDk3ZWZkODFmOTU5YTM2Mzc0NWY3Y2FjNzVhNWFmZWQwNzhhMzdjMDIzNjRkZDZkMTI1NmY3ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L1-L38",
+          "version": "repo-lines-v1:sha256:0ff479a17fe5dea7672daf2da71e943224b3d9953672ae38023a7c923dc7cf70:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhNzNmY2NkYzk5ZWE4MzU5NjdjN2RlZTdlZmJlZDFmM2NhODcyNjBkOTI5MzE4NTBmZGQ2NmRhOGNiMTJmMWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MzFlMjYwMzk4YWQ2MTA5MTRkZmMyOGYwNDhkMzkyNjRiYTdkNTAzMjc4ZGQyZjhiYjFjNGMxNGI0OTlkOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmODRiM2M4OWE2YmUwNGEwNzRiMTE4ZDU5YmQ3ODlhNDkwM2IwZWM4N2U4ZjlhMzk3ZGJlZmEwY2ExOGQyOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_ce72bb950bae4110801ce28a9f079753",
+      "statement": "The OpenWiki CLI version is baked into the image at build time through the `OPENWIKI_VERSION` build arg (default 0.6.0), passed to `scripts/install-openwiki.sh` which runs `npm install --global openwiki@${OPENWIKI_VERSION}`; upgrading the CLI is therefore `docker compose build --build-arg OPENWIKI_VERSION=x.y.z` plus `docker compose up -d`, with no service code change as long as the CLI keeps its interface.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L22-L25",
+          "version": "repo-lines-v1:sha256:bd638275659b12838fba434c019dc9cbbb9a0a9f1fb7cf987b90452359c281c7:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmY3MTg5NjBhMmNjNGQxMTNlNzBhMzBhYzk3MWJjZTVkODgyMTc0ZjQ3ZWMyOTQyYzM3YmZmNjA5MmVmMjcyZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGE3ZDY3MGVjNTFhMjgzZTZiNGY3ODQyYzk3MWJmOWQ4MjgyNjI4ZDM4MzI5ZDc5ZjUwYzYwNGM5ZGM4ODI3YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiODY3YjZkMDNiNmFhYmY0Y2I3NTA1OTJjNDQ4ZTc5NTRjMzVhZTI1YzNhMGQyMmFhYmNmM2NjNzJmNDNiOTEzYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDc1YzJiM2ViOWYzNjZiZjA3NWIwYmQzODI3MTdlMzNhMjU0MTc3N2EyMWJlYTcyODc2ZTJiOTZhNTYyZTMzYSJ9"
+        },
+        {
+          "resource": "repo://Dockerfile#L4-L7",
+          "version": "repo-lines-v1:sha256:a9078789afb3ad2bb56070fa5d3f23d6964a024f37e32685b98cb7967f09a921:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2QzODgyZWYwYWY2ZTNkOWY2MjllYWJhZjk4YTc2MjZkNmJjMWQ5YWU0MDYzZDFhY2VjYzg2NGY3MWU3MmE3MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmI1MzE3YmVhMTgzNTc2YjA1YzQxZGRhMWU3NzM2OGYwMTRhYTJlY2NjZTk0YTkyNGViNWQ1ZTFhMjRkMjM0OCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDNjMGNhMDJjZTNmMjVhMjZiZDZjY2IyNGMyYWQ3YTkyMmRmMDQ2ZjI4YzAzNzczOGJhYTFhZjJiOTY3MjE0NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTJmNTQ5MmE4N2ExZTYyNGFhNmVlYmQ1YTI0MTdkZmE4NjAxNDcwYjU5NWExYmIwMjk2YmY3OTA5NDNhZDlkZSJ9"
+        },
+        {
+          "resource": "repo://README.md#L334-L346",
+          "version": "repo-lines-v1:sha256:93013c66adb9e25ef8ef35f59ed0022d5aa8d4301249c605f38e03232c058bcc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY1ZmVlZWY2OGJkZDQxNmM2OTAyODk1MzZjN2RhMmRkZTk0OTY1NzRmZmI2YjQ3MjE0YTM3NWM5OTZiMGI0MWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE1MzFhOWZhNDE5NWQwMjc1YjAyMGRjMTUyNmFmZDFjNjMyOGU3YjE4MjdkNjM3ZTc2NTUwZjEzYmVlMjJhMzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk5ODE5ZjkyY2E1MjJlNGU4ZWRjOWJjNTZiNGM2NGQ0MzU5NjIyOGE0NDBlNDI3N2FjMTMwNDA3ZjhkODVkYmEifQ"
+        },
+        {
+          "resource": "repo://scripts/install-openwiki.sh#L7-L17",
+          "version": "repo-lines-v1:sha256:e113890fad2123d819d2ad1f7860a6abc73f4b1b62425ac867961dee2ba3360d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI4NWUzNjA4NTQ3ZmZiNzI2YmEwZjFmMWI0ZWU2NjQ3MGIyMDM0MTJjMDVlN2VjY2VjYzkxM2I5ZTQ3NGFmMjUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2YTRmM2ZhZmFmNTA4ZjMxN2I5YmY0ZTE4OTFlYzZiMDdjZWFiMzcwYmIwOTM1ZWYyYTExNWQ0ZDZiMWQyNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI0YTg1OGUzMmUwMThiZWY1NmQ1YThmYzgwM2I2MTVkZWU2NTIyOTc1ZDllY2M3YmNmMWUyZmMxZmFkNWIzMzIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e030ceabd725485ab768b5b49b8cdcab",
+      "statement": "`scripts/install-openwiki.sh` performs its npm global install with `--no-fund --no-audit` and, if that fails, installs `build-essential` and retries once, because the CLI's `better-sqlite3` dependency may need to compile when no prebuilt binary matches the container's Node ABI.",
+      "evidence": [
+        {
+          "resource": "repo://scripts/install-openwiki.sh#L1-L17",
+          "version": "repo-lines-v1:sha256:4d5dcc938a4e62c66903912479221082a77d602cc80a974b1f2a650a4657464e:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFkOTVmYzA0YTgwYzk1MmY0OWNlNDE4ODYyN2M1M2IwZmJlOGM0NDA0MWI5NTJkNTkyYWNkMWRlOTk4NjE0NjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2YTRmM2ZhZmFmNTA4ZjMxN2I5YmY0ZTE4OTFlYzZiMDdjZWFiMzcwYmIwOTM1ZWYyYTExNWQ0ZDZiMWQyNmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_87a86fcf4a9849d28d431488961fd3af",
+      "statement": "The image runs as the unprivileged user `appuser` (uid 10001) which owns `/app` and `/data`, and it sets `git config --system --add safe.directory '*'` so git and the OpenWiki CLI accept repositories that are mounted or cloned with a different owner instead of failing with `dubious ownership`; outside Docker that setting must be replicated per path.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L32-L39",
+          "version": "repo-lines-v1:sha256:974e4b69820cc27cb49ec3f4153d4db455d66871e6c9cb7c99179b1920e1863e:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBhNTEyYjcxNGY5ZTI4N2Y3OGYzNTk1ZTgyOTMwODcyOTIzMzI5NWRiMTdhNjEzM2ZjYmUwNWQ5OTJhMzg0NyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzFiMzM3ZWU1YmUyMjRkYzRmYjg3ZmJmYTRhM2VjZDU1MGU5NTkwMzMyY2RjZjIwMTY5MjMzNGVkNGY5YmJmOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjZlMmUzZjkxMDJmOWI5OTgxMmIyNDAzYWQ2ZGIyMjg1MTBhNmI1ZWM5NjRkNGVkOGU5ZjBiYjE4YmM4OTRlYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTZjYzE3M2M3ZWI5Nzk3MjE3NTQ0Yzk2NjRjN2ZmN2VjNDgyYzVkZjUzMzA1NWM5ZWE0NjA1Y2Y5NWEzNGRlNSJ9"
+        },
+        {
+          "resource": "repo://README.md#L368-L371",
+          "version": "repo-lines-v1:sha256:4e523b1a31cc91b4bc9ee368e144303cc96c17357dfd3b2a00e8fe68418559ee:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTU5NTk1ZTQyM2JmOTA1YjA2ZGJhYzJkMTBmYjgxZDc5ODk3YzQyZTcyNzJmODk3M2NlZjIwZmQ4NDFiODUxYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjlhOGY4MjYyZWY3N2VjNzQxZWUxZmQwNzY5Y2Q2YzRkZGM3MDBiN2RiYzM2YmIxMWQ2Y2ZiYjVkMjM4MThmYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDUwMjUwNTQ5OWM4Njg0ZDFiMDM2ODJiNzZkZDRmMWUxYzFmMzgzMDYxODRmZTI3ZjYzODYxNjlhMTk3MTdkYiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGRhMjI5MmEyODgyOWE3ZTRlYWQzNDExN2NiZTc3YzIwYzViZDVmNjRmOTc5MDNiYjE2N2I1MGMxMjk2ZDMyNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_881a7954471640418b38cb1e749f2e79",
+      "statement": "The image declares `HEALTHCHECK ... CMD curl -fsS http://127.0.0.1:8000/health`, which is meaningful only for the HTTP-serving `api` container; the compose `worker` service therefore sets `healthcheck: disable: true` so worker replicas are not reported unhealthy for not listening on port 8000.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L14-L20",
+          "version": "repo-lines-v1:sha256:f6ddcb37c2048e7dd58c66a81ad9b9460c472efeffd89e9bb729f36dce62be04:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzc4M2YzZjM5ZTAzNjU2ODQ1NzVkNTM2YmViNmY0NTZhNjZmYzZjOTJlYjM2NmIxYzYzNjcyODhhYWZjOTk2ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E5ODllZDI1MzM2YWY0ZTgyZjUxZmNjYjZlMDY5Yjc5YzM4YjBiNTkzODBjNGYzYzE4OGM1ZDc2NDIyNDgyMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDZiYTViMjcxZWM0YTA5MjU5NzQwY2ZkYzJiZTUwYjY0OTRlOWY5NDA4MjVjNDg1NWEzMGQwYzJmZWMzYjQzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMzc4MzQ0NjI1NzhmOGNhOWVjMGM2ZjhkY2Y4ZDg2ZThhMWU0NGI0YzU0YzRkZGYzZThkZGU1ZjIzMmMyMGYyZSJ9"
+        },
+        {
+          "resource": "repo://Dockerfile#L47-L48",
+          "version": "repo-lines-v1:sha256:ec4acfa8b05caebe9a402e3a4c8672e10b76fea43cbf5e62532ee67f4ff496d7:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjAwZTZkNzhjNWRmNTk1YjljYzJiNTI1ZWFmN2ExYWJmYzIxZTA0M2I5MzFhMmNkNGFlZmU3YWIzMTIwNWYyMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYmFkYjQwMjUwOGZlNGRiYzY5MDM0YjRjYWQwM2U2MzczYzA2MGZlZTE0OThmMzg2NGIxY2UzNDFiN2E2NTc3NiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJkNDg0ZjZmYTM0MzczNGIyMDdkMTQ1ZjkyM2E0ZGZhZmRlM2NhMjVlOGJkYzIyMmYwMGUyZDY0ZGVlYjEzZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjIsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjYzZjczOGU2NDRkNTllNjVmZTg5MDg1NGJlNTBiYjQwOTE3MjhhMTViOTk1ZmE0Y2ZiNTY5MjY4YWU5OWQ2NiJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L22-L26",
+          "version": "repo-lines-v1:sha256:0158fc557d2d541acce140ace68bcfa02565fc1ad1f395f6abfa19363d303900:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTA5YzZlNjMxN2ZlNDVlZTJmMmJjMTNkNzE2MzZjMjI0YmRlOTgwYzM1M2I2NzZlYTdhOTEzZWJhMWRmM2U1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjNlZWZkYjI3NmZlOTVhMmJkNTE2OWQ0ZGZhYzU1YjBhYjk4OTQwM2FlM2U5NDQwNDA4ZTYxNGQ1M2ZiZThmZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGQ0NzViOTE5ZWViY2VmYWUzZDU5MGE3YWM3YmExZDI4N2ZhYWZhZDMxMDg1ZjZhMGNhODRlOTk1Y2I1M2U3ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDY3Njg4OGYzN2M2MTUxMmQzOTBjMzllYTI3YWQ2ODBiNTYxYTcxNjBlYTViM2NhN2FkYjMyNmVlNmZjYTE3ZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3fb4695e0cc64140a21d1be8508990fd",
+      "statement": "The `api` and `worker` services never call each other over the network: they act on the same named volume `openwiki-ci-data` mounted at `/data` in both, which holds the SQLite queue `openwiki.db`, the per-wiki artifact tree `jobs/<wiki_id>/` (workspace, `logs.txt`, `wiki.zip`) and the CLI state directory `/data/.openwiki-config`.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L41-L43",
+          "version": "repo-lines-v1:sha256:70897e3f1d2f0add6eba812e5e2ac3cf96298a86c506644646488d972e7748a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzg4Yjc5Yjc0ODQ4OGNlYTY4NGQ2YWQwYTczNzlmY2UwNTliNzhkNWY2MDk0YjkyMGFjMGFhODgyOTI0ZTdkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTg4YzUxNTczMzQ3N2E4MDFmMGY1NTgwYWMwMjQzYWM0OTljM2M0YTgxNjM5Y2MwZjJhZjZhODJjNzU0ZDM1OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmE2MmY0OTZkNDliZDc3MTFhYjM5ZGU0Mjk2YWFhMGEwNjU1NzVhMDAxYzk5YWUxMzIzNzJkYjg4NjczNWE0MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTJkNDg0ZjZmYTM0MzczNGIyMDdkMTQ1ZjkyM2E0ZGZhZmRlM2NhMjVlOGJkYzIyMmYwMGUyZDY0ZGVlYjEzZSJ9"
+        },
+        {
+          "resource": "repo://README.md#L61-L65",
+          "version": "repo-lines-v1:sha256:9f49d7c59fccd478c0a5702313f432d93093e5af2208b7e25a65eba37ac5aba4:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjUwNjJkMGU3MjBkYjBmMzQyNjg3ZGIwNmE0OGUyNDdhMWNkYWExZTY5ZTVjZTA1NWFmZWFhZjVmN2VkNDRhYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTUwYmFkYWQ3MWVkNjZhMDA1N2Q1ZmE4ZDUxZmUwYWM3MTJlZDUyMjZmNjQ5ZTJkYTdmMjBlNWNjZTQ5OTY2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjRkOGExYmUzNGY5ZjQ5YmQxZWNhNTJjNmNmNjMxOGE3MjkyNWZiNDc2NDkwMzhkZGYwNmRmYmVmM2I3NzFlZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWU1ZGE1ZmJjOTRiZWVmZTM2MWFiNzBjMzJhYjlhMTYyNTcwOGFhNGNhZjQ4MjQwOTU2NTVmMzFlMDI5NzNjYSJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L17-L18",
+          "version": "repo-lines-v1:sha256:f6496249cd43cd308c8178aca42d4cd6a9fcf8ce7d6ce5ce36312418d39e5ca0:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEzZjRkOTY2MWU5ZDJjM2UxYTI4OWU1ODMyMjk5YmVhMTRjZGI2NGJmODg2NjFkZjcxN2IxMmZhMDJkMDExZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJmODc4OWI1OTY2M2U5MjFjMzYyY2YxMTU0MDkzMmVlN2E4YWYxNTIzYWYyMjg4YzAxMjQ4ZGU4MTliNjhlOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGVjZWFiNzgzOTc5ZDI4MTJjNmNmNjgwNzRiMjljNGIyZjgyMmE3ZjdiMjFiZDI2YTE4Y2IxMjc4YTEwZDJmNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGQ0NzViOTE5ZWViY2VmYWUzZDU5MGE3YWM3YmExZDI4N2ZhYWZhZDMxMDg1ZjZhMGNhODRlOTk1Y2I1M2U3ZiJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L34-L35",
+          "version": "repo-lines-v1:sha256:f6496249cd43cd308c8178aca42d4cd6a9fcf8ce7d6ce5ce36312418d39e5ca0:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDEzZjRkOTY2MWU5ZDJjM2UxYTI4OWU1ODMyMjk5YmVhMTRjZGI2NGJmODg2NjFkZjcxN2IxMmZhMDJkMDExZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJmODc4OWI1OTY2M2U5MjFjMzYyY2YxMTU0MDkzMmVlN2E4YWYxNTIzYWYyMjg4YzAxMjQ4ZGU4MTliNjhlOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjIzOGUxOTVhNDEwNzk5MjIyMmU5ZGVlMjY3NWQ1Yzk3MzQ5ZThhYzNiNzM1NmY1ZDMyYzViM2VlYTFkMTcxMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTRlMTcxYzJiYjdkMGU3OGU1Y2M4OWEwZWQwYTE1NjAxYmIwNTZiZDZhZWRjMzhkMjMwYWJjZTg2NzY2ODkzMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_41008bb668ab425e9c205d712f4db50d",
+      "statement": "Because `api` and `worker` only share the volume, the API can be restarted without killing in-flight generations, and workers keep finishing claimed work even if the API is down; the only cross-actor recovery path is the lease: a claim that stops heartbeating beyond `WORKER_LEASE_SECONDS` is requeued by the API's reaper and picked up by another worker in the same workspace.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L47-L53",
+          "version": "repo-lines-v1:sha256:0f85f2cb7fcfee955142f716ab1cfac46e1b976be29cfa7baf91b2614cfe5905:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTBkNzIzNTQ4MWQ1OGFhZTdlYmMxYTcwYTJiZTY5NzExM2I0MzcyMTc3N2ExZGRhMmEwYTA2NmQ3NzQ1NmRiNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjk0YTFhMDE2ZDQ2YmI4MDM5ZjEyNTNkOGI3NzU3NDViZjJiMDdhZWU5N2I0NDk5OWZjYzMxMzdmZDI4ZTg1NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmI0ODI5NmJhZDhkZWYwNmRjMGYxN2RmYjhmODRjMzg4ZTM1M2RhY2JiN2I1MzJhNjE0NTEyMmFhOWY3OWE2OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTI0ZGY2NjEyYjU3N2RhYWFmOGI3ODEyYTQwM2JlOTNhYmFjNmUwZWIwYmMwMTAwMDlkNGU2YjIyOWJlNDM2NCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L345-L356",
+          "version": "repo-lines-v1:sha256:0bc515054cd31cc2129d901d5d9de545e5d0a821001c26e4b6920b65148e00f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTAyZDc2ZWUwOWZiN2M5NjJlNWM5NzRkMjJhOWZmNDVkNjMyYjQ5YzFjODQ2M2IwMzg3YjUxZTNmN2Y0YzcifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L32-L40",
+          "version": "repo-lines-v1:sha256:8d12b2cd359a8db5a6bd6ea33e07ab6c2998440ed681b6768e630e28770b27ee:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM0NDEzYzFjOTI1Y2NlNTM1NzMxZDcwY2Y2ZGVhNjNmODE5MzA3MWYzNmVhZDc4ZTkzNzNjYzEwYjE4YzUwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY1MTMwZTA3Y2UyNjM4Yzg4YTBjNzVmYWY2MmExNjlmOWZjOWNjMjI4ZGFmM2JhOGQ4MmQxOGM5NjRkNGY4NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI0ZDRjYmRkNTU1OTIzMWM2NTY5ZmFlYWY0MWUyMjZlNTJhMTM5NmIxN2I3MmYxMGIwZmQwNDY3OGM4YTZkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWQ2ZTBjOWZmMGI2NGNkMjIxMDVhOGU0MzZhMGJlY2IwZGE5ZWU4M2MyMTg3MmM5NGE0YjBhZDY5MTdmZmMxNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5cad24d60884226aff1e9ed9dc7f0de",
+      "statement": "Worker capacity is scaled by replicas rather than threads: `docker compose up -d --scale worker=N` adds containers claiming from the same SQLite queue, while `MAX_CONCURRENT_JOBS` (default 1) sets how many generations a single worker container runs in parallel. Each generation spawns a long-lived CLI subprocess plus a `git clone` and a disk workspace, so raising `MAX_CONCURRENT_JOBS` multiplies those resources inside one box.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L61-L63",
+          "version": "repo-lines-v1:sha256:3bad390664c86145b6b88a8d19576fb8f1e7419bc489a6619e981acb3ed508ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjUwNjJkMGU3MjBkYjBmMzQyNjg3ZGIwNmE0OGUyNDdhMWNkYWExZTY5ZTVjZTA1NWFmZWFhZjVmN2VkNDRhYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYzZjNmE2NTljYzEyOTE2NWIxYzBlNmM2ZWFjNmVmOTU5MWFjMzZmNTY1YzJhMjA5YjJlZjU5NjVmZmNlMWM2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjRkOGExYmUzNGY5ZjQ5YmQxZWNhNTJjNmNmNjMxOGE3MjkyNWZiNDc2NDkwMzhkZGYwNmRmYmVmM2I3NzFlZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTdjZWQyNjNkYjA0Yzg3YTJkY2ZlNGUzN2E5YTA1MTdjODFjMjhiZGU5ODA2NDc2ZTc1MTg3ZWFhZDk3NWYxNCJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L49-L58",
+          "version": "repo-lines-v1:sha256:a54a5681578330690d1d25e4ef14437ccbbb1c25938593251c9f8271f8e3d8b1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1NzUzYzljNTFiMTI1MjZiZTE0NjEyN2YwOTNmNGU2MmZjMzliNWI1NzQ0YjZlMjY4YWM0MGNhNjMwMjNlMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5MmFkMTRkNjJlMmUxY2Y5NjcwYzBjMGY5ZWQ2YTRhYzAzYWFkNTc4YmFiOWRjOWMzYjYxZDQxMzBkZjE4Y2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MjQ3ZTExODI0M2MxY2NhODVmMTBmYTk1MmE0N2U5MDQwOTBjMTJmMjBkNDA0MmVlN2RlM2MxZWI2MDc5OGEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNjNGMzZDQ1ZTc4NDMwMmE4MGQxZmZlNjI3Y2ZhZjIwODk5MmY1NjhlYTE3ZTFiZmFhNWU1NjhkZWM3ZTBkNzAifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L50-L56",
+          "version": "repo-lines-v1:sha256:26c66985e023b2d91d070acb8f2f3609301b35e71ce1fc521fb9c81d71f736d8:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU4ZTE3NmMwYTNhZjcwNmM5MzUwODYyY2ZiNWUxYTU5NWJkZTU2NzE0ZjVmZTZkOWEwNTQwZWRkNjdhY2MwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUwMzJlOTY0ZDA5MzIzNTFlNWQxODUyNjkyODFiMTcxYTNhMDliMDhiMjg2ZTY2MWVhNDcwMzIzYzgyZWI0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGQzNGQ3NzNiMmY1OTlhM2U2Y2UxOTdlNzQ0YTExODZhZmEyNTM4MWQwMmE5MjdmMDFiNzU4NzI5ODlkNDkzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWY2YzcxMTc0NGU3NmVhYzkxZjg4ODE5NmViY2E3Nzc4ZGVhYzkwNzgyNjk2ZDlmMGQ3ZjBiNjQ0M2RlZjU4YyJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L21-L33",
+          "version": "repo-lines-v1:sha256:4a51aeb38a46f0b6c280c2d1b7ddfc7174bbf80e1e6d812c3422f0ca35709318:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5NzJhZjViZThiMDM2YzhhYWQ1YmMzZWQ2YWE0ZDk5YmM0NTgwMDk4ZTVmZDlhM2FkNTdiNjBlOTEwY2NkZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU2MjdmYWI0ODFiYzI3ODYwYTAzOTYzZTQwMGIwOGFjYjNhZmEyYTY5NmM0YzA0OTIzOTY0YjhjMDZmNDQ0ZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlODk3N2U1ODA0YzNiZGQwYmE4MWU2ODI0N2M4MDc4MTQyZjdlMjA0ZDFhMDUxNTBmMjA2NzgyNWJiZjg4YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4YTI5OWZmY2Q1Yzg3NDViZGY4MDI5ODkyZmQ4ZjlhZjIwYmRjYTZmZTE5NTExZDUzMmRmNzI1MjE4Mzc0ZTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_dcae120939aa4e5fa9119e358bf4c5bf",
+      "statement": "Both compose services use `restart: unless-stopped`, the worker declares `depends_on: [api]` only to order startup, and both read the `.env` file with the long `env_file` form and `required: false`, so the stack starts even without a `.env` (though real generations then fail for lack of a model provider).",
+      "evidence": [
+        {
+          "resource": "repo://docker-compose.yml#L10-L19",
+          "version": "repo-lines-v1:sha256:6246cc48546bcf2435fdfa9f014c172df616699a3d163b4f6c6c56fcf0e1dfc0:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZjViMjIyYTM1MTg5NTZkYzdiOWRmNTg2NGRhNTdjN2IzNjQ2MmUwYWQ5ZTAzNmE4ZjE4MTA2ZmVmYjc4ZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MzFlMjYwMzk4YWQ2MTA5MTRkZmMyOGYwNDhkMzkyNjRiYTdkNTAzMjc4ZGQyZjhiYjFjNGMxNGI0OTlkOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJmZDYxZTU0OTQ2NGM2MDBkMWFiMmY4ZDQwOWZhOGY3Yzc2OGU2YmUxNmViNjQ5ZmNkNmVmMTIyMzIyMjk4NGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5YjEzM2E5ZjY2ZjIzNTQzY2UwYTM5M2U2MTI4ZWQzMGIxODE4Njc1ZTc0YmUzZTk1ZDE0MmRjM2MzNGRkYzQifQ"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L27-L38",
+          "version": "repo-lines-v1:sha256:6c203b6ee94c90e64e0ab56fa746fee26450e0be1efa75ed408d37f42732258d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEwZjViMjIyYTM1MTg5NTZkYzdiOWRmNTg2NGRhNTdjN2IzNjQ2MmUwYWQ5ZTAzNmE4ZjE4MTA2ZmVmYjc4ZDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MzFlMjYwMzk4YWQ2MTA5MTRkZmMyOGYwNDhkMzkyNjRiYTdkNTAzMjc4ZGQyZjhiYjFjNGMxNGI0OTlkOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA3MDMwYmFmMzAyZTVmNTRkN2Q2ODE5MjIzYzU3MmM5M2Q4Y2Y0MWVkM2YxMWU1NjdkOGIxMDZkYzdiNmJkYzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmODRiM2M4OWE2YmUwNGEwNzRiMTE4ZDU5YmQ3ODlhNDkwM2IwZWM4N2U4ZjlhMzk3ZGJlZmEwY2ExOGQyOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_45d1387ade854a8a8462dc523d040fbb",
+      "statement": "The compose `worker` service defaults `JOB_TIMEOUT_MINUTES` to 60 while the code default of `Settings.job_timeout_minutes` is 45, so the effective per-generation timeout differs between a compose deployment and a local run.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L40-L43",
+          "version": "repo-lines-v1:sha256:1f72a38c518880470d331b36d0f0cd0fdd945634403fabeba46db7d9fa5f589a:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjhjOTMxY2FhMThmN2U0MTQ5OTRmOWVkNDI0ZjRiOTQ4Mjg4ZTE2Yzc1NjNkZGQ1YzVkMDc4MzQ4MWZiNzg1ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGRkOTU3MmRkMjBkNzllZDZkMTg2YjkxZWY4ZDZlZmY0NmU5NjZmMGEwZmQzYTk4YjUxMGQ4ZjVhNzBjZDEwZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGFkZTVkZTRmMDRjMzU5MDc2NmMwYTA3OTIxNWY3N2RlNTgzZDE2M2ZhOGIxODU4NTczZTVkMTZiN2MyYzc4ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTAxOWZjY2Y5Yzg2ZmNmZjZjNTQwYmI0N2Q4YzUxNjg4NGU4MzllOTM1ODY2YmE4YWFjMDdjYmNhNmQyZWVkYSJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L30-L33",
+          "version": "repo-lines-v1:sha256:535365298ffce6a2d9c67ce44194eacccaf48d4cce6d5c78c46c6252ea56995f:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI3NDYzMzRmZGJkNjUxMzIzOWYxMzI2ZGI4YjYxMjc1N2I1YjMyYzA4MDhiNTA4MWE5OTM3ZjY1MzNiOGRiOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTYyN2ZhYjQ4MWJjMjc4NjBhMDM5NjNlNDAwYjA4YWNiM2FmYTJhNjk2YzRjMDQ5MjM5NjRiOGMwNmY0NDRlZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDY3Njg4OGYzN2M2MTUxMmQzOTBjMzllYTI3YWQ2ODBiNTYxYTcxNjBlYTViM2NhN2FkYjMyNmVlNmZjYTE3ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZThhMjk5ZmZjZDVjODc0NWJkZjgwMjk4OTJmZDhmOWFmMjBiZGNhNmZlMTk1MTFkNTMyZGY3MjUyMTgzNzRlNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b1bd7a314ab240c58ec6ea6bf1ab512d",
+      "statement": "Single-container operation is supported by the same compose file: setting `RUN_LOCAL_WORKER=true` (shown commented in the `api` service or supplied via `.env`) makes `create_app`'s lifespan build a `WorkerLoop` inside the API process and stop it on shutdown, using exactly the same loop and pipeline as worker containers.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L68-L69",
+          "version": "repo-lines-v1:sha256:9faf4bb8259455e362acec65a5265e70867ef117d318dfeb509f1f77658ecc59:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzE0ZGUwYjc3ZjcyOTgzYjcwZjQ2N2VhOWNiNGY0Yjg2MDdiMjI1Yzg1ZTAzM2I2OTFhNGI5YTE5Nzc0Yzc3NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTNlOWY5ZmI0NjA1ZTI3ZGE1ZDc3MmFkYjQzMTJmYTlmN2E1NDlhNmE2MWRjOGJhYzc1ZjI0YTczOGFkZTU4MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzQ1MTdkMmRhZTk5MmU1MGU1ZjU1NzVmZmU4ZjdjODU5NDVmMzVlYTkwMzAzOThhN2IyYjdkZGJlM2Q4MGM5ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWQxYmJlYjI4NzgyMTExNmJmNDI5YWRiODMyYzY0Yzc0MzBjY2YyZWQ3ZWUwYzJkODg1MzY1MjRiYTI2Yzg1NiJ9"
+        },
+        {
+          "resource": "repo://app/main.py#L53-L73",
+          "version": "repo-lines-v1:sha256:b5d5e0ab27eb481c512218f615ac4f9623140ea2e5cfc24f8ad661ae6877982e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkMDI2ZDU3OGI1ZjNkM2E5YzJiNjlkY2I5OTNhNmI3MzVhZTc5NmIxMDc1ZTk2YTZhN2YyNTI2ODE1MTc3ZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkODU4ODFhMjkwZGZmYjQ5YzcwYmJhMmEzY2MzNWU0MzE4ZDE0ZWYzZjVkMjAwOTFkMjY1ODE3MDU1NmNhMmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMWZkMTU0NzU3YzBjZjI4ZDA4ZmZhYWU2MGYwMWRiODEyYTZiZTQyNzljZDAwOTFjM2Q2NGE5NTAxZjI2NmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlMjMwNTdjNzdhNzZhMmViNTFiYmZlMjRkMzA0NjM1MjZlZmI3N2I5ZjhlZDA4ZmIyMGM4MzYwMDNlMDgyNDEifQ"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L14-L16",
+          "version": "repo-lines-v1:sha256:deceab783979d2812c6cf68074b29c4b2f822a7f7b21bd26a18cb1278a10d2f4:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGNkZDBiNzk0OTgxZmZlMzZmOTJkNzExYjI5NmU2NGYzMmZhYzdlYTQxOGU5MTlkNzU4MzAwZDAwMzZjNjE3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTJhNTg0NjM4Njc2ZTRmMTY5MzcxZWRlMWFmYzM5ZjI4NTZlZjQxNWE5MjQxNGU1NjA3NDAxMDg0NTNmYTQwNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTMwMGQ3NzhmOGYzNTA5NzhjZThlZmQ3NGMzYzU5ZTNlMTA3NjU2MDhiNzliNDc3NWRiZDQ3ODA1YjEzYWM2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzMzODUwYTVkYThmNTgyY2FlMzFlZGE5MWIwOWVmMjNjMWIzYmJkZWMyMWMxZTEzYzlkOWNkMmM1NmRlYzhiZSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_0bff927e64ed45289c52808e0b1caaf5",
+      "statement": "Local, non-Docker execution uses the same entrypoints with the factory flag: `uv run uvicorn app.main:create_app --factory` for the API and `uv run python -m app.worker` for the worker, run as two processes that meet in the SQLite queue under the local data directory.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L356-L362",
+          "version": "repo-lines-v1:sha256:8df5ae853c5fd0e208d35b1d66b99e563c24ebf97d38bdd49c7ae3e7aa12b28f:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzhiNjE0M2ZhNDBiZDllZGEzYjI2MWJiNWJlODZiNGE1ZjE5MzlmNzM3OGVlYTg4OGIwYmFjM2Q4MjExN2E3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDdjMDZjNTYxZDVjMzI3MzQzNjg1MjY4YTQ2YjMzOTFmMzk5OGVlZTg5MGQyYmU1MWYwZDIxY2M0YTUzYWU2ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTYyNTI5MWM1N2Y5OTEzNjhkOTNiMzU2ZmRlN2M1OGU2NTM3MWIzMDIxOGM1YjgxZGZjM2I5YTczZDkwODY1YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDkwMDAxNzRmNzUxZmNjOTdkZmU4MGI4YzMxYjEyMDEzZDIyYWIzOGIwYmU4YjE1MWM2ZDViYTU3NjM3YjAzMiJ9"
+        },
+        {
+          "resource": "repo://app/main.py#L1-L10",
+          "version": "repo-lines-v1:sha256:4c8aec0ba536fb901bbb87779e7315156dd6d5d0fc7800d4dbcc9981d9190973:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyMmI3M2Q3YzUyYjJkOWQ4NGRhMmQ2YWUzNGU1MGRjOWEyOGQ0MGQxMzRhMTU5YTdhYjJjZGY5OGExNGNhODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1YjZlODcwNmI0MzA0N2YyYTZkYjY3ZjEzMjYzODU5NTYwNGU2N2YzNjk2Njg3NmNlMDE1OGYwMDUzZTZiZDEifQ"
+        },
+        {
+          "resource": "repo://app/worker/__main__.py#L1-L35",
+          "version": "repo-lines-v1:sha256:60b30b18270269ecd191de075043a5681542597d50f8bd95c31119c5608c8bc1:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjdiNmVjNWFlMmI4MzBkY2NkZGYwZDE0Y2ZhYTcyZWRhOWNkOTFjMTliYTY1Mzc1NmQwZDE5YmViMGUzZTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2MjMzYjNmZmVhMzJhMjNkZjUzMDY1MzQzNDhmMmRlZTc3NmE1YTZmNzRmYjUzMzE3NWRkYzUzOWE4ZmU0NjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1e0b0242ca94cf2956d77efbbb2f54c",
+      "statement": "The deployment assumes a single host with a local volume: the queue is `app/core/storage.py`'s `JobStore` over SQLite (`openwiki.db`, WAL) and artifacts are a local `jobs/` tree, so multi-host scaling requires replacing that module with a backend such as Postgres that preserves the same method contract (`claim_next`, `heartbeat`, `complete`, `recover_stale`, `stats`, ...) plus a shared artifact volume.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L397-L399",
+          "version": "repo-lines-v1:sha256:fdf830eb68c8dc965e0aadafb589b0adf6afbe66c0b246673cf6c56eca4c866a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjgwZGMyZjkzY2JjMzRhZDQ4YWJmYTQ4NTM1NWRjNDM2MzE5YmM1MzgzZTY4NjY2ZmJhNmIwZjBmYTc1NDcxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTI0ZDkxMWM0NDMwYWNlYjBiOTg2OGY5OTQ1YWY4ODU4ODBkZDVhYzFjZjE1NmNlNDIxYmEyYjg1NGY3NmJmMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWM0NzBiODQzNjQ1MmMzZTE0NDkwMTAyM2FjODBmOTkwYzE3MDJkNDlhYWE2YWQxMmVmMmU1MTJjMDUyZmY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTkyMDZiOGQxOTM2MGU5MTM4NGQ2ZTZiODUwNzU4YjVmYTUyNjVkYmVkNTI4NWM4ZTdjMjdhYzUyMmNmMzEzMCJ9"
+        },
+        {
+          "resource": "repo://README.md#L66-L67",
+          "version": "repo-lines-v1:sha256:0dc76917dee5f65c2f5f726dbaa7794aaea15842464b0a10abe62f8ae7f7bf27:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDBmNDUxMjM0NDAxZDBkNGNjY2FjM2ZhOWM1YzA5YTZhYTcxMzUxMmIxZmQ5NmM1ZTFlNzEwNDhjNzk3MDg4NiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTk4MmJhYTlkMGQyYzQwNDdhZmM1OWUyZTk0MTViOTAxMTE5MDcwNjg2NDA4NzNmY2I0YWQ3OGU1NTdlMzUyMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzc5ZTI2ZmIxZjlkMjExMmU2Yzk5ZTY3NDg5ODc5NWYwOGFhNzM5YjM3M2UxMjdiNzViMGI4OTBlM2VjZmY1ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjBmMDk1MTk4NGEzMTQxMWExNzc3NzQ1ZjIzMjQ5ZDY1NDc3ODNkOTlmNDEzMzY5MzkzODdlODAyZWY1MzE5NyJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L1-L13",
+          "version": "repo-lines-v1:sha256:ed0787ae4b4a29bdf3b6a8ee61785490b1ee6a07336265e3985e5bfd28eb8579:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjOWM2MmI4M2JlMWFhODQxY2Y0YWJiODE1MzQxNTM5NGQ3ZjBkMDg3ZTRkNGYyZTI1MzAxZWQ3ZmE3ZjBjODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1YjZlODcwNmI0MzA0N2YyYTZkYjY3ZjEzMjYzODU5NTYwNGU2N2YzNjk2Njg3NmNlMDE1OGYwMDUzZTZiZDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0f148e466b9c46679f17ac44b4c4a29d",
+      "statement": "The image sets `DATA_DIR=/data`, `OPENWIKI_CONFIG_DIR=/data/.openwiki-config` and `OPENWIKI_TELEMETRY_DISABLED=1`, matching `Settings._default_data_dir()` which returns `/data` on Linux and `./data` on Windows for non-container runs.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L41-L43",
+          "version": "repo-lines-v1:sha256:70897e3f1d2f0add6eba812e5e2ac3cf96298a86c506644646488d972e7748a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzg4Yjc5Yjc0ODQ4OGNlYTY4NGQ2YWQwYTczNzlmY2UwNTliNzhkNWY2MDk0YjkyMGFjMGFhODgyOTI0ZTdkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOTg4YzUxNTczMzQ3N2E4MDFmMGY1NTgwYWMwMjQzYWM0OTljM2M0YTgxNjM5Y2MwZjJhZjZhODJjNzU0ZDM1OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmE2MmY0OTZkNDliZDc3MTFhYjM5ZGU0Mjk2YWFhMGEwNjU1NzVhMDAxYzk5YWUxMzIzNzJkYjg4NjczNWE0MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTJkNDg0ZjZmYTM0MzczNGIyMDdkMTQ1ZjkyM2E0ZGZhZmRlM2NhMjVlOGJkYzIyMmYwMGUyZDY0ZGVlYjEzZSJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L12-L16",
+          "version": "repo-lines-v1:sha256:9c7bfa5d27eada0314d16b3ce076dfe117bca2aa38722b60f85c41bfe851083a:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDQ4MTUzYWMwNTM5MjBiNTI1NzFlYmEwN2FhM2NmN2YxMjIyMTQ3Y2ZhNWFiZDBkMmJkZWZhN2ZlYjM1YjQzNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmU2NjIyMWZmN2ZlMGQyYTczNjZmZTk0ZjA5NTM1Y2Y1Mjc2MTJhMzM3OGQzNjdiM2U2NTIxZTQwOWJlMWFlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmRjMTE2MjY5NGRmZmE3MDQ2NTkwMDYxMTE1MGJjMTg5NWY5ZWY0ZGI1ZDEyM2MyYWUzOTIxMjM0YTVjYTY2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzcyYzc2ZDUyZmU1OTk3YTliZTY5NDM2MjA4NmM3MDFhMWQ1NTEyZjBkYmU4ODFiNDFiOTVlYzg1ZDRkNzhmZSJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L145-L148",
+          "version": "repo-lines-v1:sha256:0c43f749e4454d9dceacb132a5b580b9ccdc4de80ce02a23b895a5a82198ce93:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjNkMDBjZjI3MDk2NGQ0NGExM2RmYWM4NzUyYjA5ZmNjNDM1YjBmMTliMzE2YWJjZjgxYTdhYTY0YmIxMjJkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWRlNjNkZGUyNzdmNzc3NTU1ZWI4MWYwZmMwOGYwZTBkN2FhYWVjZmFiYTIwMjE1MzYwYWQ1N2FmZmNjMTJiOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJjZTQwY2E2NDk3ZGI5ZDFkNWM5ZTRiZWM5ZTQzMzFiNTEyMzI5MDc0MDcwODQ2NTg3N2IxYTM2YWI2NzIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGNlYjI0ZjM1ZDQ4MGQxNTNkYWZhM2EwYWQ5MzI5ZDBhNDQ5NzhmM2RhYmRkMGEzZjBkMjQ5MzAzNjQxNzk3NiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b9e83bcb37b6482896cdd9c89f53546b",
+      "statement": "`.dockerignore` excludes `.git`, `.venv`, `data`, `tests`, `__pycache__`, `*.pyc`, `.pytest_cache`, `.env` and `*.egg-info` from the build context, keeping local secrets and volume state out of the image.",
+      "evidence": [
+        {
+          "resource": "repo://.dockerignore#L1-L8",
+          "version": "repo-lines-v1:sha256:452ed66c5079bc41ca70226b0a1d738a45abe06f1a133a5b6bb29c03cf3acdbb:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZmQwM2YxNmZjNWFkOGJlNzBkNmUwNDkxZmEyZTAyOWJjNGEzMWY1YjBkZTZkNGFkZjhlN2RkNzA5ZDIzODQwZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjlhYTczY2Y1YmMzMzc3YTdkOTdmMmU4ZDJiYjc3MzE5NTgxNWVmZTIyNWFmN2YxYmU2ZjViOTMwNmJiZTE0ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjEsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzJjNjAzMGJhZGU3NDNmYWY2ODQyMWZlMmU0MGNiZmNhZjMzOTM2YWQ4OWRiNDY5ZGQ3MThhMGY0MDViNTk2NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_dc64919a19d842a8ac741ad25ba1b191",
+      "statement": "The test suite covers the deployment's shared contracting pieces without a model provider or network: `tests/conftest.py` points `openwiki_bin` at `tests/fixtures/fake_openwiki.py` with `run_local_worker=True` to drive the real pipeline in-process, `tests/test_worker_queue.py` exercises atomic exclusive claims, heartbeat/cancel/complete with stale claim ids, stale-claim requeue and stats, and `tests/test_health.py` asserts `/health` returns `status: ok` with `pool.workers` counting the worker.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L44-L66",
+          "version": "repo-lines-v1:sha256:c18c9fc8fbbe67120ef46af5af7b8a59bdb0d8f4753522929c18358f84e218a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMTk4YzFkNGVlMTBmOWVmMDYwNzZhODViZDAzZGVmMzE3OTc2NzNhYjMxZDVjZmYzOGRhZmNmNThjOGVlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/test_health.py#L6-L13",
+          "version": "repo-lines-v1:sha256:1ee110aa501d8a060e48ab1b10b08c303d8217644fdf596f9554160689da835f:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2MwZDdjOTg3OTdhNDFjODQwZmRiYTVlM2RmN2Y2ODU3ZDJkYTBhMTlhOTY5ZDVhMTI0NTUzZWY3YmRhOTUwMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWRiNDM2MzQ1M2E0NTgwMDZlZjgzNjdhZjJlMzEyZWE4NTQ3Njc5MGM4NDE4NWI3ZmJjZjU5NjQwMjc4OTRlYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTIxNWU5YzAxMGU1Yzk3ZGVmNDc2M2VhMTQzN2M0YjI5YmQxYjUyMTRiMjY1ZmY2NzMxZDQ0MzdlYWZjNTgzMyJ9"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L27-L105",
+          "version": "repo-lines-v1:sha256:47289f7ff3e687b9f19347339c031b7437d3a4b6ab1f903e5d9d04ef5b48b27e:eyJzZWxlY3RlZExpbmVDb3VudCI6NzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlZWVjMWU2ZjBkYTZjOGFjNGY2MjJmM2M4OGQwMDQxNjdjNmIxNmFkYmI5YTZkZGFjZDY1MWJmYWUxZTFlNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5M2VlZWYxOTIyMWUwOGE5YzBmMGJjYTU1YWJjNjY3ODhjZTMzNTVlZGZmNjJjOGI1ZjdjNmZlZTMzNzRkOGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyZThhMjFiMWViNTA0MGMyMTY1NGNiZTQ2ODA4MjA0ZmJmNTVmNGFiYTY1NGNkZWQ1MWNkZDA4ZDVkMTVhMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJlN2VjMmZlNWRhODhiYjI3NmJkYjlkODZlODM2MGQ3N2EyMTBkOGM5ZmU3YzY4YWQwNzYzY2UzYjcwZGY4MGEifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

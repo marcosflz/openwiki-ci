@@ -1,0 +1,542 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:d25ae66edfc18d0163b551569ea5bec8d640b62c69f7ef71c81c274668558c4b",
+  "claims": [
+    {
+      "id": "claim_fffa4014b32341fc8d13257cd234f6cd",
+      "statement": "JobStore (app/core/storage.py) is the single coordination point between the API and worker containers: generations are rows in <data_dir>/openwiki.db while artifacts stay under <data_dir>/jobs/<wiki_id>/, so the API only enqueues/reads and workers claim and report.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L1-L13",
+          "version": "repo-lines-v1:sha256:ed0787ae4b4a29bdf3b6a8ee61785490b1ee6a07336265e3985e5bfd28eb8579:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBjOWM2MmI4M2JlMWFhODQxY2Y0YWJiODE1MzQxNTM5NGQ3ZjBkMDg3ZTRkNGYyZTI1MzAxZWQ3ZmE3ZjBjODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU1YjZlODcwNmI0MzA0N2YyYTZkYjY3ZjEzMjYzODU5NTYwNGU2N2YzNjk2Njg3NmNlMDE1OGYwMDUzZTZiZDEifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L43-L60",
+          "version": "repo-lines-v1:sha256:46de95d83f928ae1f6a23b87eb97509e8b4129cc0beeb5c844c258df9399ed60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NTBjNWM2ODkwNDY1NjMyZjBmZTI4MDBhZjY3N2UwODYxMWIwNjRmNTI4NDJkNDAyNmU0NjA5OGI5NjMxYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhMDYwYmM1M2FiYmNjZmQ1MDMxOWEyMGQ1N2M3ZWZhMjUxMzMwNTZkYzkzMDVkYzhjYWY5ZmMxMDdlNjM5ZjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0NmNiYTAxYTA0NWRlZTg1OWZlZTMwY2EzNWQ3OTM2ZmM4MzI0YzVlODBhMmY0OTJhNmEzMGYwMzAwZTIxNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZDM5Yjc1ODNmMjJiYWZlMTUwMTM2MzVkNjIwN2EzODVkNDRmNTRjZjYxZjVjMzlhMWQzODU2ZGM1OGY0MjUifQ"
+        },
+        {
+          "resource": "repo://app/worker/__main__.py#L27-L35",
+          "version": "repo-lines-v1:sha256:14a3d22248f12ed6da1e5db50b628afca0a13179977b69ecfed2e5580efca498:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWIzOTc5MzNhMjRhODAxZWU5MjMzMjdiZDY5YTAxMDQ5YzA3NzkxNTAyMWNmMmVjMzlkZGE0ZjgxYWE4MzdlNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTYyMzNiM2ZmZWEzMmEyM2RmNTMwNjUzNDM0OGYyZGVlNzc2YTVhNmY3NGZiNTMzMTc1ZGRjNTM5YThmZTQ2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2UyODJjMGZhMjdiMTBhYzczZDM5ZGY3YzliNGU3ZmIyOTMxOWQ5YjRiYTgzYzhiZTRlM2I5ZDE2NjMzMzkwNSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2Q0MTM0MGNjMjM5YTE1OWNlOWI2MDIyZTlmNjMyMjgzMmUyZWFkNzZjYWU5ZTQ3NTRkMjEwZWI4ZmI2ZDVlOCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_349e6141aa93423985da84552a282ff6",
+      "statement": "The store is scoped to a single host with a shared volume and is designed to be swapped for a Postgres-backed implementation exposing the same methods (claim_next, heartbeat, complete, recover_stale, ...).",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L397-L399",
+          "version": "repo-lines-v1:sha256:fdf830eb68c8dc965e0aadafb589b0adf6afbe66c0b246673cf6c56eca4c866a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjgwZGMyZjkzY2JjMzRhZDQ4YWJmYTQ4NTM1NWRjNDM2MzE5YmM1MzgzZTY4NjY2ZmJhNmIwZjBmYTc1NDcxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTI0ZDkxMWM0NDMwYWNlYjBiOTg2OGY5OTQ1YWY4ODU4ODBkZDVhYzFjZjE1NmNlNDIxYmEyYjg1NGY3NmJmMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWM0NzBiODQzNjQ1MmMzZTE0NDkwMTAyM2FjODBmOTkwYzE3MDJkNDlhYWE2YWQxMmVmMmU1MTJjMDUyZmY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTkyMDZiOGQxOTM2MGU5MTM4NGQ2ZTZiODUwNzU4YjVmYTUyNjVkYmVkNTI4NWM4ZTdjMjdhYzUyMmNmMzEzMCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L11-L12",
+          "version": "repo-lines-v1:sha256:9db39a55ff7a3d09d6d8844cf2155a2d5334c783ac1172fb83721f8c87bed677:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjBjZTMyMmZmN2I1NTdlM2Q5OTczZWE2YmY0NmQ4MGI1ZWUzN2M3MDczOTJjZmUxZDBkZDhhYWUyMGU5ZjBmYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMThlZTI4MzNlNmU0ODE3Y2M5Mjk0ZWVjZDI2ZTIzYzEwODEyNWE1NDQ4MDExMDYyMWE4YjIyZDhkODViMWQ0OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGE3MjVkNTI0ODEzYzZhZWY3NzZlZWM3ODcxZTNkM2E1NTQwZGFjYjcyYTE5OTgwNTYxNjAzNjA2OGQ2YmNjYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWFhZjc2MzdjYjZlN2U1ZGI4NWQ2MzQyNzQ2MDE0ZGYwNDFjY2Q1NThhOTIwYjI5ZWI2YWM3MTlkN2JhZjVjMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_af9e862d8da0478d8cb69a2ccf39022f",
+      "statement": "The schema is two tables: wikis (wiki_id primary key plus lifecycle, request and JSON payload columns, with idx_wikis_queue on status+created_at) and workers (worker_id primary key plus last_seen_at); both are created idempotently on every JobStore init.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L118-L123",
+          "version": "repo-lines-v1:sha256:3c7e6d46a10685c0d343a05eed2ff47a996490c25a452fcd2082825db4e8cda1:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk4ZTIzMmMxNDkzMmExODhjZWIwY2QwZDc5ODBhODRmNTU0NWUwMzhiYWI1Y2M3YjM0OTViZjUxZWNhYmNmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTgwMTNiZGQ0ZDliMTQzNDVkNjNhOGY0YWE4MTIwNDMyODFlOWNlZTYyYWRmNWU3NjUxNzA3MmYyYzBlNTZhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjM1YWIzYzZlOTFkYTFkZjk3MDg3ODNmZWVmYTg1NWYwZWRjMjYxYjgzNDQxNjRkODQwM2I1NmJjYjU5YzVhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDMyOGNiY2JkMDJhMTFlOGI0OTE0ZjRhZmVlODRlMjUwYzllYWJhYmJlOGUxOWZjZmVhMDYyOTlkNzQ5YTg2MCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L59-L88",
+          "version": "repo-lines-v1:sha256:79db9287318cccd57284f47ff072e2b98f353533623e41b4f65427a5b6a37ae0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiY2QyMjE4YzgzYjY0MjlkZDk3ODMyMmY0NWZjYWRjNDdiOTAxOThiOGQwOTNiN2VlYTM0NzI5NjE4ZDE5Y2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4MGY1MTJkNGNhMjBkODlkN2FkY2EzNTVkNzFlNmQyYzViMmZmYjQ1MmI2Y2Q4ZGM1MGI1NDg1Y2UyODdjNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1NjcyMmUwYjIwZjViMzI0M2NlMTE4MDQ2ZGM1ZjY4NDIzY2QwNjcyN2I2ZDlmYTkyNmY1N2M5NWFlZTk4ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_748ac848b625408288b68f81034ad3df",
+      "statement": "Each JobStore opens one connection with check_same_thread=False, timeout=30 and isolation_level=None (autocommit), sets journal_mode=WAL, synchronous=NORMAL and busy_timeout=5000 so cross-container readers and writers do not block each other, and serializes its own statements with a threading.RLock.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L111-L122",
+          "version": "repo-lines-v1:sha256:20f3ccadb3fdb262675c274065b5e4b677f8de462b5fd2dd558f53fcb9dbb262:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyNzEyZGM4ZjBkODVkMzZmZjliZWNkMjlmNmMwOWY4NTRhZTliYTU2NzVhZjJlY2ZiM2FkNDRhNGIwNWVjNGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkNjEwMmU0NWNjZTliNGViODcxNWViZDc4NzZlZThjOWFiNzllZWU3NDRhYjQ4NmEzZTY2YjUxYjljODg0MzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhMDdiMzkwOWFlNTVhNDgyODBmMWNmYjBmYzA2OGIxYjUzOWM3ZTJiMzU2MTI0NGNhYmNhMDJjZGYxOGEzZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmY2QzNzg3OWQ0ZGYyNDE5MmM3NDk3NGI1ODAwNjY2ZTI3MmIyZTk1ZmQ5MjBiNDE3MmIyOGEwNzc5YmVlMTMifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L7-L9",
+          "version": "repo-lines-v1:sha256:b9ae3a6c00af3840c49822b6155b1d5803e691aa1f2cd7c0cf06f51adc09b643:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTZhYTFmMjkyMTg5ZjFiOGE2MWZhMjZhYTZiY2JjNWViMzRlNTMxNzk0MzUwNWU3NWMwODNmMmZjODM1ZjMxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGM3N2QxODQ5YTg3MDg2M2Y1MDQ0NTRlZWZiYTkzNjgyZTYxNTlkZGE3OWUwYTE3YWExYjNjZTY1NzgxODZmMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWNkY2U5ZTE0MWE2ZDRmYWUyYzdiOGVmMzdlZjEwODg1OGE4YWI3MjU2YTFiMTg5YWUyMzZkNTdiZGFlZGIxZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYTI2ZjY0YTVhMjAyMTgxOGUxZTIyZGE0YTEzZWE2NDc3MmZlY2EwZDhkYjA3MGQ4ODQ4NzBkY2U0OTYwYmNmNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_05f131099df14a1fb07a504d7a2a752e",
+      "statement": "ACTIVE_STATUSES, RUNNING_STATUSES and TERMINAL_STATUSES (frozensets) define the lifecycle vocabulary enforced by code rather than by the schema: heartbeat refuses non-running rows, recover_stale only sweeps running rows, complete raises ValueError outside terminal statuses, and the delete endpoint refuses non-terminal wikis; ACTIVE_STATUSES itself is a documented constant no store method consults.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L292-L293",
+          "version": "repo-lines-v1:sha256:d4532ded9c6e98093b9c61e24910f672b99d3b92eeb9e379239c598d0164cf57:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmQxMWYxMzY3OTdkNTg3NGUzZTQ3OWQ5MjgxNmUwZTg2ZDg0ZjU1NmMyZjk3N2I0M2Q2MGFlZWRjMGU2NjE4NSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzU5ZjVhN2Q1MGQ3NmEzM2VmMDE3MTJiZDQ5Mzk4NjRlNDYyZDFmMmI1ZTZmOGQzMzU2MTNjYTNiZGJlMDkwMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDVhMGJmMzUyNTM1MGQ3NGFhNmZhYjVmZjUxMTAwN2JjMmU1MzkyZGRhY2M2NWRlNmFjMzYzOWU3NzdjNjZjZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDFmYzRkYmVmNzg5MWQ5MGZmMGVmMDI0NWU2YjkyMTc3OTBkYWIyYmExMmQ2OGRkMDZiYTE3ODc1MmRlZDliNSJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L30-L32",
+          "version": "repo-lines-v1:sha256:dfbc00a6df1905a8666225f97919ec04e647b1fb86eef5be70f31886fe3f35c9:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmFkNTg1OTMyZmUwYmVkNTUzNGI1NjQyMzM0NDdjN2QxNTZhNWM0YWQ0ZmZmYTRjNjllMDI2ZmVmOGZjMGZkZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTdkMGU5NGE1Y2ZhNzFiMmMwMTQzYmVmOWI5YzBlMjdhZTJkYjdjYjdjYzBkYWIxZTMwYjc1MjhiN2ZiNjJmYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDhlM2FlZjJjM2UyOGY4ZWE1MTRmZWNmODE4MzkzYTBmYTE4YjVhYjI0MzAxOTg1NTg0OWFkZmYwOWY4NDYyMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzIxNTZmMjE5Y2NmMDgxMTgxMjI0YzAxNDlmOTRmYzQzMjNlYWUyZjM2NTEyYjNmZDcxZTJjNzY0YjNjYjYxZSJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L322-L323",
+          "version": "repo-lines-v1:sha256:bdcc2b0b66659378e32af1b8fa9a6475317e23fdf228c18c6b5dfd1901a5a737:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZTg1ZTc3YjhjNWZmNmNlOGMwZDU1MDdlMTJiYTZkMWEwM2I2MGY0ZjlkMjEwODkyMDNlY2U2NTEzYzJlMTQ4MSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWY3N2E3OGFhZWY1MzUxOWYzNWU0Nzg3YjlmZWZjMjVhNjM0YmRhYzVjNjkwYTgzZjRjNmI5ZWY4OWU4YzllZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzA2Nzc1ZGU5NDZkMGUwY2I2N2Q4YzZhYmUyNDAyNzJmYjZiN2JmOWU3YjRiYmVhMzk5NjdhNTY2MjNjZmZjOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmZhY2U2NGYxZWVkZjVkYmEwMThiNGMyZTc2NGJiNjBmMzYxNWE5ZWYzOGYwOTcwNTU0NTA5MWExYzg5ZDI2MCJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L234-L245",
+          "version": "repo-lines-v1:sha256:88f6c3847b55147002f2b456c10162febf605b5b86651c06a05721057a6f3e0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5MjFmZmYxYzVkODZhMTJlMjJhODVlZmZkYTZiNDhhMzY5MzlkNTY0YTk5N2VhNWYwNDlmYmRjZmFmMzRjMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlNWEzNDQ2YzExMjM5MDBkMDU2MzcwOTI2NjIxYTExMWU0NWFjYjM2Yzk1YWIwOTUyOTRmMmU3ZjQxNGZkMjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://app/schemas.py#L13-L21",
+          "version": "repo-lines-v1:sha256:c19005d65f3949d5e1d306edfd523886abe7e9cfc81ef6e532b76f61ca1037f3:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzY0ZWI1YTgwZGZhZTZhYzJmNzFiNmQ0NTk0NTZlNWMyYWM1ODAyNjRhMmVkYTI2ODczYzVmMTVkZTU5MWU4YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzUwYzYwZWJkMTdlNzE4ZDA0OGNiOGI1ZGEwNDRmZmYyZGU4NjY3YzVmMzE2YjA4Y2E0OTcyYWQzZTk5OTI4MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWEzY2QzOWFhNTk3MGJjM2JhYzdlNTUxNTk3NTIzNGZhMzBmNzYzZDQ1YjFkZGFjYjRhODBiMjc3Yzk4NzJhZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e98a2f9119864a1f89ad4177e38e35d1",
+      "statement": "wiki_id is a 32-character lowercase hex string validated by JOB_ID_RE via is_valid_wiki_id, which gates get, delete and the legacy importer so malformed ids are rejected before touching SQLite; the same generator mints claim_id values.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L126-L130",
+          "version": "repo-lines-v1:sha256:b08c652dc5a558881c5dfb6bb1ef851e3306819eea870467423293d51486b435:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDViMDVlMjc0MDE2Y2QwMzJkNDhiNzEwNjM0NTBiYmVjOWE0Y2Q5ZDMwYTU5OTQxYzE0ZjFiMmRiMDkyOTg0OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDgwMzM4ODQzOGJjOGJjMzNkYjZiNGZiNmUzZWExOTE0N2QxNTA1YWUxZWVjMWY3ZjJmNDU3MDg5NzAzYmE2OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWZjZDM3ODc5ZDRkZjI0MTkyYzc0OTc0YjU4MDA2NjZlMjcyYjJlOTVmZDkyMGI0MTcyYjI4YTA3NzliZWUxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzA5MTA4MWM3Y2YxOThiMDE1M2RhYmQ5ZWE0NDM2YjIyMDk3ZmMwYTdkM2U1MDNiYTcyM2RjYjY1MGM5YWU1ZCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L175-L180",
+          "version": "repo-lines-v1:sha256:d56d7e4fb381791a79756c447dfcfd0bfe6d3bc05f22a3f192d91d414684ec9c:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzNhY2E1Zjg0NmQ2ODkwNjBmZjA2Njc4OTI4MDViNzRlYTVhYzg5YjdhMmVlMWEzYTMyMjE2ZWU0MjYwY2VhMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNWQ3M2Q3ZjFlM2FmMTNkN2YxYmUxMmE1MDRkZmU0ZjRiNmQ0NzI0ZTI0OTk2ZmI3NmI1MzY0MzIxY2UyNzdlYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMWIwM2EzOGJmZjZmYmI0YWYxZDIzYmQyYjg2NTAyYzdlNjI4YzkwNTc1NmU2NzY1MjVjOGYwMWEzZDIwMmFiNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjI2NTFjYTNiNGMyOTJjMzZmN2U5OGU3NjI1Mzg3OTgyZTNkY2E0Mzc4NWEzZWE0MWJiMWQzNmE0MmJlMjhiMyJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L28-L28",
+          "version": "repo-lines-v1:sha256:f5002489dbe0d73ffd11c733c489f940349a8fd0c6af2f36642a8e159dfb551e:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUwMDI0ODlkYmUwZDczZmZkMTFjNzMzYzQ4OWY5NDAzNDlhOGZkMGM2YWYyZjM2NjQyYThlMTU5ZGZiNTUxZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjUwMDI0ODlkYmUwZDczZmZkMTFjNzMzYzQ4OWY5NDAzNDlhOGZkMGM2YWYyZjM2NjQyYThlMTU5ZGZiNTUxZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjM2ODJhMWFhYjAwOGQ0M2ZlYmQ4MWEwYjFjNTVkYjMzY2I3YzgxMzdmMGNkMmUzNDZiNGU4MWI5YTJjZDM2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTBjNjU3ZDBmZDVjNDUxM2IzODg2YTBlZjg1YmYwYjRmZTA2NmJkZTIyNzAzYjJkMjliMTNhMTg5MTYwODNhMSJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L95-L96",
+          "version": "repo-lines-v1:sha256:f8d6e16256cf4851b07b2363b80f0a5322a56130624b0b4443e8f0fdc634a9c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjYxM2NkMmE4NjIxMjAyNTJlZDg4NjBlYzgzNjgwMDhkZTM2ZTlmZGViYWYxZmNlZmM5NGI5ZDM4YzExNWM1YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjNjN2RmMDcxODMxNzdhMTM0MGI4ZTQ3Njg3NTM0ZDdhOWUxM2UzZjliZjUxYTNiMjhmZTdkNTNlZjg0NTI2NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjFjZTA1MTAyZmQwODFkYTBkNzY3MmI3ODViYmJmYzQ2OTFmYjcwNDA3MDE5MThlMjk3MzM3NjA3OTA4ZjE0YSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTQ5ZDJkZGQwZDQ5M2ZhZWY5NTU3MGJiNDUzMjZiNDIwZDU0YzExMDhlZTNhMTRmY2Y2MjE4ZmQ3OTY0ZTA1OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_c2f731fd0c224484a162effa0b174809",
+      "statement": "update() is guarded by the _UPDATABLE column allowlist (raising ValueError for unknown columns, which excludes created_at, wiki_id and the write-once source), json-encodes _JSON_COLUMNS (source, push, push_result), coerces cancel_requested to 1/0, and raises KeyError when rowcount is 0; _decode reverses the JSON encoding while suppressing JSONDecodeError and normalizes cancel_requested to bool.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L190-L217",
+          "version": "repo-lines-v1:sha256:71b2005ef4fd5f2b08b77579b9323b404104afbd24120430e5e1c3ee144d7d3d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3MGE2MWIxYTkxNmIzNGI4ZDhiOTZiOGJkYzc5Njc4ZmM2YjkxMjY4NTk3Y2JiOGZhNzQ2MzE5OTVkNmQwOWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljMjMxNzk5ZTU5NzU0MWVkNjRkNjliMmVkNzlmZTdkYmU1NTM5NWNkYTdkZjVlMmRlMGM5YmUzYTgzZWJiN2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkMWRhYzhiNzRlNTUyMDE1MDc2ZjUzMWI2NmUwYWRlNGY5NWZiYmM1YmExZDhjNDRjODIxYzNkZmY5MjBmZGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVkNThlZDQ0OWU4M2U2ZDM2MjIzOWIzN2ZhYzNkNmE1Y2MwOWVkMjk5ZjllZmZkZWJhM2FkMzNmNTc5NWJiYjAifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L34-L57",
+          "version": "repo-lines-v1:sha256:8755e529dde51c43d890a577bfe749b69293f0136f4c03d0cfdd365f3e5cf4f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MWU1MTFmNmViNmEzMDVlN2RhODM2MDczNzJkYTAwNjc2MDYzZWZhZDNmOGM4YjNjMzRjZTFkMjU2YjdiYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3ZTM3MGZjZmMzYTU4NDNmZmE4ZTJmMzNkOTYwNGFkOWExZTY0NWVjNTM3YjVhZTZkODBjYzZjZDVkNmJjZDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5MDliNWJmN2EwYTMyOGJiODgxZDFmYzhiOTlkOGJjYmFlZDQyYTY1NjRlYjdiZjIxMmZhMjg0ZmY4M2VlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwNjIyZDJkOTM2MjA3ZjY5YzIxMDVlY2Y5YzdjYzk3OTJiMGFkNmI5MTMxNzIzMzhiODNkYzQ5ZWI2N2E1NzMifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L421-L433",
+          "version": "repo-lines-v1:sha256:28dfaa3deef0a5fc75a5dcaa9df68090c19f153bfdbab3aabf550f36df1d069c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYwMzM2NGNmYzY4MDVhYTY4NDhhNzYzNmEyMWIyNzkzNTQ0NWEzZjZmZjEwM2ExYjhiMGZhNmI3NzRlZmZjMzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjMjVlM2FlYzFiMTNmOTBhMzhjYjJjY2NiZjlkZjgzYmM1ZmU2NjAyODE3OTJlYzczMDc0MjcwMjMwYzcyYjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE5NDZhNzZkYTI1MzA4ODRmOGZmNGZmMDcyZDVjMjkwZDc1ZWFjZGM3ZTdiZGNhZmE3N2RjNzQ1OTQ2Zjc2NzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEzNTdhNjNiYWQwMjgyNmE1YmJkMWQ4ZGI1ZWUxZTdlM2I1NDlmNDFiMTVmYWQzZDk0YzJhZjYzMDdhMTNlMWYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_955cce73f1a842f891d3ed5bea25d883",
+      "statement": "claim_next is the only method that opens an explicit transaction: BEGIN IMMEDIATE before selecting the oldest queued row, then a conditional UPDATE ... WHERE wiki_id=? AND status='queued' that stamps claim identity, resets cancel_requested, increments attempts and keeps the original started_at via COALESCE; it returns None on an empty queue or when rowcount != 1, guaranteeing exclusive claims across workers.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L243-L269",
+          "version": "repo-lines-v1:sha256:25fdf753945a0b032263a0bb88cf92fc75616b0a43aca9352feab12d8ad2e0f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTk3OTE0NzNiNzkxOTIzNzY1MzkwN2IwMmM2ZWZkYjg5NzU5YmMwMjAzYzRhZWE4NzNkMGY4OGU1YTQ3YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwMjEzODY1M2EzZDVlMWU3MDVlMjBkN2ZlMWExNjZlZDk3N2Y0NjJlMDkxOGUwOWI1N2NjNzVlN2U2ZTQwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMDQ1ZDY2N2E2ODBmZWRiN2ExMjUwN2JjNzIxZTEwNzQ2YmIxNDgwY2ZjNjExNGU4NDIyNWQ4MDY5YjM0NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxYzhjOTg2NDg3NTg0ZGNhOWY1ZDBkNjNlMmU1NTljY2IyNGI4ZWJiZmJlNzcyNzNkN2FiZmNiZWM2YzIzZjkifQ"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L27-L40",
+          "version": "repo-lines-v1:sha256:dd267637fd894a0634c5975988670f1ce00fd02118b585a295d08d21ecfebdc8:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlZWVjMWU2ZjBkYTZjOGFjNGY2MjJmM2M4OGQwMDQxNjdjNmIxNmFkYmI5YTZkZGFjZDY1MWJmYWUxZTFlNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI0YWUzMDM0YTc2NmMzODUxZDZhYjgwNDYyZjJlZjkxNjk5NjQ1NDI5M2RiYzc3ZTk2NmZmM2ZkOGU5MGU4ZmQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyZThhMjFiMWViNTA0MGMyMTY1NGNiZTQ2ODA4MjA0ZmJmNTVmNGFiYTY1NGNkZWQ1MWNkZDA4ZDVkMTVhMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE4MjE2ZjlhNDQ5OGQ0N2M1YzI4OWRkNTFkNTQyMWNjM2Q0NjM3NzkxMjkzMDhmZmNkNGQyNzc4Yzg2MzM3OTAifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3e629a6c98a14469b24ccbe1ce00695a",
+      "statement": "heartbeat doubles as lease refresh and progress channel: it updates last_seen_at plus optional status/progress/pages, returns {\"ok\": True, \"cancel\": <cancel_requested>, \"status\": ...} on success, and returns {\"ok\": False, \"cancel\": True, ...} without writing when the (wiki_id, claim_id) pair is missing or the row is not in RUNNING_STATUSES; callers treat ok=False as a lost lease and cancel=True as a user cancellation request.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L271-L308",
+          "version": "repo-lines-v1:sha256:c0451c6dd807cded94d8ca706ded480fd6d1db5ae09ef36202e437e1669ec677:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMGVmOWIzMzdjNGEyMTY5MTQ2NjRlNjM1NWMzMGUyOGU4YzY5MDM3ZmEzOWVmMWIzM2YwYjM3YWE0ODc1OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NjJhYjU0ZGU2YTJmNjNlNzRjNzk5Nzg3ZGNmYmZkNzI2MTIzNWQxMzUxNjRiYWE1MjZhMTc0NTA2YjZmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0OTE5NjY5ZmU4YjQ1NmU3ZDkxODE2YzkyN2ZmMTVkNzg4Yjc4NTY1NjA0MDE1NzNhNTg0MTkxMjk5NjA4ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYTM5ZTJmZTUyODU2MTg3OTBiN2QzNjczZjZkYzcyZjJmNDI3MGNhNDg2MDdjYTUyYmE0YThkMjRmNTI1NzYifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L70-L77",
+          "version": "repo-lines-v1:sha256:2f9c5ad2fef2fcfb8c8cf9cc203f8ee1126d741667003053bfec2ac237d45dbf:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzdiMjk1NDMzOWNhYjg5MmZmOTQ0ZDM5YjFkMGExYWU2OTYzODhhOGVkYTQxOGU1ZDRhYTg0ZTU4ZGMzODkxMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTIwZTczNjNjNDBhOWY0N2UwMDhkMGNhNmMwNTZjODkyN2UzNDIzY2M4OTYxNTlmNzBmZTA2MDhlOGI1YThkNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODJjNDA2ZWIyMDEzMWFkMjA4YTQxZmI3NjFiNThmYjcyYzNhNjYyMDc5ODUzMGVkODI5ZTYwY2NlZjJkNGY0OSJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L155-L158",
+          "version": "repo-lines-v1:sha256:2376f030740f8c8e8e08ca4e77120ea3584877220b9e075a99f8b25bf650a370:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMzk2ODEyZGY1NzIyZDNjNTg3MDc5ZGMxMGU4MjU1YzMwY2IwNWI2MTBhNjk5NzA3MzczNGEyOTYzM2Y4MDhjMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjJhYjU2YWMwYTg2OWJmODA5ZWVlMWJkZGNlMzg4YWYwNzdjOWZiMzY3MjUyMWRjN2ZjOTVlMjA5YTExNzdjYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTljYTUzNjg2MDI0ZjM0Y2FjMjMyY2QyYTI1NmZiY2MxNTI1MjEzOGYzYThlNDI0ZDM0MTg2MWVmZWUxNGU3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L43-L57",
+          "version": "repo-lines-v1:sha256:7b1ceb168761f8a6df51442ee79dddc63a54bf0a8e4fcd71161e9db570ec14d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZiOGQyMDAyNmY3ZDY5YTkzZmM5ZDZlM2FjMGUzNjk4MTcwYzkyZmI5MWIyNDI3ODQ3NGZiODk2YzU3ZDUzZTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI3N2E2YWYxY2ZmNTE4OWNlNmIzYTg5ZDNkMzUyYWU5NDYwNTk2NzRkZmU5Y2ZlZjlkNzg5YTBiYjBkYjhjOTIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmNGQwYmY3YjQyNjU4YWVlNTVlZjUwNTBmNzJjMDU4ODJhYmNhZDk5MzZiMzQ2ODU1MTUyNmM5MjhiNmM2MzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAyODhjN2E1YTg0MTVjMDNmNTUxNzhmZGNkMjIyZWI1NzgwMGQ0NzVjYjM2Y2I1NTViMWZmY2RjMTdlZDlmOTkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c65827f0b47d4689829a80ec77b41419",
+      "statement": "complete() is conditional on claim ownership: it rejects non-terminal statuses with ValueError and performs a single UPDATE ... WHERE wiki_id=? AND claim_id=? AND status IN ('fetching','generating','finalizing'), returning True on rowcount == 1 and False when the lease was already lost, so a stale worker cannot overwrite terminal state.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L310-L343",
+          "version": "repo-lines-v1:sha256:c540bace3fc1d460fd6018a3a97eba92c688a686bf8ea90a140044f4f36aa18c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzYzJlMTY3ZTNlOWI4NDhiOTAzYzMyYTkwZGRlNjA0YmY3ZWU2ODRkY2ViOGEwMzhkNmEzMTM0ZTUzNWI4ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyMThjMTgwYjMwNzJiOGZmNDI2N2ZjNGRlZmZhZmIwOWQ4NWZhNjFkMmM1N2JjYzAyMWQyOWQwZWE2YmY5NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiM2QxMmE2NGYzZTRiMDk3OGFiY2QzMmFiZTQ1NmE1MTY2ODRjMjE5ZmM2NWE1NjhmYzM4MjA2NzBmMzgxMmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4OTcyMGI5Y2I1MWU2MzU1NzhhZDhiNTU0NTBhOWE4YzAwMWEwZGY4MzU1ZTVmYjI0YjY1ZjJiOWJhYjE4ZjIifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L96-L126",
+          "version": "repo-lines-v1:sha256:174f94dbb67b238df1320813c51169800188818fe93736a1be2647e7ca588d84:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM4ODM2ODVhYWNmMzA2ZDBmZmY0YWUzMmRjZWQ0ZmJmNDM0ODZjZWJiMGE3YzZiZjBmZDExNWVjNzZlMDM0OTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxMDM0ODFjNTdkMGYwZGMwZjc2Y2QyY2M4YjM2MDRjNGU4Mjk2ZGE0MTIyYWRkMTllODE3NDVkYzdlMzMxYTYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYzMDZjMzY3M2U2MjYyMTExNzhhNWRhMTc1Zjk5YzdhY2QwNTUwYjE1MzQ3YTY5M2QyMDFhYzU5NTYyMGU0NDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjEwMGRiOTVlZDAyMjkyYTA2MzY4ZGRjMmU0OTJiOTM4NzkzMTMxOTk2MWM3YjkzYWI0M2ZjNjYyNTNkN2JhNGIifQ"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L60-L68",
+          "version": "repo-lines-v1:sha256:8730ae54938068726627e57b72200082aa0dee272dd0dec0be54bbffe26c34a1:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNWE3OTczYWEwNWQyYjgxNzU2NDA4MzE3MzNkYTJmM2ZhNjc4NThlNGYxNWEzOTExN2M2OWFmZmE0N2M1MzRmMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDRmNTRiNTAwZThhODI1YTFlNmNhMDY3ODQ4NTE2OWUwN2RhYjkzMjgzOGU2NTQxN2E0NGU4ZWVlYjg2MDAzZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTE1MjA3NTcyMzBmZTkxYTdkZjEzZjg3N2JkMTFhY2E2Yjc3NjliNTQ5OTkzMTIxZGZlYjIxNDE4YjNjMmUzNyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDY5YzVhODU1NjQ3Nzc3MmM1MDk4NTllODVjMTliMTQxMGIyZmJjZDI2ZjBjODQ5OTY1MzFmZThkZTQ0ZTU4YyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_b964d059e0eb477c836363f4f28974aa",
+      "statement": "recover_stale(lease_seconds) requeues every running row whose last_seen_at is NULL or older than the lease, clearing claimed_by/claim_id/claimed_at/last_seen_at and cancel_requested while preserving attempts; the API runs it at startup and periodically in _reap_loop together with prune_workers().",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L345-L356",
+          "version": "repo-lines-v1:sha256:0bc515054cd31cc2129d901d5d9de545e5d0a821001c26e4b6920b65148e00f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTAyZDc2ZWUwOWZiN2M5NjJlNWM5NzRkMjJhOWZmNDVkNjMyYjQ5YzFjODQ2M2IwMzg3YjUxZTNmN2Y0YzcifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L32-L40",
+          "version": "repo-lines-v1:sha256:8d12b2cd359a8db5a6bd6ea33e07ab6c2998440ed681b6768e630e28770b27ee:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM0NDEzYzFjOTI1Y2NlNTM1NzMxZDcwY2Y2ZGVhNjNmODE5MzA3MWYzNmVhZDc4ZTkzNzNjYzEwYjE4YzUwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY1MTMwZTA3Y2UyNjM4Yzg4YTBjNzVmYWY2MmExNjlmOWZjOWNjMjI4ZGFmM2JhOGQ4MmQxOGM5NjRkNGY4NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI0ZDRjYmRkNTU1OTIzMWM2NTY5ZmFlYWY0MWUyMjZlNTJhMTM5NmIxN2I3MmYxMGIwZmQwNDY3OGM4YTZkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWQ2ZTBjOWZmMGI2NGNkMjIxMDVhOGU0MzZhMGJlY2IwZGE5ZWU4M2MyMTg3MmM5NGE0YjBhZDY5MTdmZmMxNiJ9"
+        },
+        {
+          "resource": "repo://app/main.py#L56-L59",
+          "version": "repo-lines-v1:sha256:30b7151ca9a257891aec7a99c4d5046c0623e5ffdc912185f85bac49a01846ad:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDc4Y2JjNjNkNWEyNzU0MTcwNTUwMDZkNmQyZmFhODRlMGY0ODRlMmNhMGQxZjJiNGJmNWUwNzJhNjU2YWE1NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGEwYThhMWIxMTIwNGI1NzUzZjY4NWQwZjc2ZGQ1NmZiZTY0MzYzMjg5NjViOWFmYzdlYjhiOGRiYWQwNGZlYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMxZjU4YjEwNDFkZmI0NjA0Y2QxMWVmMzdhNGNlMjJlYzViNzhjYjYzMGYyMDA0NTJmZjQyMjY2YjA2MzMzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzcyMzE3MTlmYjdlOTEzYTM0M2RjNzFiZjBhZWU3NzAyZjIwY2QyNWZlOWJjZjEwYjNhNmY5M2JmMWQ4YTM0NiJ9"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L71-L84",
+          "version": "repo-lines-v1:sha256:ced91c8aee61c3030ca59d9be5938bd3869cb25047f826824e23f7bc2808c074:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyNzY1NGIzN2RlMjY1MTNhMDJhNDMxNGFjNzcwZWVlMDZjMTA5NTAzZTI5OTNhYWQ5YjRiOWJlNjZlNDQwZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyM2IwNjMxY2JhZGM1MzllYzIzYTk3MWU3NjNkZTczM2ExMzVlY2ZiOGRmNGMxY2Y5ZjA3YTA5NDViYWZiM2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU3NDAyNjE2M2U4ZDc5NGMxMDU0YzkxNDhlOWI2YzQzYTQ3YWQ0MTAxODU5OGYzN2ViYWQ4ZTEzMWFiODUyN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjZGViMDg2YjJjYzg4YWQzZDRlYzc2Y2Y2M2FlN2E0ODMxZTljODM4NzFmNTU1YTU0N2MzY2UxYzhiZDYyZWIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7c5e7f47138a48f1bc0df460840bb33e",
+      "statement": "Worker liveness is tracked through the workers table: note_worker upserts last_seen_at on every worker poll iteration, prune_workers deletes workers not seen within max_age_seconds (default 3600), and stats(worker_ttl_seconds=120) returns queued/running/wiki-worker counts in one query, surfaced by GET /health as pool.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L358-L383",
+          "version": "repo-lines-v1:sha256:ea99ebecd8e57b1e9bf5c753cd83dd9ce78229bdcefb70c700d905d866e2d737:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MmQ0NjU5MTBjNWUyMzMxNDJlNjMzNGZjNDgxYTljMjcwMmJmN2Y2MmYzODFjN2Q0NzM3MzM1MjY5ZDFmNzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlYjAzZmE3ZmZlNDE3MDY1ZTI3NWY0ZjkwN2EwMThhNWY2YTk5NGIwYmIwNjU4MTE4MmFhMDQ2ZDc3NzQzNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdmMWE0ZWNkZDgxYjRmZDM3ZGIyNDdjODg3ZDlmNWI2NzVlZDE4MjI2ZmViYjMxYWQ5NjE5NWU1MzY2MGI2OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMTU5MWJkNDEwNTEwNWUyYjg0NmZjYjlhOGY1YTVmN2VjNTVhOTMxOTcxMDc5MGUwMGVhYTk1NDU3MjZlZTYifQ"
+        },
+        {
+          "resource": "repo://app/routers/health.py#L27-L35",
+          "version": "repo-lines-v1:sha256:ea7c0f56b8051ed8c060d815d1ccd654135ebb7873fa7a95e9d1835ba19fd8ed:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzY3N2ZlMWYxY2QxYmEyY2ZjYzcwYTY2MWVlYjFhYjhhOWMyZjRlMmQxMmE5ZWYyNGQ1MTk4NjY0MmMwMTc5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmM2NzBjOWZmYzgxM2Y4NDk3YjRlZWRkODIwNDJhOGM4ZjhhZmY5MzVjNmUxMzcxOWQwNjY2YTI4N2I2YzZhNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGJkMTg2YjAzODhjMDRiZDRiZTM2OWY4NTY2YmFiYjgyZjFmNjlkZTcxOWVjNzYwZTgyOTU0OGUyYzZjZTZhYSJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L69-L74",
+          "version": "repo-lines-v1:sha256:11e39c4ce170e36669440289b898616696897aebc2a137abfe8cc11cd2cb1ff4:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmQyNmUyMWQ2MGZmMThhNTYzMThlN2ViOGU5NjRiNDQ5M2ZhY2RiMjczODliOTFjMGNkNTA2ODQ3NGI2NWViYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzM4NThhNDUxYzJkZDQ4NjU2ODAxMWI4YmYyMjc1ZDk5Nzk1NzlkNDU4OTA0ZDc5NzdkMzlkNDY1NGM2ZjU2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzFiOWJmZWQzYjE4MjljMTE2NzU3MWI5MTU4OThjNTZkZmZhZGJmZGQwNjUxMjFiZjVlZWI1MWVlY2NiY2ZjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGE0NWZmMWVkYmVhNjk4YTI5NmZlNjk5ZmY2OWVjOTliY2NkZGUwNmFkMjkyZWRjYWQ4MTdkOGQyZDExYmQ0MyJ9"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L97-L113",
+          "version": "repo-lines-v1:sha256:1c798d94411365ebc91d5277419dd17bbfa927e73fbb3488c3b9ea99eac17b9b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0OGNmOWQzZTNkMjEzNWE3NjVhZTRjYmE5ZWM1YzJkZjZkZTM2M2FkMzVkOWVhNDRiNDFlMDc0ZjU2Y2NjZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0NTQxYzYzMTg1NzAyNDM0OTU5MWRhYTM3MTRjYWM1OTI1Y2NkNDM2YzA5ZWU0MTZjOThiNWVlMDlhYzU1ZDQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0NTQyZDgyMWY3M2MzNDM1ZjdhMjQyZWUzMzczMDQyNmJmZjhhNDFkNzc0NTYxMzI0ZjIwYWJmNTc4ZTE4NDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUzZmZkMTc5NmI5YTdhOTNmY2RiNDBhYTA0MDk1ZWIwZTA0MWZlZDQwZjgzYjc1OTYxN2ZlODYzZDRlYWZmMzIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_4519cda6b5354ecd9bf8b65600db9646",
+      "statement": "cancel() is immediate for queued rows (status='cancelled' with finished_at and an error) and cooperative for running rows (it only sets cancel_requested and returns \"cancelling\"), returning \"not_found\" or \"not_running\" otherwise; the router maps those to 404 and 409.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L386-L397",
+          "version": "repo-lines-v1:sha256:0e45c6601726e7de8238ec13caed9c0acc98a10d6ac7d37a5af47d798cce3d3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5YjNjYmJmYTk1NGI5MjlhMDg4YWQwM2MwNDExMWRjZDBkYzExZDI3NTk2MmIyZWUwOGVmNDdkMDQ0MTZjNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMjIyY2UzYTVlMzUyMDA5NTY0ODdlMzM3NzgwOTI4MGExMTk0NDk0YWUyMzcyNTY1ZTk4ZWRjZTgxYmFkOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5ZDA5Y2JjMTk3NTM0MGYxNzI5YTEwMDQ1ZmJlYTIyMWI4MjgzZjMzY2U5YWM2OGFlMWM2ZDNmODYyYTVjNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOGViYWZhNzNiZjhhYzkyMjkwODllNDc4NmM4NzM4Y2M0YjIwY2JhOGZhNDg5YzgwYjMwMDk1NGViMDNlMGUifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L146-L157",
+          "version": "repo-lines-v1:sha256:0f190e2b2076bf06291976fb9e27631105d73059289cda02d324f185e08e7171:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmODEzY2I5YjJmZDQ4ZTRmMTc1YjYwYWNjZTJhNWI2YjU1M2M0MzAyMzQ0YWUyOGIyNGNkNjdkNjYxZDBjM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4NmVkMzdlNTVjN2E4ZDEyM2ZiODY4NDk5Njg4ZTcwOTYyNDYxZmZmZDE4MzBjMjk1OWZiMzk0OTFjNDI3MTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNWQ0Y2RlNTc3MTNkZTc2ZjViMmUzMzRiNzg1OGVkNWUzNTc1MmNjZDllZjFmNzk1ZDZkNDRlZmM3YmMwNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjNjAwMmVmNDc2NWUyNzE4NzhlMjg4OGM1ODRjYWE2N2U0YjllZDAyMWMwODU4OWFhNWY3MWQ0NTI4ZDI1ZWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6575df18da294536ade7432e54a94553",
+      "statement": "retry() only accepts failed or cancelled rows and clears error, progress, finished_at, cancel_requested and all claim columns while preserving attempts and the on-disk workspace, which lets the pipeline resume from openwiki/.run.json instead of cloning again.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L399-L418",
+          "version": "repo-lines-v1:sha256:0c268d0f3f2c2191393835127df6aa2e7b58ddc980537951f6f6331235dda061:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyODJlNzAxZWFiMTJhOWQ3ODMwMThlZmQ4NGZjMjRhMWNlZDVhM2EwMjdhMzg2NWRkOGQ1NTM4NTcwZTgyNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWE3NGNlYTJjYzhjYjAxZDNhM2E5ZWFkNzU4OWRlMWNiZWViMWIxM2EwODRlM2MzNWQwMTU4ZDRlNzQzYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMWU0ZGRmM2QzZWFmMjgzMWI3OTI3YzhkYzEyODVjYzhjMTQ4MjQ1NDQzYmVjMWQxOWM1MzZmYjZkOWEwZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwZWQxMTRmN2I3ZTRhYjI1MmY0NTlhMTE2MTVkMzE4M2M1NDUyNGMyMTgwZTAzMGJmNTA2ZjNjNmQyZjkwYTMifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L160-L179",
+          "version": "repo-lines-v1:sha256:3b34114c815e929ceed2ce426b95eb06afc10337898661760689be0857615bbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MzI2OTVmZjkxMTMzNTM5M2YyZWMyMjNmYWE0OWMwZTFjNTJjNDU2YzQ3MmU0ZWE0MzkzYmRkMTNmZDgxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MWJmODMzMjc3NzU1OWZmMTUxNmZhOTY2ODIyNGIxMzA0NzVjYTRhNDIxODFlZDY4MTU4OTAyYWZiMzg5NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExZjU3ZmZlYzEyZjdlNTI0NTM5OTY5NzI2YTYyN2NlMTA0MWZiNmQ5YjY5ZjY4Y2ZjODg4NmVlOWM0N2FlZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNjZmZDY4NDkyN2VlYTczN2FiY2NkZjY0OTUwNThiNjc3NDRmZGZmNWVjOGI4ZTViYTZmNTE0M2Y3NTIwM2MifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L165-L168",
+          "version": "repo-lines-v1:sha256:02474e2f9090eba9293d21556f08dbabe52bf08fa42aaf20556e4ca878823e89:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkyNzA4MzAwNTBjMjdiNzYxZjFjNzBhYTA3NGQ5ZDk0MTI1NGJiZGFkOTQ4ODZiZmI3NGQ2MzIxYzYwNzhmMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWI1YzgyNjMyZmM4MmQ0YjJjMzQwZjQyNTU4YmEzZGZhMzFjNzY1NWRmNmZjYzE2OGI0ZmRjZTU3ZmFjNjA0MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGM1NDZlZGUxZjNiYmEyZjhiZmJlODhhY2I4YmNiYTU3ZmI2ODEyNDY4ZTE5NzI0YjYxMDk4YWEwYTk1YWE0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiM2NhY2ZmNmFmNTViZDNiYjJjY2I1NTM0OGY1MTE0YzJkMDQzMTE4MmQwYmQ2ZTQzNmY0ZDlmNDQ3M2JjM2Q4OCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_1dfb65c23c7b4ad392d95f7c111bfe37",
+      "statement": "migrate_legacy_files() runs on every JobStore init and performs a one-way import of jobs/*/job.json: it accepts the id from wiki_id or the legacy job_id key (falling back to the directory name), skips records whose id fails JOB_ID_RE or whose source is not a dict, inserts with INSERT OR IGNORE defaulting status to queued and mode to auto, and renames each file to job.json.legacy as the migration marker so repeated opens are idempotent.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L123-L123",
+          "version": "repo-lines-v1:sha256:58013bdd4d9b14345d63a8f4aa812043281e9cee62adf5e76517072f2c0e56ac:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTgwMTNiZGQ0ZDliMTQzNDVkNjNhOGY0YWE4MTIwNDMyODFlOWNlZTYyYWRmNWU3NjUxNzA3MmYyYzBlNTZhYyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTgwMTNiZGQ0ZDliMTQzNDVkNjNhOGY0YWE4MTIwNDMyODFlOWNlZTYyYWRmNWU3NjUxNzA3MmYyYzBlNTZhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzYwZGIzZGNmM2I4NDAyMTcyODk3MTlkYTg1MDllYmE2NTlhZGQ5ZjZkY2JhMjYxMjc3NjI0YTRkZTY3MjU3OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDMyOGNiY2JkMDJhMTFlOGI0OTE0ZjRhZmVlODRlMjUwYzllYWJhYmJlOGUxOWZjZmVhMDYyOTlkNzQ5YTg2MCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L435-L485",
+          "version": "repo-lines-v1:sha256:392dc9f7451a81b6b83c15f18047803d3e735e91ff76dde10416ef349762b6d7:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4ODc0ZTFjMGZmODNmZDYwMzBkMGE5YmZhNGEzNzNkMzExNmJlY2JjYTU5YTUwMTg2OGFjYWJmMjI3ZWQ4YzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAwN2M3Yjk4NGVkNTdlZTRiYWQwYzA5MTE0YWNiZjBkMWNkNzg0NTE5N2RlMTJhYzc2YzM0NTU0OWYxMjY3ZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI1ZDg2NmM0NmM3MDNlNDBlZDYyNTY2NTFhZDVkMGU0M2I0NzkzZjBhMTA1ZGQxZWRhM2M5OTYxYTQ0N2NjNTEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L116-L147",
+          "version": "repo-lines-v1:sha256:861b846d2b862c9c6a611792f7775597c45fdd20566af11718321b33a6f56e09:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJiYmY4NWIxZThkZjVkNGY2Y2RlYzA5ODE4MjUyN2Q3MDcwOWE2NTVhMjUxZmNmYWU4MjVlY2Q3Yjg2NjI4M2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0OTRjYmQyYTY0MjE5ZDNmMzZjZDcyMTM5MWNiYjEyNmMyYTIzNTI0YjEyZjY0NzVhNjIzNjUxZTc2OWFjZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjcwMGQ4ZmZlNGQyZjRmZGVlYTY3MTEzZDc1NzZmM2ZmN2E1ZWVkZWJkYjkzNTNhODdiM2VhNjUwMWY1YjRmMjkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc727fa4a5934b3c9d9c099c72b14251",
+      "statement": "meta_path(wiki_id) is retained solely as the legacy job.json location used by the pre-SQLite migration; no other service code reads or writes job.json because the wikis row is the source of truth for status, progress and results, while the per-wiki directory holds only repo/, logs.txt and wiki.zip.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L132-L140",
+          "version": "repo-lines-v1:sha256:da2b34af96cddef235481287ee833eb9a1bca7f34502bf205669b03a1180ead8:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMWE1ZmFmZmM3MmExYjQ2NTFkNmQ1YmU0OGRiZDAxZDQ4YjVmMjE4MGYzYmQ2NTc4ZGRjODEwYzNjNjUzNTVhOCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWRlZTFmYTliNzAwY2IwNGEwZjFhZDhlZDQ0NGJkZTVhNDE3NDMxMzY5ZDI0ZWRlNGFiY2IyZGRiZTNhNWZmMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDU2ZDcwYTIyMjE0ZmVkZGQ1ZDkxNjg4YjA1N2JiYTBiMzNjMjNjZGY5MmFiOGFmOTk2OTJmYmYzMjU2OTE5YiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzllNDdiNTU3MjZmN2FkMWVlZjk2OWQ2OTlmYWE5NjljNjMzNDkxZDRhODFlOTk4MDg4ZDgwNzY0Y2VlNjE1MiJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L138-L146",
+          "version": "repo-lines-v1:sha256:db25ccce16cbf93f8c40d3da8509507a6c2d27615c11ae31fb710c526fff365c:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTA2MDQxMDI3MWQ4ZGZmNTc1MzM4ZDczZDlhMWM0Njg4NDk2OWY5OGExZTQ2MzkwMDY5NjNkNWM2NjhkNzI3OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYWZmY2IwOGNiYThiODYwZGQ2MGY4ODdhM2ExMjc0MzI5YjcyNjI0OGQwNGJmOWY5Mjk3MGQ0ZWU2YTdhNWRhMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYWUwY2QzMmQ0NTg2ZGIyZDE0ZjU0NmQ1MzdhZTAzYTgyYmFhNWJiOTMzNmJlNTQ5YjE1MTQxNGEyM2ZjNTA1NyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiODYwMWQwOTk0MDQ3NjNjNDNlN2Q3Y2Y3ZGVmOGI4NjUxYzI4MGU0OTFlNGFlNTQ4NGZjYmU0OTNiNmJmNzBhZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_051e46f8faac49e0ba7cd799dbac12a7",
+      "statement": "purge_expired(retention_hours) deletes terminal wikis whose finished_at predates the cutoff (and their directories via delete) and returns 0 when retention is disabled; the API calls it at startup with job_retention_hours, which defaults to 0 (keep forever).",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L46-L47",
+          "version": "repo-lines-v1:sha256:89731951f07efe9940d550c0fe635ea2c09bb9dcfda53291413e3bb741be1361:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODUxNDU0YTU5ODE1YTk4NDgzOTE3YWVjNjMzZGFhOWVhMzhmNDRjOWUwM2M3MTAyYjk3MDJkZGM4MGY5MjQ5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E1YTE1MmJlM2I2NTcxNTk0MjcwNTBhYzMwMDFmNTgwYjMxNTg0NjhiZjZlNjdjMTlhYWM2MWQ0MWM2NDU5ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGUwYTg0NzVkZjFiMTkwNDFjY2Q2MTczZGIyZTg2YzQxY2Y0ODI5MTdiZjE4NmI0ZDAyNGM0Y2UzMDUzMDFjZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM5NjlmNjZlMjc2NDI3ZWNmZmZlNGZkOGUxM2Y3NDk1MTA3NjQ5MWJlMmI5Zjc3NzAzOGI3ZDkwOWI0MTYyOSJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L229-L240",
+          "version": "repo-lines-v1:sha256:57baa631d1c71884efe15aed636f4ee43f9a0169393a22c568c616a80c3d30c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNDFiNjJjOWY5MTIxMDM5NDZlOTk1Nzk1Y2RmZWI1OWZkZjgyNTlhZTk4MGNmMTBhODcwZDg1NjY5NmY2ODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwN2I0YjM0ZThhNWVhNTNlNzVjMWEyZGI2YTQ5M2Q4Y2IyMWQ5ZjU5NmNiMjhmNTBlM2I5ZjFjY2JhMTY5YWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MWIxOWY4M2QzMzU5MTFiOWY1YjJmYjQwYjRkNTk3YzVmMGY5NTY3ODUwOTk3ODg1MzNjMDg2ZTNhYTI3NjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0NzUxNzIxY2I1NTE1YjlmMDE3YmE2YzQ0YTZmYWQyYzk2MDk1YzViM2JhNDg5MTdkNGJkMjFjNTQzYzc5M2IifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L56-L56",
+          "version": "repo-lines-v1:sha256:d78cbc63d5a275417055006d6d2faa84e0f484e2ca0d1f2b4bf5e072a656aa54:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDc4Y2JjNjNkNWEyNzU0MTcwNTUwMDZkNmQyZmFhODRlMGY0ODRlMmNhMGQxZjJiNGJmNWUwNzJhNjU2YWE1NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDc4Y2JjNjNkNWEyNzU0MTcwNTUwMDZkNmQyZmFhODRlMGY0ODRlMmNhMGQxZjJiNGJmNWUwNzJhNjU2YWE1NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWMxZjU4YjEwNDFkZmI0NjA0Y2QxMWVmMzdhNGNlMjJlYzViNzhjYjYzMGYyMDA0NTJmZjQyMjY2YjA2MzMzNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTIyMTljMWQxZjM1YTc1OGNhNGVkMzZmMzNjOGI1NTlhNTQyMGIxNmNmMTNlMmI1ZTNkYmNiNzYyODFiOWZiMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_3ccdf06baa0840d58f4ef85d81ed77aa",
+      "statement": "Queue behavior is tuned entirely through Settings environment variables: worker_lease_seconds (180), worker_reap_seconds (30), worker_poll_seconds (2.0), worker_progress_seconds (2.0) and data_dir (/data in containers, the shared volume that makes every replica see the same queue).",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L37-L64",
+          "version": "repo-lines-v1:sha256:4787d8ba318e57f96fd6588e5f9c2076a1ab75bdae90ee3c94ab9f1706028f89:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExZmViMDQ1ZDlmOGU3NGM2ODFiMDkzOTNkYzFlYjFiNDYxMTJhNTQwZmY2NDgzYmNiZWQ3NzZlZjkzOTI5OWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1Mjk1OGE4YzRmNGVmZGQwM2Y0OTA1OGZhYzA5MDdjNjcwNjEyMjU0ZWU0NzRhNDE4ZTg1MGViY2YxN2NiNTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBlNTg1YjM0ZjRkMmRhMTE2MGIwOTllZDYwNDUzOGJmMDlkNzMwZmY0OTBiYmQzYmNhOGJmZmFhYTExODJmNDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0YWJmMTA5MDg5Y2VjODk4MWI3NzMyNTViYjE3ZTU0ODJiNTE1NTA5YTFhNGE0MzQ2MjkzODI3ODRmMjMyMjIifQ"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L14-L18",
+          "version": "repo-lines-v1:sha256:7ee3987705a051448a68bebf46ed767fa795f8088058a7e37c15e44a9c352e68:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGNkZDBiNzk0OTgxZmZlMzZmOTJkNzExYjI5NmU2NGYzMmZhYzdlYTQxOGU5MTlkNzU4MzAwZDAwMzZjNjE3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJmODc4OWI1OTY2M2U5MjFjMzYyY2YxMTU0MDkzMmVlN2E4YWYxNTIzYWYyMjg4YzAxMjQ4ZGU4MTliNjhlOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTMwMGQ3NzhmOGYzNTA5NzhjZThlZmQ3NGMzYzU5ZTNlMTA3NjU2MDhiNzliNDc3NWRiZDQ3ODA1YjEzYWM2NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGQ0NzViOTE5ZWViY2VmYWUzZDU5MGE3YWM3YmExZDI4N2ZhYWZhZDMxMDg1ZjZhMGNhODRlOTk1Y2I1M2U3ZiJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L30-L35",
+          "version": "repo-lines-v1:sha256:75fee504ef8d01df18241379e19177b1b14c1d122abd8236af62e5f91ccd3ad2:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjI3NDYzMzRmZGJkNjUxMzIzOWYxMzI2ZGI4YjYxMjc1N2I1YjMyYzA4MDhiNTA4MWE5OTM3ZjY1MzNiOGRiOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJmODc4OWI1OTY2M2U5MjFjMzYyY2YxMTU0MDkzMmVlN2E4YWYxNTIzYWYyMjg4YzAxMjQ4ZGU4MTliNjhlOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDY3Njg4OGYzN2M2MTUxMmQzOTBjMzllYTI3YWQ2ODBiNTYxYTcxNjBlYTViM2NhN2FkYjMyNmVlNmZjYTE3ZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMTRlMTcxYzJiYjdkMGU3OGU1Y2M4OWEwZWQwYTE1NjAxYmIwNTZiZDZhZWRjMzhkMjMwYWJjZTg2NzY2ODkzMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f5397e5249b406b88276de2beeaba65",
+      "statement": "JobStore.update is used outside the coordination methods for queue recovery: the API restart test forces a running row with a dead claim and the pipeline sets the resolved mode via store.update(wiki_id, mode=mode).",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L91-L92",
+          "version": "repo-lines-v1:sha256:9afab0a4416f1e2d61ac0a4684a7c6a0d6b177c1ae13c6e51cff0d39ec71d623:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmJjMTk0MjY5ZmExNmMwODU5MDQ3OGVjNTAxZjJlNzJjM2UzYjE5NzZlZTU3ZWU2YjA0NGM2NTIxOWZhM2VmMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjQ1Y2RkNDU2ZWFjYjZlYzYxZTMzNTc3ZTc0MmU2NGE1YThmYjA2YWNkZWM3NWM0YmRjZjk1NjIyZTBmOWJjNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjQ0ZDJlODY0NGYxZmNiODc1ZTI5YzE4Y2YzOGQ0ZDhmNWEzODU4NWRmNzc0N2FjMWJhOTZkMTI1M2IyZTg3MyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjBiODhhYWE0MDE4ZGUxMDIwMzJjZGI0ZGU3ZTRiZDIyYTM1NGY1MTQ4NmU0MWU0MzJkYzY2MzA0YjM1ZjY1MCJ9"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L276-L303",
+          "version": "repo-lines-v1:sha256:91ddef81e381e8c23552f729433fe6c12bdd00f235bae5634910bdb4bb16c892:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjkyOTgxNGUzNTlkM2U2NWRiZTljNjI1MDRiY2Y2YmEzYjA0NTYzZjRiN2QxZTg1MWFkNzlkNGM4Y2FlMjI5MWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4YTNhOWI0YWU3Y2JmZTllODY1Njc5YTlhNjYwMTBlOWUzMGJlNDNjZmU1Mjg4Y2U3NTc0ZjUwZjk3MTM1NjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI4ZWI5NjJmOTcxNjAxNmJkZGU1OTczNWIxMmNjZmIwMzc0MmMyYzE4YzVhMjA5Y2IyYmUzYTcyMzYyYjMwYWQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNjNTdkNDAyYzUyYzBmMmM3ODQ4MzAwNjI5ZGM1ZDQ4ODk3MDdmYjEzYTJlNWJhMjUwMTUzYThhOTk3Zjk2NjcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_823fd6d6d13748089fe8be1242814512",
+      "statement": "The wikis table has NOT NULL on status, source and created_at in addition to the wiki_id primary key, with defaults only on mode ('auto'), cancel_requested (0) and attempts (0); every timestamp is a UTC string written by utc_now() as %Y-%m-%dT%H:%M:%SZ, so lexical comparison in the lease and retention queries is chronological.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L345-L356",
+          "version": "repo-lines-v1:sha256:0bc515054cd31cc2129d901d5d9de545e5d0a821001c26e4b6920b65148e00f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTAyZDc2ZWUwOWZiN2M5NjJlNWM5NzRkMjJhOWZmNDVkNjMyYjQ5YzFjODQ2M2IwMzg3YjUxZTNmN2Y0YzcifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L59-L88",
+          "version": "repo-lines-v1:sha256:79db9287318cccd57284f47ff072e2b98f353533623e41b4f65427a5b6a37ae0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiY2QyMjE4YzgzYjY0MjlkZDk3ODMyMmY0NWZjYWRjNDdiOTAxOThiOGQwOTNiN2VlYTM0NzI5NjE4ZDE5Y2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4MGY1MTJkNGNhMjBkODlkN2FkY2EzNTVkNzFlNmQyYzViMmZmYjQ1MmI2Y2Q4ZGM1MGI1NDg1Y2UyODdjNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1NjcyMmUwYjIwZjViMzI0M2NlMTE4MDQ2ZGM1ZjY4NDIzY2QwNjcyN2I2ZDlmYTkyNmY1N2M5NWFlZTk4ZjkifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L91-L92",
+          "version": "repo-lines-v1:sha256:d3f4d7db852a25a8908678ba9d2bb9033176931a5de483dfcff9396d69aadd41:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwMzVhNDQ4ZjY3Mzc2MTljZTE2NmM3N2FjMmI2ZDQ5YzExMDQ1MjVhOTE5YmQxY2EzMDFkYTJiODBjYzE3ZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTU5ODQyMjI5OTBlNDZlNzdmM2RmMTVkOGFjMzU3MjkxMTcwM2FhMzAxZWEwMzYzMDY1YTlkM2NjOWVlZWQ1NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzhhZTYwYTA5YTc4NGI0N2VhMDg1MzE2YmZmOTJjNjgwMTFkZDY3MGQ4OWYyOGRhZjVkYTliYjZhZTQxYmM0MiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjUyMDYzZGFjYzU5MmZhOTAzYzRiNDJlNjI4NTYzZTllMzM5NjEzZDA1NmFmNzE2MTg1NWI5NDZkMzNkYTE3NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2d0e3e7447b2478bb2443222198d91ab",
+      "statement": "The per-process threading.RLock cannot provide cross-replica exclusion; exclusivity between API and worker containers comes from SQLite's own write locking (the BEGIN IMMEDIATE claim plus busy_timeout=5000) and from every mutation being a conditional UPDATE decided by rowcount, and the connection is never closed, leaving WAL side files next to openwiki.db on the shared volume.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L111-L122",
+          "version": "repo-lines-v1:sha256:20f3ccadb3fdb262675c274065b5e4b677f8de462b5fd2dd558f53fcb9dbb262:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIyNzEyZGM4ZjBkODVkMzZmZjliZWNkMjlmNmMwOWY4NTRhZTliYTU2NzVhZjJlY2ZiM2FkNDRhNGIwNWVjNGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJkNjEwMmU0NWNjZTliNGViODcxNWViZDc4NzZlZThjOWFiNzllZWU3NDRhYjQ4NmEzZTY2YjUxYjljODg0MzQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhMDdiMzkwOWFlNTVhNDgyODBmMWNmYjBmYzA2OGIxYjUzOWM3ZTJiMzU2MTI0NGNhYmNhMDJjZGYxOGEzZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjVmY2QzNzg3OWQ0ZGYyNDE5MmM3NDk3NGI1ODAwNjY2ZTI3MmIyZTk1ZmQ5MjBiNDE3MmIyOGEwNzc5YmVlMTMifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L243-L269",
+          "version": "repo-lines-v1:sha256:25fdf753945a0b032263a0bb88cf92fc75616b0a43aca9352feab12d8ad2e0f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTk3OTE0NzNiNzkxOTIzNzY1MzkwN2IwMmM2ZWZkYjg5NzU5YmMwMjAzYzRhZWE4NzNkMGY4OGU1YTQ3YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwMjEzODY1M2EzZDVlMWU3MDVlMjBkN2ZlMWExNjZlZDk3N2Y0NjJlMDkxOGUwOWI1N2NjNzVlN2U2ZTQwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMDQ1ZDY2N2E2ODBmZWRiN2ExMjUwN2JjNzIxZTEwNzQ2YmIxNDgwY2ZjNjExNGU4NDIyNWQ4MDY5YjM0NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxYzhjOTg2NDg3NTg0ZGNhOWY1ZDBkNjNlMmU1NTljY2IyNGI4ZWJiZmJlNzcyNzNkN2FiZmNiZWM2YzIzZjkifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L345-L371",
+          "version": "repo-lines-v1:sha256:4ec0840b5fdbcca698923e2dd3221e5f4ecc074df0270f17f70df22a827a4278:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIyZDZmMTE3NGIzZWYwNTY1ZmJmZTJlNDU5ZmEyY2Y5MGFlODBlMDdlMGUzYTAwYTRjOTExNTRjNzdmN2NmODkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d62364a8ccb45198bada912bb266e86",
+      "statement": "The progress string stored on a wikis row is produced outside the store: WorkerLoop._track reads OpenWiki's durable run state from repo/openwiki/.run.json via read_run_state and formats it with format_progress ('<completed>/<total> pages · <phase>', falling back to '<n> pages written'), while JobStore only persists the opaque TEXT value that GET /wikis/{id} surfaces.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L271-L308",
+          "version": "repo-lines-v1:sha256:c0451c6dd807cded94d8ca706ded480fd6d1db5ae09ef36202e437e1669ec677:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMGVmOWIzMzdjNGEyMTY5MTQ2NjRlNjM1NWMzMGUyOGU4YzY5MDM3ZmEzOWVmMWIzM2YwYjM3YWE0ODc1OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NjJhYjU0ZGU2YTJmNjNlNzRjNzk5Nzg3ZGNmYmZkNzI2MTIzNWQxMzUxNjRiYWE1MjZhMTc0NTA2YjZmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0OTE5NjY5ZmU4YjQ1NmU3ZDkxODE2YzkyN2ZmMTVkNzg4Yjc4NTY1NjA0MDE1NzNhNTg0MTkxMjk5NjA4ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYTM5ZTJmZTUyODU2MTg3OTBiN2QzNjczZjZkYzcyZjJmNDI3MGNhNDg2MDdjYTUyYmE0YThkMjRmNTI1NzYifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L96-L137",
+          "version": "repo-lines-v1:sha256:c20075e0ac1e3ccc847b85372c14e972b4c1f4078a2851a69517d79ecdcf3fb3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMmRkOGQ0YTliYTJiZjViYTRiZDZmNGJmOGU5MDI4NTVmYmIyNjU4YzMxYzdkNDVmNjEzNjJjYTIzY2EwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTYwMGE3M2QyZTAyZjM1MmI5MGZlZjFkOGQ2MzgxMWJhNGE4ZWUwYzFiZWFhN2FlNDY1OGYzNmFhMmUxOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYjIxYmY4OTVmYWUyZDczOTIwZDkzMTc4Y2ZkNTg0MWNkZjhmOTUyNDUxNmM4YTU2NTg0MzZhNGFjNDhmM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5MzgyYmMyNDA1ZWVhZTg3YmY5NzJlOGRiM2U0ODM2M2I2YjQ0Y2UyMzYwNTMwYjk2MzJmNWRmNjhjNTYwZTYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L132-L158",
+          "version": "repo-lines-v1:sha256:96d3225e4df4bae151bd6f5e4c2e8cfb5f4442563d0e7624eb356feab6d96f77:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMzA3MjJjNTdjN2I4ZTgwZTg3ZjE1OThhYWQxZWY3ODE5YzEyZDUwMjJiMWQxNGFiODhkNDBlODE1MTk4ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzM2E2MjRhMDhkMmQ5MWUzODQxNDdiMTAzMmMxYjUxMWJhNzkyYjE4NzAyYjUzZmM4YjQwZDkwZTI1NWRkMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a2fd3adf99a84de89d7aeed5adf6010b",
+      "statement": "The per-wiki directory also holds the uploaded source archive for upload jobs (jobs/<wiki_id>/upload<suffix>, a path the router composes from job_dir() rather than a JobStore accessor); the pipeline extracts it into repo/ and the file remains on disk so a later retry does not require re-uploading.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L117-L135",
+          "version": "repo-lines-v1:sha256:bbc9c1b8c0f737b70bfe80e97967f52732ab496b2e3ebe0da0ea14c03ade1271:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYTRjYWMxOWJhNjRiNDk2NDIxNzhlMjE3NTJhZDEwOWY2NzBjZjE3YTMxNTk2ZTkxNTg0ODU5MDA5ZmViMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNTBiYTM3MTA1YzZlNmMzYjAyMzg3MTI5NTM5OGFiNmQwYTg1YzIwYzg4MWQzM2RlMTg1MDNiYjdiMjlhMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlYWI2YzQ5ZjMwNTBlZWNmMzBmODRlNTQzYTEwZmY2NzhiM2I2YTNjMmI1YzBjNGI3MjUwZDBlMDVhZTU2NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4Y2EwZTQ2MzM0N2I2MWYzM2E3MzdjMjJkYmUxYzdhOGI0MWE0Mjc2YTEwZDI1MDljZTIzMTgzMjc0NDM1MmYifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L165-L185",
+          "version": "repo-lines-v1:sha256:26799b60be76fee1259142b49a458655383b804506620b1b0b1581afc3d1404f:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MjcwODMwMDUwYzI3Yjc2MWYxYzcwYWEwNzRkOWQ5NDEyNTRiYmRhZDk0ODg2YmZiNzRkNjMyMWM2MDc4ZjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjNTQ2ZWRlMWYzYmJhMmY4YmZiZTg4YWNiOGJjYmE1N2ZiNjgxMjQ2OGUxOTcyNGI2MTA5OGFhMGE5NWFhNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA1ZTE3NTFjNmUzYTNkNDE4YzZmMmU4ZDMyMGJjMTEyN2M3Y2NjMjEzMzM3MjVmMmMxOGQ4ZWY3YmVmYzk1NDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8ee25bf288dc486680cfa40d2f1e1f03",
+      "statement": "Read-side ordering is deliberately opposite on the two paths that share idx_wikis_queue: list_wikis returns created_at DESC, wiki_id DESC (id as tie-breaker within one second) while claim_next selects created_at ASC to hand out the oldest queued row first; stats returns exactly {'queued', 'running', 'workers'}, the shape GET /health publishes as pool.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L182-L188",
+          "version": "repo-lines-v1:sha256:51be1cfda1784195410e98910e23445e2ea4a3ff01ba29d5c91ce08fbe26f5a0:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTYyNDYyMWM0OWRmOGIzZGNkMmJjYTY4ZWNjZGY4MDk1Y2NlMjAyZDE0YzEwZTgwODRlYTE5NjQ4NzU4MjI3MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZWNjZGJkZjIwZTQwNTk5ZGE1NjVmNTA3OWVlZWFkOTc0NzEyZjc2ZTc1OTg2ZmRhMTcyMjY3MGUzODM0YWQwMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDVhYzJmZjBlNjk5MzExOGMwN2EzOTFiYzZjZGUwZTVmY2Q2NzcyZmZkNGI2ZDg1MzI5YzgzNGJlMTY3NmI5NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGFmMTlkZGExNDVlNDA0NTY1ZjUyMTA1NTRhNWJjZGRkMDQ2YThiYmI5MjgyOGMxMzY5MDI5YWVlYzA4MzlmOSJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L250-L252",
+          "version": "repo-lines-v1:sha256:851fbc01cd586cb622a178566efc81ea738a3d346966286075632f36188b6929:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY4YTZjYWY3MTc4YWMxOWQwYjM0ZDQwZWJjMWExMTQ2OGFmYzljNmExOTk4ZWM0ZGE2ODQ0MGJlYjgzZmJmMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzIwZjYwMDYxMTJkM2U3YTA5ZjA3NzY4OGVkZDA3MTYxZDBjMjdmYzAyZWY0ODY5M2Y4YzUxOWZlNjhmNWZjYSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMzQxMWI0ZTI3ZmE4YzFmNTEzY2FhMGFjNzMxYzJmNDJlOGZiNDEyMDY3MGUyYzNhZGRhZmJjMjBlZjk4Y2M3NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmNmOGQ0YmU3ZTZkZDJmYTU5MGQyNmFmNDZhNTYxZDEyZjQ0NzI0NjlmYWU2YjlkZWQwNWQzMThlODg0NjViYyJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L373-L383",
+          "version": "repo-lines-v1:sha256:855d1af3a207312acf05d155a1aceb469da50e2ec7fad74529ce1a4afb0d1414:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiNzIwN2UyMzQ0NTI3ZTdkYWQ3ZWZiYTZhOTNlNzg4OWIwNzBkMDlmYWE4ZDA2NmRiOTYxNTBkMGIwOWYyMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlYjAzZmE3ZmZlNDE3MDY1ZTI3NWY0ZjkwN2EwMThhNWY2YTk5NGIwYmIwNjU4MTE4MmFhMDQ2ZDc3NzQzNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImNmYTc4MDA3OWY5OTk4NjhiNWQ2NWI5NWI5Njg2ZTAyOGU4YjBmNDZhNGIyOTMxODNiNmFiM2Y0ZjZjNTU0YjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMTU5MWJkNDEwNTEwNWUyYjg0NmZjYjlhOGY1YTVmN2VjNTVhOTMxOTcxMDc5MGUwMGVhYTk1NDU3MjZlZTYifQ"
+        },
+        {
+          "resource": "repo://app/routers/health.py#L27-L35",
+          "version": "repo-lines-v1:sha256:ea7c0f56b8051ed8c060d815d1ccd654135ebb7873fa7a95e9d1835ba19fd8ed:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNzY3N2ZlMWYxY2QxYmEyY2ZjYzcwYTY2MWVlYjFhYjhhOWMyZjRlMmQxMmE5ZWYyNGQ1MTk4NjY0MmMwMTc5YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDg5M2Y0MGUzNzgxZWI4OTZjODJkMDQ2YTA4MDY3YTExZTM1Y2RmMmYxZGZhZjI2ZmVhOTBiOGRiNjY3NjQxMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMmM2NzBjOWZmYzgxM2Y4NDk3YjRlZWRkODIwNDJhOGM4ZjhhZmY5MzVjNmUxMzcxOWQwNjY2YTI4N2I2YzZhNCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGJkMTg2YjAzODhjMDRiZDRiZTM2OWY4NTY2YmFiYjgyZjFmNjlkZTcxOWVjNzYwZTgyOTU0OGUyYzZjZTZhYSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_cc192fc5e2074b0e86e1c4be2be2318c",
+      "statement": "delete(wiki_id) is the only method that mutates both stores of truth: it deletes the wikis row and then removes the job directory with shutil.rmtree(..., ignore_errors=True), returning whether the row existed, so filesystem cleanup is best-effort and cannot be reported as a failure; the API only reaches it for terminal rows and purge_expired applies the same deletion to terminal rows older than the retention cutoff.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L219-L240",
+          "version": "repo-lines-v1:sha256:46bf54dff4b142dcf24b345d6509052be35f2f9550aa36494a6654c132444f79:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5NjA3YzlkZWNhOTAwZGZhZjNiYjdjODkzYTY5ZmIyNGY5MDFhOTlhZTdmMjMwYjdhZDRjODBkNjA1NmI1YjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwN2I0YjM0ZThhNWVhNTNlNzVjMWEyZGI2YTQ5M2Q4Y2IyMWQ5ZjU5NmNiMjhmNTBlM2I5ZjFjY2JhMTY5YWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk0ZTg4ZjIyZDNmZjU4NGUzMjM2ZDg4MDk1NTU3ZWJmZmQ5ZDQzMWI5ODJkOTg0YzE0MDlmMjAyMjgyNzA5MzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0NzUxNzIxY2I1NTE1YjlmMDE3YmE2YzQ0YTZmYWQyYzk2MDk1YzViM2JhNDg5MTdkNGJkMjFjNTQzYzc5M2IifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L53-L59",
+          "version": "repo-lines-v1:sha256:03caead64054a3dd4fb1d4dcad4500a2ed9ada9b9a348aebe4485ae1305ea816:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZWQwMjZkNTc4YjVmM2QzYTljMmI2OWRjYjk5M2E2YjczNWFlNzk2YjEwNzVlOTZhNmE3ZjI1MjY4MTUxNzdmZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGEwYThhMWIxMTIwNGI1NzUzZjY4NWQwZjc2ZGQ1NmZiZTY0MzYzMjg5NjViOWFmYzdlYjhiOGRiYWQwNGZlYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMDAxZmQxNTQ3NTdjMGNmMjhkMDhmZmFhZTYwZjAxZGI4MTJhNmJlNDI3OWNkMDA5MWMzZDY0YTk1MDFmMjY2YyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzcyMzE3MTlmYjdlOTEzYTM0M2RjNzFiZjBhZWU3NzAyZjIwY2QyNWZlOWJjZjEwYjNhNmY5M2JmMWQ4YTM0NiJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L234-L245",
+          "version": "repo-lines-v1:sha256:88f6c3847b55147002f2b456c10162febf605b5b86651c06a05721057a6f3e0b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5MjFmZmYxYzVkODZhMTJlMjJhODVlZmZkYTZiNDhhMzY5MzlkNTY0YTk5N2VhNWYwNDlmYmRjZmFmMzRjMzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZlNWEzNDQ2YzExMjM5MDBkMDU2MzcwOTI2NjIxYTExMWU0NWFjYjM2Yzk1YWIwOTUyOTRmMmU3ZjQxNGZkMjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhjYzRhN2QxY2M3OTZhYmEzZTQ2NzIzMzI3ZjUxN2U5ZjgxMTk4MmQyNTBmMDcwMjk4NmU0YjU3NjRhZDk1ODkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_df9e67c382024fb885c0a8699ff943ea",
+      "statement": "Worker pruning and liveness reporting use different windows on purpose: prune_workers defaults to max_age_seconds=3600 and the reaper calls it without arguments, whereas stats counts workers seen within worker_ttl_seconds=120, so a dead worker disappears from pool.workers after two minutes but is only forgotten after an hour and reuses its row through the ON CONFLICT upsert.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L358-L383",
+          "version": "repo-lines-v1:sha256:ea99ebecd8e57b1e9bf5c753cd83dd9ce78229bdcefb70c700d905d866e2d737:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM2MmQ0NjU5MTBjNWUyMzMxNDJlNjMzNGZjNDgxYTljMjcwMmJmN2Y2MmYzODFjN2Q0NzM3MzM1MjY5ZDFmNzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNlYjAzZmE3ZmZlNDE3MDY1ZTI3NWY0ZjkwN2EwMThhNWY2YTk5NGIwYmIwNjU4MTE4MmFhMDQ2ZDc3NzQzNTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjdmMWE0ZWNkZDgxYjRmZDM3ZGIyNDdjODg3ZDlmNWI2NzVlZDE4MjI2ZmViYjMxYWQ5NjE5NWU1MzY2MGI2OTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNlMTU5MWJkNDEwNTEwNWUyYjg0NmZjYjlhOGY1YTVmN2VjNTVhOTMxOTcxMDc5MGUwMGVhYTk1NDU3MjZlZTYifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L32-L40",
+          "version": "repo-lines-v1:sha256:8d12b2cd359a8db5a6bd6ea33e07ab6c2998440ed681b6768e630e28770b27ee:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOGM0NDEzYzFjOTI1Y2NlNTM1NzMxZDcwY2Y2ZGVhNjNmODE5MzA3MWYzNmVhZDc4ZTkzNzNjYzEwYjE4YzUwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNmY1MTMwZTA3Y2UyNjM4Yzg4YTBjNzVmYWY2MmExNjlmOWZjOWNjMjI4ZGFmM2JhOGQ4MmQxOGM5NjRkNGY4NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI0ZDRjYmRkNTU1OTIzMWM2NTY5ZmFlYWY0MWUyMjZlNTJhMTM5NmIxN2I3MmYxMGIwZmQwNDY3OGM4YTZkOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWQ2ZTBjOWZmMGI2NGNkMjIxMDVhOGU0MzZhMGJlY2IwZGE5ZWU4M2MyMTg3MmM5NGE0YjBhZDY5MTdmZmMxNiJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L69-L74",
+          "version": "repo-lines-v1:sha256:11e39c4ce170e36669440289b898616696897aebc2a137abfe8cc11cd2cb1ff4:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmQyNmUyMWQ2MGZmMThhNTYzMThlN2ViOGU5NjRiNDQ5M2ZhY2RiMjczODliOTFjMGNkNTA2ODQ3NGI2NWViYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzM4NThhNDUxYzJkZDQ4NjU2ODAxMWI4YmYyMjc1ZDk5Nzk1NzlkNDU4OTA0ZDc5NzdkMzlkNDY1NGM2ZjU2NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzFiOWJmZWQzYjE4MjljMTE2NzU3MWI5MTU4OThjNTZkZmZhZGJmZGQwNjUxMjFiZjVlZWI1MWVlY2NiY2ZjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOGE0NWZmMWVkYmVhNjk4YTI5NmZlNjk5ZmY2OWVjOTliY2NkZGUwNmFkMjkyZWRjYWQ4MTdkOGQyZDExYmQ0MyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_8931b37a7f814d1a915ef686d1042b6b",
+      "statement": "The replacement seam for multi-host scaling is the JobStore class rather than an interface: no SQLite type or store internal leaks into app/, so a Postgres backend must expose the same method names and return shapes (claim_next, heartbeat, complete, recover_stale, note_worker, prune_workers, stats, cancel, retry, delete, purge_expired, the path helpers) plus the module-level utc_now and new_wiki_id used by pipeline and the worker loop, and must preserve the stale-claim rejection results (None / False / ok=False) and heartbeat's single-round-trip cancellation signal.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L397-L399",
+          "version": "repo-lines-v1:sha256:fdf830eb68c8dc965e0aadafb589b0adf6afbe66c0b246673cf6c56eca4c866a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMjgwZGMyZjkzY2JjMzRhZDQ4YWJmYTQ4NTM1NWRjNDM2MzE5YmM1MzgzZTY4NjY2ZmJhNmIwZjBmYTc1NDcxMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTI0ZDkxMWM0NDMwYWNlYjBiOTg2OGY5OTQ1YWY4ODU4ODBkZDVhYzFjZjE1NmNlNDIxYmEyYjg1NGY3NmJmMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWM0NzBiODQzNjQ1MmMzZTE0NDkwMTAyM2FjODBmOTkwYzE3MDJkNDlhYWE2YWQxMmVmMmU1MTJjMDUyZmY0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTkyMDZiOGQxOTM2MGU5MTM4NGQ2ZTZiODUwNzU4YjVmYTUyNjVkYmVkNTI4NWM4ZTdjMjdhYzUyMmNmMzEzMCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L11-L12",
+          "version": "repo-lines-v1:sha256:9db39a55ff7a3d09d6d8844cf2155a2d5334c783ac1172fb83721f8c87bed677:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjBjZTMyMmZmN2I1NTdlM2Q5OTczZWE2YmY0NmQ4MGI1ZWUzN2M3MDczOTJjZmUxZDBkZDhhYWUyMGU5ZjBmYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMThlZTI4MzNlNmU0ODE3Y2M5Mjk0ZWVjZDI2ZTIzYzEwODEyNWE1NDQ4MDExMDYyMWE4YjIyZDhkODViMWQ0OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGE3MjVkNTI0ODEzYzZhZWY3NzZlZWM3ODcxZTNkM2E1NTQwZGFjYjcyYTE5OTgwNTYxNjAzNjA2OGQ2YmNjYyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMWFhZjc2MzdjYjZlN2U1ZGI4NWQ2MzQyNzQ2MDE0ZGYwNDFjY2Q1NThhOTIwYjI5ZWI2YWM3MTlkN2JhZjVjMiJ9"
+        },
+        {
+          "resource": "repo://app/main.py#L43-L60",
+          "version": "repo-lines-v1:sha256:46de95d83f928ae1f6a23b87eb97509e8b4129cc0beeb5c844c258df9399ed60:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY1NTBjNWM2ODkwNDY1NjMyZjBmZTI4MDBhZjY3N2UwODYxMWIwNjRmNTI4NDJkNDAyNmU0NjA5OGI5NjMxYjYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhMDYwYmM1M2FiYmNjZmQ1MDMxOWEyMGQ1N2M3ZWZhMjUxMzMwNTZkYzkzMDVkYzhjYWY5ZmMxMDdlNjM5ZjAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImU0NmNiYTAxYTA0NWRlZTg1OWZlZTMwY2EzNWQ3OTM2ZmM4MzI0YzVlODBhMmY0OTJhNmEzMGYwMzAwZTIxNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZDM5Yjc1ODNmMjJiYWZlMTUwMTM2MzVkNjIwN2EzODVkNDRmNTRjZjYxZjVjMzlhMWQzODU2ZGM1OGY0MjUifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L146-L179",
+          "version": "repo-lines-v1:sha256:40e25a2a7b21ad8aa1c913f7a90f04b83eb23a6e3350290cfc7f8d2f4412c998:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmODEzY2I5YjJmZDQ4ZTRmMTc1YjYwYWNjZTJhNWI2YjU1M2M0MzAyMzQ0YWUyOGIyNGNkNjdkNjYxZDBjM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MWJmODMzMjc3NzU1OWZmMTUxNmZhOTY2ODIyNGIxMzA0NzVjYTRhNDIxODFlZDY4MTU4OTAyYWZiMzg5NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNWQ0Y2RlNTc3MTNkZTc2ZjViMmUzMzRiNzg1OGVkNWUzNTc1MmNjZDllZjFmNzk1ZDZkNDRlZmM3YmMwNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNjZmZDY4NDkyN2VlYTczN2FiY2NkZjY0OTUwNThiNjc3NDRmZGZmNWVjOGI4ZTViYTZmNTE0M2Y3NTIwM2MifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L66-L77",
+          "version": "repo-lines-v1:sha256:0065549b31f0d90669ccd3ace3efd2e8851f67c6c73dd4761c8d819b2b9a5f11:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljOGJmYjYwMDVmMWU5NjkzNGM3MDdhYjU3YmVhZDAzM2Q0YmIzNGJlMWE4YmRjMzg4NmZmMjA2ZDU1MjgyZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NWE0Y2MxNDc4ZmIwZDg4YTdjMmZmYTE5OTAwNzIzYjIzOWE5NzdmYjZiNzliMzhkNjhmZWE3YzBlMTM2NjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgyYzQwNmViMjAxMzFhZDIwOGE0MWZiNzYxYjU4ZmI3MmMzYTY2MjA3OTg1MzBlZDgyOWU2MGNjZWYyZDRmNDkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8f39f813774d4268b482047851e5bf60",
+      "statement": "There is no schema-migration framework: _SCHEMA runs CREATE TABLE IF NOT EXISTS on every JobStore open, so an existing database is never altered and a new column becomes usable only after being added to both _SCHEMA and _UPDATABLE (or written exclusively by create), while a new lifecycle transition must be expressed as a conditional UPDATE ... WHERE to remain safe across replicas.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L118-L123",
+          "version": "repo-lines-v1:sha256:3c7e6d46a10685c0d343a05eed2ff47a996490c25a452fcd2082825db4e8cda1:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk4ZTIzMmMxNDkzMmExODhjZWIwY2QwZDc5ODBhODRmNTU0NWUwMzhiYWI1Y2M3YjM0OTViZjUxZWNhYmNmNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTgwMTNiZGQ0ZDliMTQzNDVkNjNhOGY0YWE4MTIwNDMyODFlOWNlZTYyYWRmNWU3NjUxNzA3MmYyYzBlNTZhYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjM1YWIzYzZlOTFkYTFkZjk3MDg3ODNmZWVmYTg1NWYwZWRjMjYxYjgzNDQxNjRkODQwM2I1NmJjYjU5YzVhOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDMyOGNiY2JkMDJhMTFlOGI0OTE0ZjRhZmVlODRlMjUwYzllYWJhYmJlOGUxOWZjZmVhMDYyOTlkNzQ5YTg2MCJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L34-L57",
+          "version": "repo-lines-v1:sha256:8755e529dde51c43d890a577bfe749b69293f0136f4c03d0cfdd365f3e5cf4f2:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0MWU1MTFmNmViNmEzMDVlN2RhODM2MDczNzJkYTAwNjc2MDYzZWZhZDNmOGM4YjNjMzRjZTFkMjU2YjdiYzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE3ZTM3MGZjZmMzYTU4NDNmZmE4ZTJmMzNkOTYwNGFkOWExZTY0NWVjNTM3YjVhZTZkODBjYzZjZDVkNmJjZDEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg5MDliNWJmN2EwYTMyOGJiODgxZDFmYzhiOTlkOGJjYmFlZDQyYTY1NjRlYjdiZjIxMmZhMjg0ZmY4M2VlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwNjIyZDJkOTM2MjA3ZjY5YzIxMDVlY2Y5YzdjYzk3OTJiMGFkNmI5MTMxNzIzMzhiODNkYzQ5ZWI2N2E1NzMifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L59-L88",
+          "version": "repo-lines-v1:sha256:79db9287318cccd57284f47ff072e2b98f353533623e41b4f65427a5b6a37ae0:eyJzZWxlY3RlZExpbmVDb3VudCI6MzAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFiY2QyMjE4YzgzYjY0MjlkZDk3ODMyMmY0NWZjYWRjNDdiOTAxOThiOGQwOTNiN2VlYTM0NzI5NjE4ZDE5Y2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzMDNlY2RkNGE0ZDEwZjE5YzczZmQ0MmZkMTI0MzdmZDMzNTRhODI2ODE2MDVkYTUyNTVhOTdhMzkwNjhkYmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY4MGY1MTJkNGNhMjBkODlkN2FkY2EzNTVkNzFlNmQyYzViMmZmYjQ1MmI2Y2Q4ZGM1MGI1NDg1Y2UyODdjNTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1NjcyMmUwYjIwZjViMzI0M2NlMTE4MDQ2ZGM1ZjY4NDIzY2QwNjcyN2I2ZDlmYTkyNmY1N2M5NWFlZTk4ZjkifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_15793ee73458463c863b615a32d229c8",
+      "statement": "tests/test_api_wikis.py::test_completed_wikis_survive_a_restart proves that terminal state and artifacts outlive the API process: after a wiki reaches done, a second create_app() over the same data_dir still reports status done and serves the download, because the row lives in openwiki.db and wiki.zip on the volume.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_api_wikis.py#L259-L273",
+          "version": "repo-lines-v1:sha256:5d7010cc9e6dd9579f1019fc8013f7175a45bc59c4f53887f469f639b18dbc30:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNTY0NTYwZjRmNWMyOTFkMTE3OTZhMDZhYjhiNzhkYzUxOWFiNWZjODE0ZDczZTA2ZTMwNDUxMjBlMTRkOTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNTdkNDAyYzUyYzBmMmM3ODQ4MzAwNjI5ZGM1ZDQ4ODk3MDdmYjEzYTJlNWJhMjUwMTUzYThhOTk3Zjk2NjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzN2ExNmFiZDE5YmYyZjQ4NThhMzUyMTIzOWEwYmQzNGQ2YjUzZGY1M2ZlYmVhNmExNThhZDkxYjk3ZjA5NzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzOTMyZmRjNjIxNGFjMWU5NWI4MjJhYTA2ZWQ2MGQ1ZjM1OTcwNTJiNWMyODdlZTIzNzcwNzg0ZGQwYjhmZjEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1af8de5f045d425f81039f5582e6200e",
+      "statement": "tests/test_wiki_state.py pins the values the store merely persists: read_run_state returns None (never raises) for a missing or corrupt openwiki/.run.json, and format_progress defines the exact progress strings a wikis row carries, such as '2/7 pages · generating' and '3 pages written'.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L96-L137",
+          "version": "repo-lines-v1:sha256:c20075e0ac1e3ccc847b85372c14e972b4c1f4078a2851a69517d79ecdcf3fb3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMmRkOGQ0YTliYTJiZjViYTRiZDZmNGJmOGU5MDI4NTVmYmIyNjU4YzMxYzdkNDVmNjEzNjJjYTIzY2EwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTYwMGE3M2QyZTAyZjM1MmI5MGZlZjFkOGQ2MzgxMWJhNGE4ZWUwYzFiZWFhN2FlNDY1OGYzNmFhMmUxOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYjIxYmY4OTVmYWUyZDczOTIwZDkzMTc4Y2ZkNTg0MWNkZjhmOTUyNDUxNmM4YTU2NTg0MzZhNGFjNDhmM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5MzgyYmMyNDA1ZWVhZTg3YmY5NzJlOGRiM2U0ODM2M2I2YjQ0Y2UyMzYwNTMwYjk2MzJmNWRmNjhjNTYwZTYifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L61-L113",
+          "version": "repo-lines-v1:sha256:2d4e7dedd32378458dd0b30698ae6813d466090a3b9aadf2df3e1fbefd67d4b3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2Y2FiNzA2ZGE5NWY5NmU3NmU2OTBlYTJhMjViNjViOTFhMjQ5ZjkxMWRmYThiOWNhMTNlMDgwNDM0ZTljYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3OTQ2ZWI4YzI4M2U0Y2Y5NGEwY2I2MjZjYTA5MWU0N2ZmNDM2Y2NmMTQ3NWZhMTYxZDA1ODBhNWVhNDE0MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ZGE3MGI0NzA3NmYxZTYzNzVlNzMwZDk2MTZmNzljMmU0M2IyYzgwN2EzN2YyYjZkN2JiODMyNzFlNmVlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

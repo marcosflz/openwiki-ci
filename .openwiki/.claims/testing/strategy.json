@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:f22504d00fec21d14d688b47d0a27eebdafb69f7ab5303c7c289dd663906bee9",
+  "claims": [
+    {
+      "id": "claim_544317d3071649f59e97635c41deb423",
+      "statement": "The automated suite exercises the real production pipeline (create_app → JobStore → WorkerLoop → run_pipeline → subprocess) and fakes only the edges: the OpenWiki CLI via OPENWIKI_BIN and the provider HTTP client. No test module patches pipeline, wiki_runner, packer or publisher, so regressions in the glue between them fail the suite.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L1-L8",
+          "version": "repo-lines-v1:sha256:fc622bdfe8765559eb18023db289e4e946ec35cd2c54f2ac50b51c4540a411e8:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjZmNzY0ZGM1ZWU1OGJkY2UyZmQ3MjQ5OGZmZWQ0NjA1NTlhMmRiN2ZkZWNhNzgxYzBmOWYyNDgyYjJmNmQ5MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSJ9"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L1-L6",
+          "version": "repo-lines-v1:sha256:f1ea716e79e61bb5bf12fb55fa8b45e150ece0a40417ba8ca211d3b1703007b9:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMmI1MTg0MzJjNzEwZGEwZTI2OTliNDU1ZWFlN2JjOGMxZDc5ZjU3MTIzY2VmM2EzYjg0MDAwNWQxMTgzZDY0YiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSJ9"
+        },
+        {
+          "resource": "repo://tests/conftest.py#L44-L67",
+          "version": "repo-lines-v1:sha256:73671faadb9e917110bb4795fccdd69a1bf2b3bfbcaaef389b5d977cdb57e109:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg5MTczNDQ2Nzc1NDNhMGE0YzY1YTdiMmE2YWQ0ZTAyODg4YmVjNzBkNDUyNjgyMWNiZTI1YWJlMzFlMTAxMDEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9f896d512c6041898ac69f0e64333dbc",
+      "statement": "The `settings` fixture builds a `Settings` with `data_dir` under pytest's `tmp_path`, `openwiki_bin` quoted as `\"<sys.executable>\" \"tests/fixtures/fake_openwiki.py\"`, `allow_local_git=True`, `run_local_worker=True`, `max_concurrent_jobs=1`, 0.1 s worker poll/progress intervals, a 2-minute job timeout and `default_page_concurrency=1`, which is what makes local-repo tests work and keeps polling assertions fast and deterministic.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L44-L57",
+          "version": "repo-lines-v1:sha256:99d12b11313e0fc69b428f38a9c58a18c218d1881dc37b426426303a7fbd8a5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2b92f0e66894cf9855ff3c4c882c1d3",
+      "statement": "The `client` fixture enters `TestClient(create_app(settings))` as a context manager so the FastAPI lifespan actually starts the stale-claim reaper and the in-process WorkerLoop; without the context manager no generation would ever be claimed.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L53-L73",
+          "version": "repo-lines-v1:sha256:b5d5e0ab27eb481c512218f615ac4f9623140ea2e5cfc24f8ad661ae6877982e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkMDI2ZDU3OGI1ZjNkM2E5YzJiNjlkY2I5OTNhNmI3MzVhZTc5NmIxMDc1ZTk2YTZhN2YyNTI2ODE1MTc3ZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNkODU4ODFhMjkwZGZmYjQ5YzcwYmJhMmEzY2MzNWU0MzE4ZDE0ZWYzZjVkMjAwOTFkMjY1ODE3MDU1NmNhMmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMWZkMTU0NzU3YzBjZjI4ZDA4ZmZhYWU2MGYwMWRiODEyYTZiZTQyNzljZDAwOTFjM2Q2NGE5NTAxZjI2NmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlMjMwNTdjNzdhNzZhMmViNTFiYmZlMjRkMzA0NjM1MjZlZmI3N2I5ZjhlZDA4ZmIyMGM4MzYwMDNlMDgyNDEifQ"
+        },
+        {
+          "resource": "repo://tests/conftest.py#L60-L66",
+          "version": "repo-lines-v1:sha256:1073a10d8edba85274ced760c32128bde389e31fe1b62033aa2164d1563d2b2b:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2ZiNjE1NWRjZWM1MGUwNDQ3NjJmYTYyZTZhZTY2NjE0NWYwM2ZiMTQ0Y2UwYjAzZGJkZjQ4NjJiNDI1Y2FjZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiOGYxOThjMWQ0ZWUxMGY5ZWYwNjA3NmE4NWJkMDNkZWYzMTc5NzY3M2FiMzFkNWNmZjM4ZGFmY2Y1OGM4ZWU0MCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGNjNGE3ZDFjYzc5NmFiYTNlNDY3MjMzMjdmNTE3ZTlmODExOTgyZDI1MGYwNzAyOTg2ZTRiNTc2NGFkOTU4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjNiZjY4OTFlZDE4NmM3YTE5OTkxYzQ3OWZhYWZmODM0M2Q2ZGI2YzgzNzE2YTYwZjRjNmE5NjRiYmViYjkwNCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_bcf939a909bf4b5b988559671c2df5ea",
+      "statement": "`make_git_repo` writes sample files (optionally including an existing `openwiki/` or `.openwiki/` wiki with `.claims/`, `index.md` and `.last-update.json`) and commits them, skipping when `git` is unavailable; `make_remote_repo` returns a bare origin that accepts pushes, or with `bare=False` a non-bare seed with the branch checked out so `git` refuses the push, which is how real push failures are produced.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L30-L41",
+          "version": "repo-lines-v1:sha256:837bebbb59e516757f7bad3f9d6b4aee999e730b823e05d6dfa28c2923fde22c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYxMjM3ZjcyNTU3ODdjZjNhYmUwNDMyM2UzMDEzMGJkZTI4Mjg5NDllNTU4YTYwNzU0Y2I1ZGQ5Njg0ZWZmMDQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjIwMGQ0NWRiMGFjNjkwOWZjNzZiNmEwNTYyOGI0YTQwZGM2Y2E5YWFkZDAzM2UwNDRlNmQyNzk4N2FiMzA3ZjgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBmZGZmYTIxMjNmY2UxYzRjMTY3NWY4MjM2ODhkYmRmYjdjNGEwYTQxOGRiZWE0Mzg0MzIwNzJiMmI0NTMwMTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/conftest.py#L69-L130",
+          "version": "repo-lines-v1:sha256:81cf36a811f6da2263351fc4ea328dd90ab1386ce999ac773712ef54923d09e3:eyJzZWxlY3RlZExpbmVDb3VudCI6NjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiODgzMjhlYjRlNDMxNjUwNjliNGJiMWZkNGJiMjA1OTFiMDNkOTU3ZGRhY2YzMWMyNjU2ZTAwOTE3NTQ2NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZhM2U2ZWIxOTAxZWJhNDZkZTI1ZjZmOTUzMTM1ZmE5MzM1YTQzYmI0MjE0ZWEzYWMxMTIwNGZkOTdmNWY2NjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcwZmEzN2I1YzVmYmExOWJmNjY2NWUyNjYzNDJmNzAyOTY3NGMyM2EzNTllNTdjOGM3YmIxZGZlZTI4OTQ1ODIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6aa305be7688431abdc6247370f5ec91",
+      "statement": "`wait_for_status` polls `GET /wikis/{wiki_id}` every 0.1 s until the terminal set `{done, failed, cancelled}` (30 s default) and `wait_for_state` polls every 0.05 s until a specific non-terminal status (15 s default); both assert every response is 200, and the second is what lets tests observe `generating` before cancelling or before queueing a second wiki.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L133-L158",
+          "version": "repo-lines-v1:sha256:06aa50604be318fdfe817f82c3be8a8fac110e421eb628926b3ca841a5204d0a:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAzZWE4OTVmM2E4MWMyNzY4Yjk1NmRiMzc1NzgzY2MyMDdmNGE0ZTUxYzFmMmYxMGYxY2Y4OTNkNDYzYmI5NTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ5NTI3MjAxYzhhZjVmOGZkNzg5YTZkMzEwMjk4YTVhNDIyNGM4Y2U1MmI3YWJiNzIwN2Y5NDMwMmE4NWVmZWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhYzY1MDc4ZjNhZjE1OWI1NWFmNmNhODAxMjQ4YjFlOTI1YTdkYzk5ODMyNzJlNjViZWZiOWQ4YTM0NTg0MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b8d325879574bca92ebeb52aa359248",
+      "statement": "`tests/fixtures/fake_openwiki.py` impersonates the `openwiki` binary as a subprocess contract: it creates `openwiki/.claims/quickstart.json`, `index.md` plus `architecture.md`, dumps `sys.argv[1:]` to `openwiki/.fake-args.json` and selected environment variables to `openwiki/.fake-env.json`, and prints per-page progress lines that the runner timestamps into `logs.txt`.",
+      "evidence": [
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L25-L56",
+          "version": "repo-lines-v1:sha256:3b2682fd2fd41968a9019822f4b8cb7fdb07e9ae65b9834c1829c88d9fb6e721:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiMzk3OTMzYTI0YTgwMWVlOTIzMzI3YmQ2OWEwMTA0OWMwNzc5MTUwMjFjZjJlYzM5ZGRhNGY4MWFhODM3ZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2MjMzYjNmZmVhMzJhMjNkZjUzMDY1MzQzNDhmMmRlZTc3NmE1YTZmNzRmYjUzMzE3NWRkYzUzOWE4ZmU0NjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5OGIwNjNkOWI0N2U2NTM3OTYyNTU3MmNjZTE5NzY2OWQ1NzY3ZTEyYzE4YmUwNzU2NTJiOGNkOTgxY2U4ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6454ad54596b471dac09934aa1fe5c13",
+      "statement": "`FAKE_OPENWIKI_FAIL=1` makes the fake CLI print `error: simulated provider failure` and exit with code 2 so the job ends `failed`, while `FAKE_OPENWIKI_SLEEP=<seconds>` delays the run to create the observation window needed for `generating` status, cancellation and queueing tests; both are set with `monkeypatch.setenv` because the CLI subprocess inherits the process environment.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L41-L59",
+          "version": "repo-lines-v1:sha256:4fce1f2b0a7dcc6897c062988453fc441877cea56fc816033fd1d4631331fc30:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNzZmNTAyNGYyNjA4ZjFmMjA4ZWQwNjNlMjkzMjJmYWRmMDRhN2JlZmU4ZGFlOThmZDA2YjBhZjFlZTEzNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNmZlNGE4Zjk2NjEyZGE3ZTE1N2UwODAwMGZjNjY1MjBjYjlmMWI2NDBkMzNlYTI4ODcyOTc1M2NlYWMwNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMjEzOWQ0YjZiNmFlNzNkZTBjMWY2ODA2MTE1NThkNDc2MDZhNzJjMTUyOTM4YzE0ZTBjNTI0YTU1NTliOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjYzVlZDc2MGM3YWJjNTJkMTUxNWZhNmYwNDU2ZmMzZGI3ZTdiMDE5ZTY5YWIxZGJjMDUyYzg1OWE5ODExODYifQ"
+        },
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L26-L32",
+          "version": "repo-lines-v1:sha256:c78b0b7ab54e7096552be90be04b60a944f5af5e6b7e94e69bdf18879aed9df7:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDE2MzkyMGYzMDJkNDYyOTRjMjVmNGZkMzY0MzFmMTFiYmY5YTRjOWRhNDNkYzlkZmIzMGEwMmRmOTA0MDMwMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDA4OTFhYzI3MmNmYmI3MzMwM2MzMjExYWQzNWFjNmI0MWI1MTQ2ZWY1YzU0Y2Q3MTI0YzhmYWQxMjFmODE5NyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNTQ4ZDc0ODNkMDYwZjE3MjJlMjQ1MzY4ODgzMzQyNTZiNTQ5MGU4YmJlODY5ODIwNjc2Y2E5ZWFmMzUwOWNjOSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGFlODdhOWU1ZDk0Njc0MjZjNzE5YzFiZDkyNjM4ZDAzYzI5MGI3MTBkYjRmZGQ2YjMwZWNkOTNjNWRmNDhmZiJ9"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L57-L79",
+          "version": "repo-lines-v1:sha256:b4ce9f15fcfad8c86f1d575714b412ce9286b72bb9d826a256db444c10123a90:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyY2U5N2IyYzY0YWRhZjY1MTM5NTAwODE0MDIzNTZjNzdlMjc3NjEyYTMwY2EzZjdhMTc5NDAyYTc0NzNlN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjYTljYzMyNjgxY2JmNGQyMzkyNjg5NDQwMWQ2NzNkZmRhNGVjOTg1MzUzYzViZWRjMjJiZDE0ZGJmNzczMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4NmEyY2FhMTAyMmQxNjA1ZjIxODAyZTg2YThlZGExNWEwNWYzMzk5ZDgyZGRlZTI0ZDU2OWQ3MzY2NzI3ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxOTY4ZjRlMTY2ZDIzMmRiYzgwYmNmMGFhNjkwM2U5YzVkZGVkZTI2ZDliZjQwM2YxOWRjNTMxZDZkZTU3YTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_a5d79309da10468ea5fa5203d66cfaaa",
+      "statement": "The fake CLI records only `OPENAI_COMPATIBLE_BASE_URL`, `OPENWIKI_PAGE_CONCURRENCY` and `OPENWIKI_PROVIDER` in `.fake-env.json`, making those the assertable part of the OpenWiki subprocess environment contract.",
+      "evidence": [
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L17-L22",
+          "version": "repo-lines-v1:sha256:ee7eff5427e6b63ade462a89baf614278a32afa4a31755f259c7b0fcc2eb25d4:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODQwMDg0ZDk3ZTBlYzhlYmMzMGYyYzUzNWI2NmJlN2NjYmQxMDA2M2I3MjQxYjQ1OGE1YzE5NmJlZmQxMjNmMCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZmFmYmEwNTI3YzM5NTNjNGI2ZTBlNWI1NzM5YmE4MzYxMmY4MDUzYmNkYzk0NjY3MzAxOTNjZDFkNTkwYjQwOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjFlOWZlNmIzNGFiMDZlZDkyOTkwYmIyN2Y3NzYwOWNkMWJiMmJiNWMyOTJkZmYxZjY1MmZiZGY3ZDdjMzhmZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTQ4ZDc0ODNkMDYwZjE3MjJlMjQ1MzY4ODgzMzQyNTZiNTQ5MGU4YmJlODY5ODIwNjc2Y2E5ZWFmMzUwOWNjOSJ9"
+        },
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L41-L44",
+          "version": "repo-lines-v1:sha256:e6d1780f5d4bd669f38b83ad88a005a7b6fc47504296e62871ce65bfab3054aa:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTg2MDRkMjgxZjgzOWM0NWIxNjdiOWE1MTRmZTk1NTY1MjQ0YTBmYzIwODVmNGMwMDk5NmZlYWYxMGZhZWU2YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzFiZjc1MTA1ZjQ1NWE3MDUwMTMwMzY5MDNiNGYzZjE4YmY4NGViZmIzOTcwMzBkMDQxZTBkOTg1OWM3NWQzMCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOTdhYWEyMjRkMDVjZTFiYmNlOTFlMzYzODQ2ZDJmZjQ1M2M4ZTc1ZjcyNjM5NTM5MDZkNGU0ZjE0Y2Q1ZmJmZiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5783628c624447618273c1d1700029c7",
+      "statement": "Because the fake CLI output is deterministic for a given argv/env, the push tests can run the same source twice and assert `push_result.status == \"no_changes\"` with the remote HEAD unchanged.",
+      "evidence": [
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L34-L56",
+          "version": "repo-lines-v1:sha256:106d5c9ede6f1b381d84dcd03082a5106f4bd7cbcb79513fa196707cb06c72c7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjNGNmMGIyOGMyNjliODQyODU0YTc3OTMxOTVjZjRjZDRlOTQ5YmM1MjE1NDMyNWU3ZTdjZmY2Y2EyNmQwZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2MjMzYjNmZmVhMzJhMjNkZjUzMDY1MzQzNDhmMmRlZTc3NmE1YTZmNzRmYjUzMzE3NWRkYzUzOWE4ZmU0NjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJjMmVhMWQxMmY5NDkyZTJkZmM3Y2I2YTRiYjRmZDlhNTU4YThlOWEyYjBlYjk3OWZhZWRkMDkyYWNmNmM3ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L75-L87",
+          "version": "repo-lines-v1:sha256:84affda3afbed6d8ff7014f6cf09285fa511b8011a7714681e6383bf8da3fb2a:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4NzY2MGRkYjRlODg3NGM0NjViYTQyNzM5MTFmM2NlZjIyZDJjY2NkYjc3NDMyOGIzOTI5OTg5MzU0MWZkY2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2MzNmM2Y3YWUzNGRiODExNjQ2MDllNDRkNDNhMDljN2VjYzFhYjQxODJkMjMyYzE1ZGM4Y2U1NmYwZDUwMzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjFlOWFkZjcyNGQ2ZDQ2MDIyOTczMzBmN2VmNjJmOTI1MjIwMjFlYzkxMTZiZjkwYWZlZjc0OTQxMDdkZDA4NTciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhjNTA1MzgxZjg0YzIyOTNmNDYxNWE1ZjgzMDM0NWQ5ZmVlODk1ZmY5NjA1Njc0MmQ4YjJjNjNmMmNhZjliNTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1f0698f124274dbc822b6b1296e7f875",
+      "statement": "Provider behaviour is faked in two independent ways: automated probe tests monkeypatch `model_status._make_client` to return an httpx client over `httpx.MockTransport` and count calls (distinguishing cached vs `?force=true` responses), while `tests/fixtures/fake_openai_server.py` is a manual mock serving the `/responses` and `/chat/completions` shapes and, with `FAKE_REQUIRE_SESSION=1`, returning 400 unless `x-opencode-session` is present like OpenCode Go.",
+      "evidence": [
+        {
+          "resource": "repo://tests/fixtures/fake_openai_server.py#L1-L48",
+          "version": "repo-lines-v1:sha256:8baddef36368c248a6c338d40026bb5b52843ea6986265fbb085543b0f66fc7d:eyJzZWxlY3RlZExpbmVDb3VudCI6NDgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4OTIyZGRlMGQ1ZTA1ZmUxYjU1MDM0ZDQxZGUwOTA1ZTQwZDAzYmEzNDJjYWQxNmY2ZDYwYTI5N2ZlYmU2Y2YiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUyMmFlYTNiNDhmOGIwOGZmNDYyZGQ3ZWVhN2Y1ZDFmMWM4MTBmYTY1NmZjYTczMjVlNWZiZGRiNjdhNTEzYWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImU4MmJjYzViY2NlYTY0ZTJkYTgyOTcxM2M1Yzg0MGYyZmNhYThhMDBkMGY0MDg1MWFmNTU5OGY4NTM5YmJkMjIifQ"
+        },
+        {
+          "resource": "repo://tests/test_model_status.py#L102-L127",
+          "version": "repo-lines-v1:sha256:52e744d78bc66a39ade317e231ac04cf0395f2720b3e762bb0b899d117dd8253:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyNDNmMGRhNmRhMTkwYjA2Yjk0OWE2N2VlMjhkZGE4MzAxNzM3NWVmZThhOGQxYWI4MWY0MWQ3OGIyN2YwZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRmNGU5ZGRkY2VmZTI5MzI4ZTRmMWQ0YzU0M2ZhNTdiYzBhNmQxNzhlNDBjYTgyNmRlYzFjYzk4ODZiYjJiNjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc1MjEyZDBiNjYxNmYxNDk3MTM4ZWZmZTc2NTE0MTdmYzU1MThmZmVhYjZhOTMzMjE1ZDU2MTUxOWM0ZTIwYWYifQ"
+        },
+        {
+          "resource": "repo://tests/test_model_status.py#L31-L45",
+          "version": "repo-lines-v1:sha256:2d8b74243509b1cd4637f78f4b6576943d0b1200c952c5b82a3faf5e5f6bf1da:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVjZGY3OWJmMzg4MjczNDc5YzMxZDIwZWM3ZjNmMzM3MTQwOTE3MTI2ZTA5Y2QyMDA2MmI1MmJiOWQ3OTFhNzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YmE1ZDA4YTUzMjljY2RkYWE1MDlhNWYxYTFlNmY0MDVlZTc5OTNjNDEzZTAzMDdhNWMzMzg2MjhiODJiYzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjBhMWJlY2VhNTkwMmVmYmFmNTVlNDk2MmQxYTk5NjNjMDJhZmE2YjQ1MzMyZDZlNmE3NTViYTc5YzMzZWUyZDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlZDRiM2ZmMGE4NmZiNzYzNjM4NTE4MTAyNjY5OTRiOGMxNTMxZThlYjA3YjcyZWQwZGM0ZDQ2NDJhNzE3ZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_8d3cbb05444a4840a7310e66855315a0",
+      "statement": "`tests/test_api_wikis.py` is the end-to-end API file: it covers 202→done with zip contents, language-bearing `INSTRUCTIONS.md`, timestamped logs, upload flow, request validation (scheme, empty URL, SSH+token, invalid mode, unknown extension), delete, cancellability of running and queued wikis, retry, auto init/update selection read back from `.fake-args.json`, hidden-wiki adoption, and state persistence plus crash resume across two `create_app` instances sharing one `data_dir`.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_api_wikis.py#L198-L256",
+          "version": "repo-lines-v1:sha256:5defc953e991614010b8417cce55f9ca513b02f21def59c0c70999b33b84817e:eyJzZWxlY3RlZExpbmVDb3VudCI6NTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYWM4MGEyNTQxZWZiMjNmYThiMGM3Y2JmZmMzMDRiOTZhNmU3YTY5ODM0NzZiZTQxODE0ZTU0ZTg5YzQzYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllNDFkNmM0YzgwNzczZjExZmFiMDBjMTE0MGEwZjNkMmUyODE0N2MxMDMzYWUzOTJjM2QzYzFlZGU4ZmYxYTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxODBlMjM5YjMxNGVlNjYyNTFmNjZmYWVlNjIyYjMyYzMyYjg5NGVmYmYyNjdhZmQ5MjUyZjRhNjg2YTgxMDYifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L23-L54",
+          "version": "repo-lines-v1:sha256:bda2f19b162db15424d0adc32908acafb1d0e6880809e3e52eeacf8c7bac6713:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwM2Q4Yzg0NjdjYWI3YmJiMTg5YTI5OGIyOTUxNGFkYTUwZGU4ZjEzMjYzMDBiYTJiYjhjYTFlZDc2NjQ4OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIwMDAxNDM3MjdkNDQ4NWNjNGJlOWM4MmNiMzBhNWEyN2ExYjM2YjEzODk0NjhhYTU4ZTZmNTQ1MTIwM2MxZDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjFhMTNmY2M0MWNlN2NmYmVjYTQ4N2M3NTMwZWViMjVlMjJmOGRhZDk4ODIyZDhkY2JkMzE5YjkzNDJiYjdiNGMifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L259-L304",
+          "version": "repo-lines-v1:sha256:c06ef9156b837b391d5652833d58fe4ececb0c4088bbd463ed5b057bfca309b4:eyJzZWxlY3RlZExpbmVDb3VudCI6NDYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMzNTY0NTYwZjRmNWMyOTFkMTE3OTZhMDZhYjhiNzhkYzUxOWFiNWZjODE0ZDczZTA2ZTMwNDUxMjBlMTRkOTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjNTdkNDAyYzUyYzBmMmM3ODQ4MzAwNjI5ZGM1ZDQ4ODk3MDdmYjEzYTJlNWJhMjUwMTUzYThhOTk3Zjk2NjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzN2ExNmFiZDE5YmYyZjQ4NThhMzUyMTIzOWEwYmQzNGQ2YjUzZGY1M2ZlYmVhNmExNThhZDkxYjk3ZjA5NzUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9d308666e1334a47a47f5d3c28fe03dc",
+      "statement": "`tests/test_worker_queue.py` unit-tests the `JobStore` coordination contract: an atomic exclusive claim invisible to a second `JobStore` over the same database, heartbeat/cancel/complete, completion with a stale claim id being ignored, stale-claim requeue, queued cancel and retry, worker stats/pruning and legacy `job.json` migration that renames the file to `job.json.legacy` without duplicating the record.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_worker_queue.py#L27-L84",
+          "version": "repo-lines-v1:sha256:4774b3ca68dd2265a57d446f7657974d09b010f92a03c73563340c62cb66c7e5:eyJzZWxlY3RlZExpbmVDb3VudCI6NTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZlZWVjMWU2ZjBkYTZjOGFjNGY2MjJmM2M4OGQwMDQxNjdjNmIxNmFkYmI5YTZkZGFjZDY1MWJmYWUxZTFlNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyM2IwNjMxY2JhZGM1MzllYzIzYTk3MWU3NjNkZTczM2ExMzVlY2ZiOGRmNGMxY2Y5ZjA3YTA5NDViYWZiM2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjMyZThhMjFiMWViNTA0MGMyMTY1NGNiZTQ2ODA4MjA0ZmJmNTVmNGFiYTY1NGNkZWQ1MWNkZDA4ZDVkMTVhMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjJjZGViMDg2YjJjYzg4YWQzZDRlYzc2Y2Y2M2FlN2E0ODMxZTljODM4NzFmNTU1YTU0N2MzY2UxYzhiZDYyZWIifQ"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L97-L147",
+          "version": "repo-lines-v1:sha256:f168d781f400c3c4d007462f3e9ba73c3937f12cf7815bb1acf97307de27604f:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0OGNmOWQzZTNkMjEzNWE3NjVhZTRjYmE5ZWM1YzJkZjZkZTM2M2FkMzVkOWVhNDRiNDFlMDc0ZjU2Y2NjZWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI0OTRjYmQyYTY0MjE5ZDNmMzZjZDcyMTM5MWNiYjEyNmMyYTIzNTI0YjEyZjY0NzVhNjIzNjUxZTc2OWFjZmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQ0NTQyZDgyMWY3M2MzNDM1ZjdhMjQyZWUzMzczMDQyNmJmZjhhNDFkNzc0NTYxMzI0ZjIwYWJmNTc4ZTE4NDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_626c42c0ffcb4cb7b1270b2f23750860",
+      "statement": "`tests/test_push.py` drives `publisher` against real local remotes and verifies commit author/message defaults, custom branch and message, `no_changes`, HTTPS token requirement, SSH rejection, invalid branch rejection, push failure keeping the wiki downloadable, detached checkout requiring `push.branch`, disabled push being skipped, and `--update` runs fetching full history (no `.git/shallow`).",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_push.py#L110-L160",
+          "version": "repo-lines-v1:sha256:c7a9037bcd1770b15e409ee805cc3f2defbc681ac688078f1df593722e39d6a6:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4MzVhYzdiN2Q2NTBhMDA1MWVmM2EwMGYzYmJiYmEyMWZlOWJhNGFlYWM3MDFiMzk3YzgzNjVmMTlmNDQyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5MWFmNWU0NDUyZDA4NTkzMzM3YjkwNjIyMTZiMjA1MWFkOTBjZWQ4NDExMzY3NjMyNTkxYmQ5MDgwOWNkYWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhMjlkYmQ2OGEwMDk2OWEwY2RmOWRiYzAyZTc4MjY3MGY3NjliODg4ZDRiYTE4ZmY2ZTllOTk1NzgxYmY5MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L26-L54",
+          "version": "repo-lines-v1:sha256:1c0eae086e1a125a65b92c0543fadebb575b24f1346299cf5d96777eb120bc8b:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBmZmM2NzZiNDVhNjEyNGJiYmZjMDViYmJhM2Q1ZTQ2ODI5OTI0OTYxZGJmMWU1MmQyZjZhNzA1NmQ1NjU0MmQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM1MTcyZGZmZTc5NTFjOGNkNTM1OTc5YjdjZDllMWIwNGRiOTRjZWY0Y2NmZWM0YzYzY2IxZmVmZjJhMDMyMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjUzZGI0OGRjYzJlZmNhMWFlNTQ5MmI0MzU3NDRlODJlNDA4OWZjYjFmNzBlMzI3MzUxOTkwOGMwNDVmNjMwMDAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRjMDY5NDA0OWY0MjhjYTliMjE5YzNkZTBmNWM2MTg3NTUzZjdkZGI5ZDA1ZTM2M2RlYzhiYTg2OTcwMTBkNjgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f3b699185c3547e38c6ca49bd0c1ab52",
+      "statement": "`tests/test_provider_proxy.py` covers `parse_extra_headers` (default service User-Agent, configured override, rejection of malformed JSON/shapes), `create_app` failing fast on malformed headers, header injection with path preservation in the forward app, 404 for paths outside the configured base, and the end-to-end wiring where the CLI subprocess receives the loopback proxy URL in `OPENAI_COMPATIBLE_BASE_URL`.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L110-L140",
+          "version": "repo-lines-v1:sha256:b21da69c5b6f989a33839d2cad22f450dd2ca302b9d30887491569d63ae80924:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0NzA1MmMwZTdjNWFjNDU2NjA2NWVkY2M0MGM1ZDljZDYzYjRiNDk5OTJkYmY4YTUzMWRhYjY0M2MyYzdmOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MmE2NjAxMWNkMTQ1ZTYzYTVhMTlhYzNjNTQ1MzJlYzliN2RlYWExZTZlNTdjZDBlOTA5M2Y0NWQ1OWM3MjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5YjgyNzE2NTdjODVjMDI0MWUzMWQ4MDQ2NzQyMjFkNmJlODc2ZmM2ZmY1OTM1NTNlNjFkYTZjN2Q3MWE2MjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L20-L44",
+          "version": "repo-lines-v1:sha256:222add10b76f23aa58062b3138fe15d297c76081ffb644c75406ee2a1bd08138:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhMmU1YjJmN2ZlNTY2NTU4YTIxNWJjNzg4MTU3YTM4YTZhMWI2ZjZhYzE1YjZmZGFiYmYwNjJjZTg5OThlNzIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4NGQwYjA1ZmI4NGQxMjUxNTdmZTQ4Nzg5OWQ0MTJiMzUwZmZmODg2MWE5ZDU5Nzk3Yjk2YTEwYTc2MDdjMGMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjI4MzQ4N2U1Mzc4ZWFhYWVhMjg1OGZhY2E4ZDMxZmViYTQ4NjRiODYwZjMyNTJlYzlmYmU0YWZjNmNjZjgzMjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjIwNjQ3MWZlNjgwZjFiYzU0YjNlYTFjNjFlMzliMWI4MjYxMjRiYTkxMDViNjI1ZDc0NWEzZTYzZmMzY2Q4ZmQifQ"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L57-L107",
+          "version": "repo-lines-v1:sha256:1b03e19926f233ea2989117677dbd1d9bbc66d51a5655dc949bca8cbd097cc64:eyJzZWxlY3RlZExpbmVDb3VudCI6NTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEyZjZkOWY0ZjdjZGQxNzVkOGEyNjBiZDMzYjJhZDZkMmRlZGU3OGI1M2JlMTlmYWRlOWEyOTU4MGVhNjQ3ZTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNjMzgyNjc3YmE5NTJhOGViY2Q3MDVkZGE0ZjFiOWMxNjNiMDBkM2IzYTBlMWY1N2E1MGY3NDNkZWQyYzEzZTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjExZTVkYjk4YjA5YWNjMzEyMDhmYjQ3ZTlkMjkzYzgxZWYwYTYwOWI3NzNiNDc2MTM2ZmI0YzBkZDVmOGVmN2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjkxY2ZhZWQ2NmFjZTBjMDNmYjJiZmJlNDc1Y2FkYzBhYjYyNzVhNGY1OWI3YjY5MzRjYjU3YjFmYzBmZDU3NWUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_889809c322074df2a1ea2ebfeca8d3f7",
+      "statement": "`tests/test_wiki_state.py`, `tests/test_ingestion.py` and `tests/test_health.py` isolate the workspace parsers (`wiki_artifact_dir` validation, `adopt_hidden_wiki`, `pack_wiki`, `decide_mode`, `read_run_state`, `format_progress`), the ingestion safety rules (URL validation with opt-in local paths, archive suffix matching, per-forge token headers, path traversal/absolute path/size limit/symlink rejection, root-folder normalization, idempotent `ensure_git_repo`, branch and commit-SHA clone) and the `/health` plus `/` advertisement endpoints.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_health.py#L6-L18",
+          "version": "repo-lines-v1:sha256:e993a795d16cf848a7edc7d7e6822d4d1697212dfb4ec93ab975255a98530531:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNjMGQ3Yzk4Nzk3YTQxYzg0MGZkYmE1ZTNkZjdmNjg1N2QyZGEwYTE5YTk2OWQ1YTEyNDU1M2VmN2JkYTk1MDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgzZjE3OGQyODk1Y2UzYTllZjgyYjk0N2RkMDUzMDlhYzBkYzkwMzY2MDQwY2U4ZGZmOTM1Y2JlYTU2NzEzNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFkYjQzNjM0NTNhNDU4MDA2ZWY4MzY3YWYyZTMxMmVhODU0NzY3OTBjODQxODViN2ZiY2Y1OTY0MDI3ODk0ZWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_ingestion.py#L16-L65",
+          "version": "repo-lines-v1:sha256:d4a80e1c634d12875e334b37810c89215b2e3bb573b6b276bb69364a683d1de9:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxMjJlODNhMzk2NzM0Mzc1ZGEzYTBmZjIzODJjYjk5N2Q5MzhlMTFmZDY3NzcyYWQ3YzU5OGEzOGQzZTYwNTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM3ZmFlNmFmYTQ0Y2I3NTNmMjA5ZWYyZDQxODY5ZGVmMGU0MzM2OWQ0OGNiNjQ1MmNlMWE2YjUyNWJmMzJlYjMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVmZGYwMjg1ZDY0ZTJjZTBkZTIyNDhiYmIwM2UxNTk5YWZlZTkyYmRhMDZkNzExZDYzYWVlNjY0MzA4YTJjNzgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjI1Y2UzMzY5NTgxNzBhN2EyMjI4ZmYxZGMwNDY4YTA2NDViZDQ3ZTNmZGMyNWQyOTNhNGY0NGQwMWJlNGFjNmMifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L15-L113",
+          "version": "repo-lines-v1:sha256:994482aea92fb635113a2144a4e72ab6d8ba10c18e2e876841f628d01c866ed8:eyJzZWxlY3RlZExpbmVDb3VudCI6OTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YWUyODg5YWNhMjk0MDgzYTgwOWNkODJkNGNjMWZkZTZkNDI3YjRhOTU3ZmNhZjBjOTVlMGE5YWQzNmJmYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3OTQ2ZWI4YzI4M2U0Y2Y5NGEwY2I2MjZjYTA5MWU0N2ZmNDM2Y2NmMTQ3NWZhMTYxZDA1ODBhNWVhNDE0MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2YjcxMGNjODJhZjgwNWY5Y2U0Zjk4M2UzY2Q1MmEyMGI5NWY3ZjA3YzY3YzA5OTI1MWQxZTgyMGRjZGI2ZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_9e2d46f9b3124770b8455bc1dd7f42bd",
+      "statement": "The suite runs with pytest configured in `pyproject.toml` (`testpaths = [\"tests\"]`, `addopts = \"-q\"`) and the `test` extra (`pytest>=8.0`); the documented commands are `uv venv --python 3.12`, `uv pip install -e \".[test]\"` and `uv run pytest`, and no CI workflow runs pytest: the only workflow under `.github/workflows/` is the scheduled OpenWiki wiki refresh, which installs the real CLI (`npm install --global openwiki@0.6.0`) and calls `openwiki code --update --print` instead.",
+      "evidence": [
+        {
+          "resource": "repo://.github/workflows/openwiki-update.yml#L1-L36",
+          "version": "repo-lines-v1:sha256:172a438691cd788298cc0ded1dd2b67f5fc21c34a88fd20b9c8cc1aab86a049d:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2MDI3ODdhZjZkY2MwODM0ZGUxMjFjYmIxY2I5NWY5NDU5YjcyMWVhYjAzNDlmMTA1MDFiOTk2YzFjNzdmZmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk0MWM2MGQ4MzU5N2M3NmNjYTY5NmFhYzc0ZGZiN2FjNWRjMzM2MmZlNjUxZjhjYWI1YTMwNDk5NjMwMTdkNDMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhmMmIxZjEwN2VhNDE1ZjE4MDZkYTUxNTU0N2YxYzllZWJiY2EwMzlkNjJlODQ3M2ExMjVkZDc3ZDZmOGM4NzcifQ"
+        },
+        {
+          "resource": "repo://README.md#L348-L366",
+          "version": "repo-lines-v1:sha256:51c7819a4565426cfa5cc7e7332c1b45db201ed2c2263c61f2c8dde6d36ce21f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZDJhZWEyZDYxZTkxN2NmMmU4YzMyM2NkZjg2MTBjOTRjODVhNTE3YzdkYjYyMGY5Y2I5NGQxMDllZWNkNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyMjU4NzJlMDI0M2M0YThmZDJmZTJlZmZkNTg4Yjc5NjRmN2ZiZjMxOGNjMWM1ZWI2MTY4OWFhNWI5MTU3NDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNTQ1NWI3YmNmOTRmNjY1Njg0OWNiMWQ4OWQ5ZGYyNWJmYTM1MDUxMjM2MTAzZmY3Y2ZjZjczNjUyYWI4NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1MmM4ZDNkMzg5MzNlMWQ4MDI3NzhlOTMzMDlmZWFhMjE0YjdlYWMzODg2ZTY3MzViODA2NWQ1M2FlZDFmOTEifQ"
+        },
+        {
+          "resource": "repo://pyproject.toml#L21-L31",
+          "version": "repo-lines-v1:sha256:38571415b165e2db8ee18e3418b5439c6052509ab1ebff1a5a420275a1e32101:eyJzZWxlY3RlZExpbmVDb3VudCI6MTEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU5MjE4ZGM0Y2U5NzFjYmUzZDM4ZDc3NDMwZTYzOTkxODg4NGRkNzdkNzE4NGM3YjkzZGZkYzJlOTk4NjkxYjQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzMWI1ZWMxMGRjOTQxNjQ3ZDZiMjllM2Q4MzgyMDhhNjI1MGI0ODJjNjMzMjU0ZGVlNWU2YTNlNDhiNmMzOWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyY2YyNWIyYTY2MGNhMmFhNzA4NDMwOWVjOWM0NjFlYTY3YTZhZTNhYWJiNjBlNmI0NTFlOGY5NjFhYTVmMjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_0dd9802d6df244d096e777acc923ec4e",
+      "statement": "The harness is a trust boundary rather than a correctness proof: the fake CLI never calls a model, git operations use only local repositories and `file://`-style URIs, `JobStore` is exercised on one filesystem (so the documented Postgres multi-host path is uncovered), and `/docs` is only asserted as an advertised URL, leaving a real provider, the real OpenWiki CLI beyond the pinned contract, real forges and multi-host behaviour as manual verification items.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L94-L130",
+          "version": "repo-lines-v1:sha256:6913a740cea923b58cf92754f873f4cdc5f1e78c2fb409a65296d8298b9c4286:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZiODgzMjhlYjRlNDMxNjUwNjliNGJiMWZkNGJiMjA1OTFiMDNkOTU3ZGRhY2YzMWMyNjU2ZTAwOTE3NTQ2NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJhYzY1MDc4ZjNhZjE1OWI1NWFmNmNhODAxMjQ4YjFlOTI1YTdkYzk5ODMyNzJlNjViZWZiOWQ4YTM0NTg0MzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcwZmEzN2I1YzVmYmExOWJmNjY2NWUyNjYzNDJmNzAyOTY3NGMyM2EzNTllNTdjOGM3YmIxZGZlZTI4OTQ1ODIifQ"
+        },
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L1-L7",
+          "version": "repo-lines-v1:sha256:38809f4c5686a182b596f03d47228ab0cdb494e03f2e2234234391c35ea13556:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjg5MjJkZGUwZDVlMDVmZTFiNTUwMzRkNDFkZTA5MDVlNDBkMDNiYTM0MmNhZDE2ZjZkNjBhMjk3ZmViZTZjZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSJ9"
+        },
+        {
+          "resource": "repo://tests/test_health.py#L15-L18",
+          "version": "repo-lines-v1:sha256:6d1edf2d26c239db6fefa21101c962b7f11cd2b75df0cae1a75d78f55b4f69e7:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODAwYTcwOThjNDc5YzI1MGZlNWE0ZDhhZDA4NjNmNmFhNTY2N2I4N2U0ZTdkYjFmYjNmZWE3MGM4NzdiNDY5ZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODNmMTc4ZDI4OTVjZTNhOWVmODJiOTQ3ZGQwNTMwOWFjMGRjOTAzNjYwNDBjZThkZmY5MzVjYmVhNTY3MTM1ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMTIwNDAxNjQwZjQ2OGE1MmJhNzY4ZWFhZjExMmVlMWZlZWVjNDZkYTVjNDRkYjM1NTQwZjM5MzA3MTU3YzliZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_916f00707aae4124b2eb0f858b07afc8",
+      "statement": "The automated suite needs no model-provider API key and no network access: `OPENWIKI_BIN` points at `tests/fixtures/fake_openwiki.py`, the in-process worker runs that script, and the only automated model traffic goes through an httpx `MockTransport`, so a run of `uv run pytest` never contacts a provider or a remote git host.",
+      "evidence": [
+        {
+          "resource": "repo://README.md#L348-L366",
+          "version": "repo-lines-v1:sha256:51c7819a4565426cfa5cc7e7332c1b45db201ed2c2263c61f2c8dde6d36ce21f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk1ZDJhZWEyZDYxZTkxN2NmMmU4YzMyM2NkZjg2MTBjOTRjODVhNTE3YzdkYjYyMGY5Y2I5NGQxMDllZWNkNjIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMyMjU4NzJlMDI0M2M0YThmZDJmZTJlZmZkNTg4Yjc5NjRmN2ZiZjMxOGNjMWM1ZWI2MTY4OWFhNWI5MTU3NDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkNTQ1NWI3YmNmOTRmNjY1Njg0OWNiMWQ4OWQ5ZGYyNWJmYTM1MDUxMjM2MTAzZmY3Y2ZjZjczNjUyYWI4NmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ1MmM4ZDNkMzg5MzNlMWQ4MDI3NzhlOTMzMDlmZWFhMjE0YjdlYWMzODg2ZTY3MzViODA2NWQ1M2FlZDFmOTEifQ"
+        },
+        {
+          "resource": "repo://tests/conftest.py#L44-L57",
+          "version": "repo-lines-v1:sha256:99d12b11313e0fc69b428f38a9c58a18c218d1881dc37b426426303a7fbd8a5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L1-L7",
+          "version": "repo-lines-v1:sha256:38809f4c5686a182b596f03d47228ab0cdb494e03f2e2234234391c35ea13556:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjg5MjJkZGUwZDVlMDVmZTFiNTUwMzRkNDFkZTA5MDVlNDBkMDNiYTM0MmNhZDE2ZjZkNjBhMjk3ZmViZTZjZiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTMwM2VjZGQ0YTRkMTBmMTljNzNmZDQyZmQxMjQzN2ZkMzM1NGE4MjY4MTYwNWRhNTI1NWE5N2EzOTA2OGRiYiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjAsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTViNmU4NzA2YjQzMDQ3ZjJhNmRiNjdmMTMyNjM4NTk1NjA0ZTY3ZjM2OTY2ODc2Y2UwMTU4ZjAwNTNlNmJkMSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_f978c747ecc24c6c924e9b4d163c48f3",
+      "statement": "Tests assert across the process boundary rather than against internal Python objects: the API and proxy tests read the CLI's `sys.argv` and selected environment back from `openwiki/.fake-args.json` and `openwiki/.fake-env.json` inside the downloaded zip, while pure unit tests (`test_wiki_state.py`, `test_ingestion.py`, `test_worker_queue.py`) call the service functions and `JobStore` directly without the `client` fixture.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_api_wikis.py#L198-L211",
+          "version": "repo-lines-v1:sha256:682afe98d5b81b22a214ad0f8afd8bb2c035a3b4df8b21079b2aeba66d3200cc:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYWM4MGEyNTQxZWZiMjNmYThiMGM3Y2JmZmMzMDRiOTZhNmU3YTY5ODM0NzZiZTQxODE0ZTU0ZTg5YzQzYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY4Y2IwMDZiNTQzOWMyNGNiMzQ3Y2NkZmYxZmFmZGNiMjUwNTM3MGM2NTA3ZGE4ZTkyZTA5YzVhNjEwMjM3NzIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1NGNkYmM0ZGMyYjE1ZmFhNzJjYWY4MGUwNzUyY2U1MGEwZmVkMzQ2NTAzYmRhYTVhNTJmOTE1ZDFiNTI0MGMifQ"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L110-L140",
+          "version": "repo-lines-v1:sha256:b21da69c5b6f989a33839d2cad22f450dd2ca302b9d30887491569d63ae80924:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0NzA1MmMwZTdjNWFjNDU2NjA2NWVkY2M0MGM1ZDljZDYzYjRiNDk5OTJkYmY4YTUzMWRhYjY0M2MyYzdmOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4MmE2NjAxMWNkMTQ1ZTYzYTVhMTlhYzNjNTQ1MzJlYzliN2RlYWExZTZlNTdjZDBlOTA5M2Y0NWQ1OWM3MjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5YjgyNzE2NTdjODVjMDI0MWUzMWQ4MDQ2NzQyMjFkNmJlODc2ZmM2ZmY1OTM1NTNlNjFkYTZjN2Q3MWE2MjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L15-L30",
+          "version": "repo-lines-v1:sha256:fe3756077d6fe0d2e37cae7c3e16b2610f97dc003d2c494f4561dbf71f134e37:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU1YWUyODg5YWNhMjk0MDgzYTgwOWNkODJkNGNjMWZkZTZkNDI3YjRhOTU3ZmNhZjBjOTVlMGE5YWQzNmJmYjEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImExY2RjNWI3YTQwZjE4ZWFmMjFhMjY5MTNjNGYxMmFlY2FiNDkzY2NiMjNkYjEzODE1YmNlMWJmZjRiMmU5ZjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc2YjcxMGNjODJhZjgwNWY5Y2U0Zjk4M2UzY2Q1MmEyMGI5NWY3ZjA3YzY3YzA5OTI1MWQxZTgyMGRjZGI2ZmEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYxZGRhNDdmM2Q0NzYxYmE3ODEwODI2NWNiZGRhODcyMDY2MTVlMzMxMmZiM2Y0YjIwNDhjNTcxNThiYzdiZWMifQ"
+        },
+        {
+          "resource": "repo://tests/test_worker_queue.py#L13-L24",
+          "version": "repo-lines-v1:sha256:5b02b100ef6ae97bf04b14dcb10f7cde7e649e49399e0260ab65653ccc9e3c4c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdkMWQ5MzdiOGE5ZjZlOTE4NTg4MjQ5YmQ4Y2EzYTNlMDNjMjVkMWI0NmI4MmEyMDJkYThmYjZlYTZhY2FkMGMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5MjI3MmRjNzJhZTljNWQ2ZDVjYjNiNGY5MDA2MmI4MjJiYWI3NmU5ZTVjOGE2NmJmMDU4YzA1ZGE4MDgyYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2OWRkYmRmOGExMWQ3NTFiODRmOGVkZDUwOTAxNGQwZDEwYTljMzg4YTI1MzY2YjZmMDU3ZWRmYTg1YzYwMzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4Y2EwMzA0NWQzMGM3ZDJlZmNjODBkYzQ3OWRlZDMxNDVjZmJmMTFmNDdlNzNjMTRmMjI4NmI4ZGVkOTBmMGYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_3f005353435e4ab3a7c2e2fcf50975ec",
+      "statement": "`tests/__init__.py` makes `tests` an importable package so test modules can import shared helpers directly (`from tests.conftest import _git, wait_for_status` in `tests/test_push.py`, `from tests.conftest import FAKE_OPENWIKI, wait_for_status` in `tests/test_provider_proxy.py`), which is how push tests inspect the remote and proxy tests reuse the fake-CLI path.",
+      "evidence": [
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L16-L17",
+          "version": "repo-lines-v1:sha256:c8f6802fabe8fce759fffb89294f16bd57f9475cb6fd82222d42b8fec86b2bf8:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2JhMDkwOTAyOGE4MjE0ZTdkZTU1ZGQxZjQxMWYxMjA3ZmVjNTZhNDY1YmMyNjkyMmUwNGFkMTU4N2U0MjU4MiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E4N2EyN2ZlNDkwNzBhNmMzYWNkNDZhOGFmYWVjYWU0YzMyNWI1ZDA0YzNhNmJiMmMwNjJlNzdhOWM5ZDJjYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOWQ2MjUxOWM4ODJiOGRhODcwOWMyM2VmMmVjZTE4N2MwYWUzYjhhMzI4YTM1NWRlYjNhNWMzZDFmOTY1MWI2NiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjk2MGI2OTAzNTU0YjU4YTE5ZDlkNjEzY2ZjZWZiOTQxMDY5ZDczNWM3MWQxMDE5MjE5YTE0ZTA4ODcwZWQ5YSJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L9-L14",
+          "version": "repo-lines-v1:sha256:85fc33b19a46621007632559e6aa9b207515319c0884feb93bbb4561db22e50b:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDdkM2IxOTkzNDg5ZTE1OTJiNTAzMmUzNGFkMTdiZTc1YTgyN2MyYmUzMWM2ZGI5NzdkNWQ0NzcxYmExZDVkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZTc3ZDQxMGRlMDhjMDMxY2ExMzU2NzhmMTM1YTgxOTE0NWMwNzI2MjY4M2RiNDUxNzJkNGY4Mjc3NTc1OWM4MiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGY2OWM0MDQwZDg0NmFlYTM4OGVhNTY0YjNiMjc1MDMwZTU5ODcxMzAwMTVjNTM5ODkwMzgwY2M0M2M4MjRiZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDIxMzE1Nzc3MWVmZmM0ZTg5M2Y0ODBmZDgzZGEzMTE2YmM2NjcyNDE4ZWYyNGUyYjA2OGIxZDgzYzI4ZjRhMiJ9"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

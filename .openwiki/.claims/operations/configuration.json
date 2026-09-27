@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:2a64eb9b6447205d63208df12062072cc5eb66cfac1a02821edf9f80d8ced799",
+  "claims": [
+    {
+      "id": "claim_c9c97917369a4673b8993016395e759e",
+      "statement": "Settings in app/core/config.py is the only configuration surface for the service's own knobs: it is a pydantic-settings BaseSettings that reads environment variables and a `.env` file from the working directory, ignores unknown variables (`extra=\"ignore\"`), and gives the process environment precedence over the `.env` file. OpenWiki's own variables (provider credentials, OPENWIKI_*) are deliberately not declared and are forwarded untouched.",
+      "evidence": [
+        {
+          "resource": "repo://.env.example#L1-L25",
+          "version": "repo-lines-v1:sha256:4c5211a69aa04cc519bfb482f059cc4c6880ae293e56941f9e0c78584a78e629:eyJzZWxlY3RlZExpbmVDb3VudCI6MjUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkNDgxNjQ3Njk5NGI0NGE4Y2ZmYzNmZGM1OGQ1N2FkODcyZjhlMzQwMzEwMDBiMDkzZTY0NTE5ODI4OTM1OTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdhNGNkNzY3ODU2MDJlOTEyN2Q4ZTE2N2ZlM2VjMWI2MmNhYzBmZjU1NDBhZjQyMGJhZDEyODQwMWJkYTFjNWUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1MjA0ODhkZWRmYjRhZGI2MjFjMDk1OTVlMDNlMzI5ODdiZTgzNjJhYWJjOTE4MTMzNjU3Y2IyMjM1ZTEyNDQifQ"
+        },
+        {
+          "resource": "repo://app/core/config.py#L19-L45",
+          "version": "repo-lines-v1:sha256:cf6a616c4d9f53bcf7fb8f9032d9cc70a36b4f4c3df4bd35c2901ebd0a9f2755:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZjODYzMzFjOTBiNzhjZGI5MTdmZDViZDY5ZmMwNzE0ZDVhNWZlODQ2MGQ4NzYyNzllMTVmZjQyZmZjNzIzNWMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyYmZhNjM4MDBhYWZlMGY5YTE2NWE4NTRjYWRkZDUxYWI5MWI5OTFjMTEzZDdkZDJiZmY5YTU1YjE1ZDQ3OWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZmOGMyOWRkZDE1MmM5NzUzOGUxMzYyMDkyNDZjZTA2NWFlNzQ2ZjEwZjg4NzdlYWM5NjQ2NWYwYTI4YjViZjAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImY5MjQ3ZTExODI0M2MxY2NhODVmMTBmYTk1MmE0N2U5MDQwOTBjMTJmMjBkNDA0MmVlN2RlM2MxZWI2MDc5OGEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_aeb87f5caa7c49eb981c039cf137a065",
+      "statement": "Provider credentials (OPENAI_API_KEY, ANTHROPIC_API_KEY, ...) are intentionally absent from Settings so the service owns no credential storage: build_env copies os.environ and overrides only service-owned variables, keeping provider config an environment change rather than a code change.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L20-L25",
+          "version": "repo-lines-v1:sha256:9a4b830baf35f73c84413a2eb565798f5a0f031a8f97e746c74ac382eaebc626:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiM2Y3MGY3YWE4MDJkNmEwNmE0YzUxZDQzZTJiOTRkODBmZWIxNTA5MGUyYTFhNTZjMWM1Mjg5YjM5NjAxZTgxNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTZhNzE1MjU3MmVlODRmMTA5MDZjNzRiOWYyYTkyNDM0ZGRhYjBlM2M0MjgxM2IwNGU1OTdlZmNlYzk1MWIyNiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzcyYzc2ZDUyZmU1OTk3YTliZTY5NDM2MjA4NmM3MDFhMWQ1NTEyZjBkYmU4ODFiNDFiOTVlYzg1ZDRkNzhmZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNmNjMjU5OTg4YWNhNzAwYzI3MGU3OTkwMWEwYWU4YTA0MzFmMmQ4NGM2YjEwNmY3MmFhMzAwMDczYzE1YTc1YyJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L41-L59",
+          "version": "repo-lines-v1:sha256:4fce1f2b0a7dcc6897c062988453fc441877cea56fc816033fd1d4631331fc30:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNzZmNTAyNGYyNjA4ZjFmMjA4ZWQwNjNlMjkzMjJmYWRmMDRhN2JlZmU4ZGFlOThmZDA2YjBhZjFlZTEzNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNmZlNGE4Zjk2NjEyZGE3ZTE1N2UwODAwMGZjNjY1MjBjYjlmMWI2NDBkMzNlYTI4ODcyOTc1M2NlYWMwNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMjEzOWQ0YjZiNmFlNzNkZTBjMWY2ODA2MTE1NThkNDc2MDZhNzJjMTUyOTM4YzE0ZTBjNTI0YTU1NTliOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjYzVlZDc2MGM3YWJjNTJkMTUxNWZhNmYwNDU2ZmMzZGI3ZTdiMDE5ZTY5YWIxZGJjMDUyYzg1OWE5ODExODYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5e56acef7d0541559f057def8eb779c6",
+      "statement": "build_env always forces OPENWIKI_CONFIG_DIR to settings.resolved_config_dir, defaults OPENWIKI_TELEMETRY_DISABLED to \"1\" only when the environment does not already define it, sets OPENWIKI_PAGE_CONCURRENCY when a per-job concurrency is resolved, and finally applies worker-supplied overrides (used to point the CLI at the header-injecting proxy).",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L98-L112",
+          "version": "repo-lines-v1:sha256:b5e1041ebbbee93bf0bacd8af5a7ceba963f60f28209c3caf8e05be1d19dd3d4:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ5Y2NlMTI5ODQ2MmMxYzU1YjRhNzAyMDg1MzhiNDM3ZGU2NTRjMGYzY2RmYTIzN2E5NWY4MTBkZWI0YjcyNWUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU5MDlhNTNhNjE4ZDAyOGUxZDMwMDBjMGE3YWJjZWVjYmU1ZmIzN2Y0ZTUxMWVmZTQ2NjQzZmFkNmU2Njg3MmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRkNzExODNkOGIyNWQ0OTI5Yzk5Y2NiNDFhYTBhOWExYjIxMmMxOWUxMTA0MDdmYmFjZjE4MjM4ZDMyNDI1YjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxZDI0YmU0OTkwNmQxYmIxZGY1ODg3Y2YxNTdlMWZhNTMwZDVkYWI5ODYyZmIzMWQ0YmQ5OThhZDI0Y2IxNWEifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L41-L59",
+          "version": "repo-lines-v1:sha256:4fce1f2b0a7dcc6897c062988453fc441877cea56fc816033fd1d4631331fc30:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljNzZmNTAyNGYyNjA4ZjFmMjA4ZWQwNjNlMjkzMjJmYWRmMDRhN2JlZmU4ZGFlOThmZDA2YjBhZjFlZTEzNjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUwNmZlNGE4Zjk2NjEyZGE3ZTE1N2UwODAwMGZjNjY1MjBjYjlmMWI2NDBkMzNlYTI4ODcyOTc1M2NlYWMwNjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMjEzOWQ0YjZiNmFlNzNkZTBjMWY2ODA2MTE1NThkNDc2MDZhNzJjMTUyOTM4YzE0ZTBjNTI0YTU1NTliOGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdjYzVlZDc2MGM3YWJjNTJkMTUxNWZhNmYwNDU2ZmMzZGI3ZTdiMDE5ZTY5YWIxZGJjMDUyYzg1OWE5ODExODYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1c82ec9da4d44d5f895ffdde4fcf14c3",
+      "statement": "Settings enforces configuration invariants at startup through field validators: default_page_concurrency must be 1–8 (the same range the API validates for per-wiki concurrency), job_timeout_minutes/max_upload_mb/max_concurrent_jobs/model_check_timeout_seconds/worker_lease_seconds/worker_reap_seconds must be >= 1, worker_poll_seconds and worker_progress_seconds must be > 0, compat_proxy_port must be within 0–65535, and push_author_name/push_author_email must be non-empty after strip().",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L94-L143",
+          "version": "repo-lines-v1:sha256:52e801d267e13918238ae42b58a1c661ac89224dbe83063c7024010f2007502a:eyJzZWxlY3RlZExpbmVDb3VudCI6NTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3MTg1NmNiYTdlYTcyMmRlMzllNzk0Yzg5MTlhMzcyNmRjNmQ3MWFjZDcyZWVjZjAwYmU4YTdmZTIxMzZlYjkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFlM2NmY2ViMzNlMDExZjliNjk1MDg4ZTBiM2FhODNiMTYwM2Q2OWRiNGRjNjU4MDNhYTgzNjM1M2U4MWIwZDciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE3OTA0MDJlMjFjMzFjZDMzNjgyMmY3ZmJlNTRlYTQ3NTAzODI4MGEwZGY3ZmI5NjA5ZTRjNTNiZWMzY2FmMTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUyODlkZTliNmQ1NWIxMGE0ZDM4N2NiZTNlZjIxODAxNTVkZDdhZGQxMzRhNDJiM2VkN2E1YzdmYWEyYjQ1ZTMifQ"
+        },
+        {
+          "resource": "repo://app/schemas.py#L108-L113",
+          "version": "repo-lines-v1:sha256:0948b15ae8af1f4791fe97b8d73baac56cca9b01f073d3bb60d1979512156714:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTA0ODQxYjRhNjNkY2NiMWFiYjVmOGRjZmY2YTRhMDc2MmJhZTZmMmI5ZTQ2NTQ5ZTFlOTIwYTM4ZjU3YTRlOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzAxMDc5ZDcyYmVmOWJmMjRlNjNmOGE1ZTc3YWRmMDk3NGE4M2MyZTZjNGI4YjQ0ZWI0N2MwZTU4YzU1OTJjZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNDg4OWI2OTdhNzIxNTYxMDZhNjJkNzE3ZDg5YTdiMWEzMGIyNjhhYmIzNjA5ODBhODYzNWMxYzRlZjc0OWY0MiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fd68b400c9fc4ea5a182564e4a00f42e",
+      "statement": "wiki_artifact_dir is validated as a plain folder name — non-empty after strip, not \".\" or \"..\", and free of \"/\" and \"\\\" — because the value becomes a path component inside wiki.zip and a pathspec in `git add`. tests/test_wiki_state.py pins that \".openwiki\" is accepted and \"bad/name\" raises ValueError.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L129-L135",
+          "version": "repo-lines-v1:sha256:ce2d1547f94286287096aa333e1cd2e4cd103348c6b5d020729c543af72792da:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTM3MDU4YmY4ZGFiZDM0N2E0ZTc4OGNiZWI1ZjlkMjFiMmU5NGY2ODIzYmNmZDI4NjA3MjZjMWNmMjhmZWZkMiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMWUzY2ZjZWIzM2UwMTFmOWI2OTUwODhlMGIzYWE4M2IxNjAzZDY5ZGI0ZGM2NTgwM2FhODM2MzUzZTgxYjBkNyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNDQxMjVjNjE1NDllMmI5ZDhmNWJhZjA0MDc2ZWIxOTYxYTUyMzNlY2YxMDA0ZGVjY2M1OGYxZGVjNTBmOWJmNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmE4MjQwYWQ4NmQ3MmEzMmU3ZGUzYmViNjQyOGU3N2RiMTAwNDQwZTA2MDk4NTJmNDdmMWI1ZjkwMjYyY2RiOCJ9"
+        },
+        {
+          "resource": "repo://app/services/packer.py#L24-L58",
+          "version": "repo-lines-v1:sha256:88b870cd405f13a8e522660f1cf86da59dd0def6b5c011cee4a18649fc84ef06:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4Y2UyZjQxYjUxZTY1YWJjZjY0ZTUyM2EyZTQ1YzYwZjMyNWI3MWQ5ZGExNjYyMWM3MWE1NTdjZWM1MjliOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMjAzN2FmNmFmZDU5ODIwZmQxYTRjYTMwYTY3N2Q0ZTVhMTIzNDljNzhlZTQzMzk3N2JiOGQwYzkyNDQ1N2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiZWMxOGE2NjYyNTNiZjI1YmExNjFjOGQwYWVlMDVmYWFmMTMzODZlZTgzNmY5MjFmMTNjNWJkZmJjZjM1MjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg2ZGY2MjhhMTczNTQzMDVjMjJjMjRkYjg3OTdiZDY1YzE0MGIyOTYwNDg3NDBjYWVmMWI5YjMxNzhlZDVmMWQifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L15-L18",
+          "version": "repo-lines-v1:sha256:95c983218172de548d0d2c52fe478814c0d92423922de83f91532f05a940700c:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTVhZTI4ODlhY2EyOTQwODNhODA5Y2Q4MmQ0Y2MxZmRlNmQ0MjdiNGE5NTdmY2FmMGM5NWUwYTlhZDM2YmZiMSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiODg0NzJjMGJiZDA3NGFiMjM2Y2FhZGQ5ZjJiYTM4Y2NlNmU0NmFkNjJiYWMyZmIyN2VmNmMyNjA0OWU2MTdmMyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNzZiNzEwY2M4MmFmODA1ZjljZTRmOTgzZTNjZDUyYTIwYjk1ZjdmMDdjNjdjMDk5MjUxZDFlODIwZGNkYjZmYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWM2ODUzNWVjMTU4M2I1MjMyMGUwNDlkOGY0ODY5YjVmMGRjYzlkNjU4ZDVkZmFjYTI5ZGFmNzRhMDcwNjRiYiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9bd2146273a54517a0ca39b30d676d78",
+      "statement": "Settings derives three paths consumed across the service: data_dir (DATA_DIR, defaulting to /data on POSIX and ./data on Windows via _default_data_dir), jobs_dir (data_dir/\"jobs\"), and resolved_config_dir (openwiki_config_dir when set, otherwise data_dir/\".openwiki-config\"), the latter being exported to the CLI and read by the passive health report.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L12-L16",
+          "version": "repo-lines-v1:sha256:9c7bfa5d27eada0314d16b3ce076dfe117bca2aa38722b60f85c41bfe851083a:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDQ4MTUzYWMwNTM5MjBiNTI1NzFlYmEwN2FhM2NmN2YxMjIyMTQ3Y2ZhNWFiZDBkMmJkZWZhN2ZlYjM1YjQzNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmU2NjIyMWZmN2ZlMGQyYTczNjZmZTk0ZjA5NTM1Y2Y1Mjc2MTJhMzM3OGQzNjdiM2U2NTIxZTQwOWJlMWFlOCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNmRjMTE2MjY5NGRmZmE3MDQ2NTkwMDYxMTE1MGJjMTg5NWY5ZWY0ZGI1ZDEyM2MyYWUzOTIxMjM0YTVjYTY2OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNzcyYzc2ZDUyZmU1OTk3YTliZTY5NDM2MjA4NmM3MDFhMWQ1NTEyZjBkYmU4ODFiNDFiOTVlYzg1ZDRkNzhmZSJ9"
+        },
+        {
+          "resource": "repo://app/core/config.py#L145-L152",
+          "version": "repo-lines-v1:sha256:6b8b23b50070a918b86340f6f7a75c1d2383574da6bb142cb4b081cc691d06f3:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjNkMDBjZjI3MDk2NGQ0NGExM2RmYWM4NzUyYjA5ZmNjNDM1YjBmMTliMzE2YWJjZjgxYTdhYTY0YmIxMjJkNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMTFjMDI4ZDdjZmI5M2JmMWM4ZjhkYjBiMjRlMWVhZDczNGI0OTI4Y2RlNDBiN2I1ZmUyZjYzYmJmZTMwOWEzZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYTJjZTQwY2E2NDk3ZGI5ZDFkNWM5ZTRiZWM5ZTQzMzFiNTEyMzI5MDc0MDcwODQ2NTg3N2IxYTM2YWI2NzIzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://app/services/model_status.py#L121-L125",
+          "version": "repo-lines-v1:sha256:2352cd0367a64afa3f6ac8e35cd3264f0846d8251debab41b02748eb1d4d7763:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYTc5MWNiYjY4YTQ1YjFkYTAxYjA1MzA1NmZkNmM1OTk3YTVjNjQwOTE1NzI5ZjMwZjk2NTViMTk5M2QwZDFjZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZjcyMTU4MTY0ODdhMTA0YzI4YzQ1MzRkNjY3ODg5NTY0NjEwYzQxNDBlMWIyMWQxZTBkNTIyMWQ5N2YyMTEwMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZGQ5NzM4NjFhY2I1NzdiZTk5NzZhN2IyODUwNmVkYjk2NmU2MDZlZmJiYTJmMjI1ZWFkZGM5NzQ0MTZlNzM0ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDMxNWZlYzYxM2JkMDM3ZTNhODNjMjIzNGE2MTU1MmEyMWY3NjI4MzA4MmY1OWE4MjM0ODkzOGUzNzljOTAyMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_5fc020bd9c0a464faee09b39f139a5cd",
+      "statement": "RUN_LOCAL_WORKER controls whether the API process also runs generations: when true, create_app's lifespan constructs a WorkerLoop inside the API (single-container/dev/tests); worker containers instead run `python -m app.worker`, which builds the same Settings and JobStore.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L53-L74",
+          "version": "repo-lines-v1:sha256:9fd1c80841316edcaafaa834b67a1759e54015fad67a6f19806c493f7c613d1d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkMDI2ZDU3OGI1ZjNkM2E5YzJiNjlkY2I5OTNhNmI3MzVhZTc5NmIxMDc1ZTk2YTZhN2YyNTI2ODE1MTc3ZmUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjAwMWZkMTU0NzU3YzBjZjI4ZDA4ZmZhYWU2MGYwMWRiODEyYTZiZTQyNzljZDAwOTFjM2Q2NGE5NTAxZjI2NmMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjBlNjZkMmNjNDU4NDlhYzkzNDAxYzA2NzA5YjE1MWU2OTZmNWM4ODRkNTk5ZjdiMjhmMGJkYTIyZmExOTBhYWUifQ"
+        },
+        {
+          "resource": "repo://app/worker/__main__.py#L27-L36",
+          "version": "repo-lines-v1:sha256:ec3d24a10fb9f8a5be5268cd8e01e646b988575e0dac7ccae6565d0b152a90a3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiMzk3OTMzYTI0YTgwMWVlOTIzMzI3YmQ2OWEwMTA0OWMwNzc5MTUwMjFjZjJlYzM5ZGRhNGY4MWFhODM3ZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjNlMjgyYzBmYTI3YjEwYWM3M2QzOWRmN2M5YjRlN2ZiMjkzMTlkOWI0YmE4M2M4YmU0ZTNiOWQxNjYzMzM5MDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc5MWQzYjcxNzRmZjRiNDEzYTFiNWM4MTBmZGFhMDI2YTdjODY2MDQ5MjllOTFmOWJlYjYyYzA5OGM1MWQ5YWMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b56b6439084d4ddb811551bff02f6401",
+      "statement": "MAX_CONCURRENT_JOBS (default 1) sets how many generations a single worker container runs in parallel by creating that many `_runner` tasks, so horizontal scale comes from replicas sharing the SQLite queue rather than from raising this value.",
+      "evidence": [
+        {
+          "resource": "repo://app/worker/loop.py#L50-L56",
+          "version": "repo-lines-v1:sha256:26c66985e023b2d91d070acb8f2f3609301b35e71ce1fc521fb9c81d71f736d8:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZDU4ZTE3NmMwYTNhZjcwNmM5MzUwODYyY2ZiNWUxYTU5NWJkZTU2NzE0ZjVmZTZkOWEwNTQwZWRkNjdhY2MwNSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTUwMzJlOTY0ZDA5MzIzNTFlNWQxODUyNjkyODFiMTcxYTNhMDliMDhiMjg2ZTY2MWVhNDcwMzIzYzgyZWI0ZCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGQzNGQ3NzNiMmY1OTlhM2U2Y2UxOTdlNzQ0YTExODZhZmEyNTM4MWQwMmE5MjdmMDFiNzU4NzI5ODlkNDkzMSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWY2YzcxMTc0NGU3NmVhYzkxZjg4ODE5NmViY2E3Nzc4ZGVhYzkwNzgyNjk2ZDlmMGQ3ZjBiNjQ0M2RlZjU4YyJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L21-L38",
+          "version": "repo-lines-v1:sha256:106b23850fcdefa7a4936b0284bb108d5f53daf09e96b43c48fe459a4b4cea75:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5NzJhZjViZThiMDM2YzhhYWQ1YmMzZWQ2YWE0ZDk5YmM0NTgwMDk4ZTVmZDlhM2FkNTdiNjBlOTEwY2NkZGQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MzFlMjYwMzk4YWQ2MTA5MTRkZmMyOGYwNDhkMzkyNjRiYTdkNTAzMjc4ZGQyZjhiYjFjNGMxNGI0OTlkOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZlODk3N2U1ODA0YzNiZGQwYmE4MWU2ODI0N2M4MDc4MTQyZjdlMjA0ZDFhMDUxNTBmMjA2NzgyNWJiZjg4YzQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmODRiM2M4OWE2YmUwNGEwNzRiMTE4ZDU5YmQ3ODlhNDkwM2IwZWM4N2U4ZjlhMzk3ZGJlZmEwY2ExOGQyOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_25de33673ab7411999a737fe136e5671",
+      "statement": "WORKER_LEASE_SECONDS and WORKER_REAP_SECONDS define the recovery contract: the API's _reap_loop periodically calls JobStore.recover_stale(lease_seconds) to requeue claims with no heartbeat within the lease, so another worker resumes the same workspace; WORKER_POLL_SECONDS and WORKER_PROGRESS_SECONDS set the claim-polling and heartbeat cadence.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L345-L356",
+          "version": "repo-lines-v1:sha256:0bc515054cd31cc2129d901d5d9de545e5d0a821001c26e4b6920b65148e00f1:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjYzZDQwNjJjZjRkOTdkMGYwNWY5MWI2NjNkNDFmNDdjYjJkNGQwNTA2ZDY3Njk3OTFjOTk1MzBlZWNmZjFhZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImNhYjUyNDUyMWM5Y2VkZGViOTJhMGZlZDZjODVkZjYwNWFiMTcwM2I4YWFhZTk2NmQwNGFmN2MyNDY1MzUzYzciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijg3ODBmZWIxM2Q5ODM4ZGE1OThjOTM1Mzc3MDI1YzM2MzZjODk0NjA1OTBmOTU2NTQ4NzA0NzkxNWVhOWJkNjUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyOTAyZDc2ZWUwOWZiN2M5NjJlNWM5NzRkMjJhOWZmNDVkNjMyYjQ5YzFjODQ2M2IwMzg3YjUxZTNmN2Y0YzcifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L32-L41",
+          "version": "repo-lines-v1:sha256:f09780113afaf58a684101b719ffae19d755710185a69758a8b1b251e8d5226d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjNDQxM2MxYzkyNWNjZTUzNTczMWQ3MGNmNmRlYTYzZjgxOTMwNzFmMzZlYWQ3OGU5MzczY2MxMGIxOGM1MDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViNGQ0Y2JkZDU1NTkyMzFjNjU2OWZhZWFmNDFlMjI2ZTUyYTEzOTZiMTdiNzJmMTBiMGZkMDQ2NzhjOGE2ZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZhMGFmYWJjOGEwMzJkMDI1MWQxMjA1NjU4NmY5YTkwOTA5YjJiMDkxOGM0YmM1ODMxYmNmYTUwZWZhNzY1YTYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L69-L76",
+          "version": "repo-lines-v1:sha256:57e7387bf035171dc9e11066471e7d35cf1e24f429dcbc09cc4ee84eff165513:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmQyNmUyMWQ2MGZmMThhNTYzMThlN2ViOGU5NjRiNDQ5M2ZhY2RiMjczODliOTFjMGNkNTA2ODQ3NGI2NWViYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjY5OWI5MjNhZmEyYzMxYjU1NzVjMmU1MjRmYjM1YTg2M2M2NzlkODYzOTQ2ODliMzJiNTUxZmFlMjAwNjA3YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzFiOWJmZWQzYjE4MjljMTE2NzU3MWI5MTU4OThjNTZkZmZhZGJmZGQwNjUxMjFiZjVlZWI1MWVlY2NiY2ZjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZWNjZGI4MGE1NTViYmQwNzkxZGQwNmUwYzdjNDZkOGNmYzJlZGE0NTRjMjY0ZjFiMDZkYzMyMmUxM2NjOTdjYyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e1c6ae4874804c7d9e0b440be95290e6",
+      "statement": "MODEL_CHECK_TTL_SECONDS (default 30, and a negative value behaves as 0) caches GET /health/model results in ModelStatusCache; 0 disables the cache so every call probes the provider, while MODEL_CHECK_TIMEOUT_SECONDS (default 20) bounds the active probe and reports a timeout as status error.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/model_status.py#L384-L412",
+          "version": "repo-lines-v1:sha256:6acb8775663b0af71dabe830c8083adaa360b6f042c8f134307d052cae807d21:eyJzZWxlY3RlZExpbmVDb3VudCI6MjksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJmNDhiODVjMDM1N2VmZDU0ZjlhMWVlZDhhMjRiZWM3MWZkZjU5YjY4ODFlODM4NjQ5NjFhYzhjODZmMWViODkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMxYzczNDI2YzQ5NTc0NGVhZWYxMzEzNWY3OWEyNDdlZDYwYjZhNTNmNjdmM2FkZWY0YWE4NmUwOWZlMjdkZGUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY0YzE1NWEzMGZiNTM3NjNmZWFmYjlhZTE2Y2Y1NTQ2OWRmOThjYTU0OGI0N2ZmYjZjZGRhNjIxYjI5ODVmOTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImFkYzNkZGE3NjkwZDgzOTJkYmVkNTU0YTg0MDNlODgyNjFjYzQ2ZDkzYjc0MzZiZmMzY2RjYjZhOGU1ZjY1NzkifQ"
+        },
+        {
+          "resource": "repo://app/services/model_status.py#L491-L516",
+          "version": "repo-lines-v1:sha256:dd9ff32f6e898194e595b9a2a6cb760f573fca6d7921e96abc03d58e2b31282e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2NDY0NTQ1MTA4YzQ3NTc4OWMwZDQ2ZTI2YjFlNDYyODhhOTI1MWZjMDM5OWM3OWQ2NDA4ZjRiYjUwMjcyOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYzYmE5OWQ0ODc1ZDA1NDE0MWE2NjYxYjE5MmM4YTBiZTYxYjEwMjNkMWU1ODE1MDEyMDgyY2QwMTRjYzk1YmEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijk3Y2E2NTIyYTZiNDllNzE5ODJiMzE5OWU3NGM1MDE4ZWVmOTBhYTI4OTE2YTdmMzJiMmI4MWIyYTViYjljODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijg0ZWE4ZmI4ZWFiOTkyMzYzNDMyMjNjNzkzMmIzYzU2MjdjYmEzOTNmMjBiZjc0ZWJkMjYxYWRlODIyZDhjNzcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_11e9528ce39f48b7bca2b44896fb77f7",
+      "statement": "The service forces no OPENAI_COMPATIBLE_BASE_URL of its own unless header injection is needed: WorkerLoop.start only launches the loopback proxy when both OPENAI_COMPATIBLE_EXTRA_HEADERS and OPENAI_COMPATIBLE_BASE_URL are set, using COMPAT_PROXY_PORT (0 picks a free port) and publishing env_overrides so the CLI talks to the proxy.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/provider_proxy.py#L176-L199",
+          "version": "repo-lines-v1:sha256:8663cf6f832b10a4c8d4ae47b6b7db3036397f80f584ce9621f6f5e8eb1a3ec8:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZmODM0OTVkZTlmNTU2Yzc2MWIwOTljOWY2MTA5YTQ5MmE4NDVjZjkzNTdjNWI2NDIyZDI3NTEzYmJlNTRkN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjI2ZjY3M2UwOGI5ZGYwYTJlNmVjY2FhM2JhMWVlMGQ2N2QyYjE5NzFkYWFkNTg2OTM4NGNhNGYwNjFkYTM1ZjkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5ZWY0Y2YxMmY2ZGUwNzA1NTI1ZjM2YzM1ZmU2ZDZkNWU4YzI5Yjk5NjQ1NDJiNTE5MGRkNjlmNDVkZWJjNGQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwZGRmNzYyOTJhNTdmNzk0YTA1YzNmOTNiZWFlM2Y0NzE4YTNiMWEyNmIzZDE2MDIxZWMyY2M3YWFlMDYzMjMifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L35-L49",
+          "version": "repo-lines-v1:sha256:f244e091fd9620dd2a340cbcb9a18918ec587ed889d2b2dca8a039707d3b59c6:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjNmRmYmI3NmM1ZmNjNGJjZDM3MjU4OTUzNThjZThiY2VhYjVjYjVlYjEyNjMwNzZlYzljYWExNjdlZWMwMzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjU4MGYwNTlmNDAyZGFiZmRlMTMyODQ3ZDcwZjU0NzAwMjM0MjkwMzg1N2I2M2QxOGY0ZGExNGZkZTRkOWVmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM0YzIwOTY3MTc4NDNlNzRkMTNhMjkwMjAyZTBkNTE1YjJlYWEyNGEwMGJiMjJiOTY1NGM5YTEzZDg5ZDEzMWMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA3NGQwOGI1ZjFkOWVkZDA3ZTVhODE1Mjg0MTgxYjAyZjdiYmI5MTdkZDVmNDUyODBjNjMyNmRiMDNmYWRhZmIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_b6955ee1d1bc49178d7ede377cf4c529",
+      "statement": "Malformed OPENAI_COMPATIBLE_EXTRA_HEADERS fails fast rather than degrading silently: create_app calls parse_extra_headers before building the app (pinned by tests/test_provider_proxy.py::test_create_app_rejects_invalid_extra_headers) and WorkerLoop.start parses it before deciding whether to start the proxy.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L43-L49",
+          "version": "repo-lines-v1:sha256:9112e63876acfd6a079ba7aad1ab8614e49bc3ac9c854d0630eff23cc260a725:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiZjU1MGM1YzY4OTA0NjU2MzJmMGZlMjgwMGFmNjc3ZTA4NjExYjA2NGY1Mjg0MmQ0MDI2ZTQ2MDk4Yjk2MzFiNiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZTQ2Y2JhMDFhMDQ1ZGVlODU5ZmVlMzBjYTM1ZDc5MzZmYzgzMjRjNWU4MGEyZjQ5MmE2YTMwZjAzMDBlMjE0OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMDAxZmQxNTQ3NTdjMGNmMjhkMDhmZmFhZTYwZjAxZGI4MTJhNmJlNDI3OWNkMDA5MWMzZDY0YTk1MDFmMjY2YyJ9"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L41-L44",
+          "version": "repo-lines-v1:sha256:2654598d38a5e1c3e8a14cd3eb30ef31c717d3ac042621aa1904cc7ee768dac6:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDM4MjJiNWNhZDkxNDQ1YzE1YmQ5YWIxZTUzOTIwODUwM2RlMjA4MjJkNTE4MGMzNWFhMTg0NzYzYTRlZDdiNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZDg0ZDBiMDVmYjg0ZDEyNTE1N2ZlNDg3ODk5ZDQxMmIzNTBmZmY4ODYxYTlkNTk3OTdiOTZhMTBhNzYwN2MwYyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYjRjNzgyNzM0MzUxM2I3ZjcwNTRiZjZkZWQwMDgzZWQzYjEzN2QwOWNlMWM2YzNiYmY3YTEwMDM0NjBmOGM0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMjA2NDcxZmU2ODBmMWJjNTRiM2VhMWM2MWUzOWIxYjgyNjEyNGJhOTEwNWI2MjVkNzQ1YTNlNjNmYzNjZDhmZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_fb6b2f535602474fafb67e9060d92840",
+      "statement": "ALLOW_LOCAL_GIT (default false) is a development-only switch that gates cloning local paths and file:// URLs in validate_git_url; disabled, file:// is rejected with an explicit message and schemeless URLs are rejected as non-git URLs, which keeps the API from reading the container filesystem in production.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L80-L82",
+          "version": "repo-lines-v1:sha256:21b8a3afda574836dfb1ea4de9ace161f3f3d696935fdea9b18d27dd155939bb:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMGYxNmVmNWI1ODdlMmZjNWY1ZTI2Nzg1NjdiMDk5YTNjYTk0YTNhZjEzNjU1NzMxNDVmZmM5MzQ5OWRmN2E1ZSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMGExNDA1N2FjZDEwMzZhM2RmNGZlYjkwZTYzMjY3ZjBhNGRkZTAxNzlmYWU1YjFmM2Q2YTZlZDY2NTU2MDgzNSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWQ2Mjg1MGFkMGI1NDMxNmJjOGQxMDdhZWZlMmFkNjZiZTg4MmEzNmU3ZDZkMDM3ZWU5NzU2MGRmM2ExMjE4ZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTZhYmRkMDJmODcwMTAzNmY3MTA3MmMxNGM1NzhjZGQzZjdjODNmMDMyYzkzODk5NGFlYzJhNmZlMzVlYmU1MyJ9"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L49-L74",
+          "version": "repo-lines-v1:sha256:262d32b0792de71b3912578c8d932cf45df8cd83f5d98355d327d094a57aec40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NzkxZThiYWRjZWZiNWM3YzFlYjhkOTU5NjY1ODdmZmFjNjQ3ZTE5YmI4Nzc5MWEwZTI0MGIxNTlmYTBiOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTI4YjNhNWFlOTM3MjBkZDcwYmUzODcxYjlhM2I2ZDAyYTZjNjhhMjNiNzc4MjdhMzY4MDg2MjQwZjkxNTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMmU0MjY2NDcwNmRiYTBkZjUyNWI1MTMxZDc0MWRhODc4YWVhNGYzNzQzMzhkNDIwOWU0ODA1ZjM4MTRmODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ3NWVjMzNjZmUwMDQyMzhmZDk2MGM4YWQwN2U1OWI3ZDNmMDE4ODQxMGU1ZDBmMzExOTkwM2U5YTQwMzBlZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_db7af28bf03e48309157722e24ea1bdd",
+      "statement": "JOB_RETENTION_HOURS (default 0) controls finished-wiki garbage collection: 0 keeps terminal wikis forever, and with a positive value the API lifespan calls purge_expired at startup to delete rows and workspaces of terminal wikis finished more than N hours ago.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L46-L47",
+          "version": "repo-lines-v1:sha256:89731951f07efe9940d550c0fe635ea2c09bb9dcfda53291413e3bb741be1361:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODUxNDU0YTU5ODE1YTk4NDgzOTE3YWVjNjMzZGFhOWVhMzhmNDRjOWUwM2M3MTAyYjk3MDJkZGM4MGY5MjQ5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2E1YTE1MmJlM2I2NTcxNTk0MjcwNTBhYzMwMDFmNTgwYjMxNTg0NjhiZjZlNjdjMTlhYWM2MWQ0MWM2NDU5ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNGUwYTg0NzVkZjFiMTkwNDFjY2Q2MTczZGIyZTg2YzQxY2Y0ODI5MTdiZjE4NmI0ZDAyNGM0Y2UzMDUzMDFjZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM5NjlmNjZlMjc2NDI3ZWNmZmZlNGZkOGUxM2Y3NDk1MTA3NjQ5MWJlMmI5Zjc3NzAzOGI3ZDkwOWI0MTYyOSJ9"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L229-L240",
+          "version": "repo-lines-v1:sha256:57baa631d1c71884efe15aed636f4ee43f9a0169393a22c568c616a80c3d30c3:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNlNDFiNjJjOWY5MTIxMDM5NDZlOTk1Nzk1Y2RmZWI1OWZkZjgyNTlhZTk4MGNmMTBhODcwZDg1NjY5NmY2ODMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjgwN2I0YjM0ZThhNWVhNTNlNzVjMWEyZGI2YTQ5M2Q4Y2IyMWQ5ZjU5NmNiMjhmNTBlM2I5ZjFjY2JhMTY5YWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY5MWIxOWY4M2QzMzU5MTFiOWY1YjJmYjQwYjRkNTk3YzVmMGY5NTY3ODUwOTk3ODg1MzNjMDg2ZTNhYTI3NjQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImM0NzUxNzIxY2I1NTE1YjlmMDE3YmE2YzQ0YTZmYWQyYzk2MDk1YzViM2JhNDg5MTdkNGJkMjFjNTQzYzc5M2IifQ"
+        },
+        {
+          "resource": "repo://app/main.py#L54-L60",
+          "version": "repo-lines-v1:sha256:d71a900e7e6e2fdbadc3cfe2280acc076a6eedb27be8b9951928021c5cd1b224:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTQyMDE4ZDBjNjliODQ2YTU4NTBiYjZkYWFjZjA4YTdhZTNhNDk3MGJmN2QyNWE2MDllNmI0ZWU0YTExZTAwYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiN2EwNjBiYzUzYWJiY2NmZDUwMzE5YTIwZDU3YzdlZmEyNTEzMzA1NmRjOTMwNWRjOGNhZjlmYzEwN2U2MzlmMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjc0YTlmOGE4YjQ0YTY2ODgwMGVkNmU2YTM3NGU4MGE5OTJkZmJjMzkxZjAxODg4MGYwOWIyNGQ1OGE0MDEwNiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDJkMzliNzU4M2YyMmJhZmUxNTAxMzYzNWQ2MjA3YTM4NWQ0NGY1NGNmNjFmNWMzOWExZDM4NTZkYzU4ZjQyNSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6c04d39d115449918031689f96cf484e",
+      "statement": "Upload limits are enforced with two variables: MAX_UPLOAD_MB (default 200) caps the streamed upload size in save_upload, aborting the request with 413, while MAX_EXTRACTED_MB (default 1024) caps the summed uncompressed size of the archive entries before extraction, protecting against decompression bombs.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L117-L135",
+          "version": "repo-lines-v1:sha256:bbc9c1b8c0f737b70bfe80e97967f52732ab496b2e3ebe0da0ea14c03ade1271:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjVkYTRjYWMxOWJhNjRiNDk2NDIxNzhlMjE3NTJhZDEwOWY2NzBjZjE3YTMxNTk2ZTkxNTg0ODU5MDA5ZmViMjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNTBiYTM3MTA1YzZlNmMzYjAyMzg3MTI5NTM5OGFiNmQwYTg1YzIwYzg4MWQzM2RlMTg1MDNiYjdiMjlhMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlYWI2YzQ5ZjMwNTBlZWNmMzBmODRlNTQzYTEwZmY2NzhiM2I2YTNjMmI1YzBjNGI3MjUwZDBlMDVhZTU2NTgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4Y2EwZTQ2MzM0N2I2MWYzM2E3MzdjMjJkYmUxYzdhOGI0MWE0Mjc2YTEwZDI1MDljZTIzMTgzMjc0NDM1MmYifQ"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L251-L264",
+          "version": "repo-lines-v1:sha256:c24c4d90d79c8317cf66592de44b25cf9f888ab5575622e2491e68d55ec937aa:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1YThlZWQ2NTZmZjE2NmVjYWNiMTkyYzA1ZmU0YzAzYjFhMmM3Yjk0ZjZlYTExZDkxZjMzMGVlOWJiNTNhMTkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljZGM3ODI2MmNjMTE3OWMzYWRlZDlkN2VmZThlNTgwMzllZjBhNmI3MTliNGE1NGI2N2E4YjU0ZDFkNmNiNmUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjE2MzViNWMzZmIxNzRhZGM3YmJiZDY0NzcxYTIyNWNiZjg1YTQ5ZDFlMDlkMDY4ODExZGYyNjU0NmJkMDI3YmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ5NmExNTQ2YjZhMjVmODRjYTU2NzNkOWIyZDEyZThlZGNjMmNjNjgzZjE0MDM4YjEyZGM2ZWFhY2IzMjY1MDYifQ"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L279-L299",
+          "version": "repo-lines-v1:sha256:0a8fdd59ffc884464edc50103224a0b48e76e1ab98d916be10f97d695936da06:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYyMGZhYzFhYmExNThhZTUyMDI1ZWZhNjdlMDgyNzRlOGU5NzkxYjhjZWVkOTg2YTEwYTViOGE2ZmE1MmY0YTIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI4ZDVjYzllNjM1OTc5NmVmNzE4MjAzZDU2NjA3YjBlY2QxMmRlZmY4Y2YzNDE4MDE0NDQxYjVmNDYwMTZmMjciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU1ZDJkMTk0OGY0Mjg0MjIzN2M5ZmE2MjZlZTliMzcxMjcxMjg1YzEwZjE5MTY5MThkMGVmMDcxNWNkM2NhNWYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI0MzY2MWE5MzMxYmQyZWJlMjg2MzU4ZDU3ZGVmMGM5MDU5YjQ3NmYxNjJiMzQwNjA1NGI5MmM0YzcxZDEzNzgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6253b21a166b4a54889e0a2fe6cabe79",
+      "statement": "The deployed configuration diverges from the Settings defaults in ways that matter operationally: the Dockerfile bakes DATA_DIR=/data, OPENWIKI_CONFIG_DIR=/data/.openwiki-config and OPENWIKI_TELEMETRY_DISABLED=1, and docker-compose.yml sets JOB_TIMEOUT_MINUTES to 60 for the worker (versus the 45 default in Settings). OPENWIKI_VERSION is a build arg, so upgrading the CLI is an image rebuild.",
+      "evidence": [
+        {
+          "resource": "repo://Dockerfile#L1-L45",
+          "version": "repo-lines-v1:sha256:65c72557b93b1b117dc84436411fbe2e97cd744666542097ec67ccec6d55045e:eyJzZWxlY3RlZExpbmVDb3VudCI6NDUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYjQ4YmQ3NThhMDRiMjU4MGM2MDIxYTg2ZGZiY2UyMTFmMDE1YTFkZDVjYzRmMzljMTNiNmVjZmUxNTcyOTAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1YWJjYjgyM2E1ZmU2NWFjZTM3NWNjYTBmMzI5NThjMjIxMGNkYTEzODcxODM2MWEyNTk1ZTM4NWIyOTc0NTkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImIwNzEwMTZkY2Q0YzIxNTNhNGEwMGU0MTVhYmFjNjUzMWJlZmE5YmYzODBiYzUyNzA3YmQxYTE2NWM1NGVjM2MifQ"
+        },
+        {
+          "resource": "repo://app/core/config.py#L41-L41",
+          "version": "repo-lines-v1:sha256:62c75a8633819ea21ce194f529c05b857d49ef094d48bffcfd320af776ecc774:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjJjNzVhODYzMzgxOWVhMjFjZTE5NGY1MjljMDViODU3ZDQ5ZWYwOTRkNDhiZmZjZmQzMjBhZjc3NmVjYzc3NCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNjJjNzVhODYzMzgxOWVhMjFjZTE5NGY1MjljMDViODU3ZDQ5ZWYwOTRkNDhiZmZjZmQzMjBhZjc3NmVjYzc3NCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2Q1YzUxMWE0N2U0OTRiY2IxNjEyNjcxODc2OWM4MjQyMDIwNWI3MjU2MjQzMjA2NWY1MDIyOTRjNmRkNzMxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjMxMDk4YjgzMTkxZDI1MmE3MWJkYTY0NjVjNzAwMGQyMDc4MmI0MmUzZTdkMzFiNjQwMWEzNzgxMjFmZTE4MSJ9"
+        },
+        {
+          "resource": "repo://docker-compose.yml#L1-L38",
+          "version": "repo-lines-v1:sha256:0ff479a17fe5dea7672daf2da71e943224b3d9953672ae38023a7c923dc7cf70:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhNzNmY2NkYzk5ZWE4MzU5NjdjN2RlZTdlZmJlZDFmM2NhODcyNjBkOTI5MzE4NTBmZGQ2NmRhOGNiMTJmMWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE1MzFlMjYwMzk4YWQ2MTA5MTRkZmMyOGYwNDhkMzkyNjRiYTdkNTAzMjc4ZGQyZjhiYjFjNGMxNGI0OTlkOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjowLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjlmODRiM2M4OWE2YmUwNGEwNzRiMTE4ZDU5YmQ3ODlhNDkwM2IwZWM4N2U4ZjlhMzk3ZGJlZmEwY2ExOGQyOGMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f13d3fd6458f4d48aefb58835139a880",
+      "statement": "JOB_TIMEOUT_MINUTES is enforced by run_openwiki, which converts it to seconds and kills the CLI process when exceeded, writing an explicit timeout line to the job log before raising OpenWikiRunError.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L184-L185",
+          "version": "repo-lines-v1:sha256:6c761b6048fdcee518852a50ada2bed1b6633cafeba9347fa1efc7561887bdcb:eyJzZWxlY3RlZExpbmVDb3VudCI6MiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTgzNjljYjNhMWM1NDU2ZTRmMjVmMDRmYzI2NDVlMjdmMDNhNGNiZjdiY2VlNjlmM2UwOTc2Y2RkMWE5OWM2OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMjRkODk3ZDUwZmU1YTA5OGJjZjRhZDQ3N2UzMTY5ZjM2ZGI2NzE0YTc0MTJkYzUwMDBlYzRmMzJlZTVjYzM0YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZWZiNzMxMjY3OTRmZDkyOGNiZTQ4MGZkNTFkNzUxYzU0M2VkMjc1ZDExY2RhZDhmYTdhOTNmMmY5NjM4MzI1OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNjYyNDc1YmI4MGY0MTdjYjVkZTc0NjZiOGU2ZjUwODdjYjNlYjg5YWEzNjU1ZWMyZjcwZDdmZjk5ZjIxMWI4NCJ9"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L249-L255",
+          "version": "repo-lines-v1:sha256:fe50e8c52e356d591269c3e13412728954eb986388004e6151a8a1067f4f9dd1:eyJzZWxlY3RlZExpbmVDb3VudCI6NywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjU2OWNiMDkyODBlZTA3ODE5NDVlNDhkNDA0MWJkMmRmYWFlNjkxYWQyZWFiZjVkM2NiYTA4NDZjNzIxNmNhYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDMxNTZmOTE4YWRhZWI4YjhhZWMzN2M3YThkMjdjMDkwMWI2MTFhODczODFhODY4NTFhNzRlODE5MWIwYmU5NSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNjRjMzg4N2U4NjVlMjIzYTY5MGQ3OTQwY2U1MGU2Mzg3NzFhNzYwNzBhNjNlZGM0YmVlODAwY2UyMTBlNWExZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjRlYjU0ZmUzZjk4MzYzNGJhZGM3YTI4ZDg2Y2RiYzQ4YjhjYjc0NmZjNDA2MmQ3MmU0Yjk3M2M2MGI4YTZjMyJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_172e2a2654414139a153997abd5f8c59",
+      "statement": "Settings.log_tail_default is declared but unused: GET /wikis/{id}/logs defines its own query default (tail=50) capped by MAX_LOG_TAIL=2000 in app/routers/wikis.py, so changing the setting does not alter the API response.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/config.py#L45-L45",
+          "version": "repo-lines-v1:sha256:42bfa63800aafe0f9a165a854caddd51ab91b991c113d7dd2bff9a55b15d479c:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJiZmE2MzgwMGFhZmUwZjlhMTY1YTg1NGNhZGRkNTFhYjkxYjk5MWMxMTNkN2RkMmJmZjlhNTViMTVkNDc5YyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDJiZmE2MzgwMGFhZmUwZjlhMTY1YTg1NGNhZGRkNTFhYjkxYjk5MWMxMTNkN2RkMmJmZjlhNTViMTVkNDc5YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZjMxMDk4YjgzMTkxZDI1MmE3MWJkYTY0NjVjNzAwMGQyMDc4MmI0MmUzZTdkMzFiNjQwMWEzNzgxMjFmZTE4MSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZjkyNDdlMTE4MjQzYzFjY2E4NWYxMGZhOTUyYTQ3ZTkwNDA5MGMxMmYyMGQ0MDQyZWU3ZGUzYzFlYjYwNzk4YSJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L19-L19",
+          "version": "repo-lines-v1:sha256:54b3b61e71f54ce13bb8d70009de626050c87bf32938f6667ed5ea29b5078c93:eyJzZWxlY3RlZExpbmVDb3VudCI6MSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTRiM2I2MWU3MWY1NGNlMTNiYjhkNzAwMDlkZTYyNjA1MGM4N2JmMzI5MzhmNjY2N2VkNWVhMjliNTA3OGM5MyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTRiM2I2MWU3MWY1NGNlMTNiYjhkNzAwMDlkZTYyNjA1MGM4N2JmMzI5MzhmNjY2N2VkNWVhMjliNTA3OGM5MyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWY2ZmFhZTE0NDNjNmJjM2Q3OTBhODQyNmJhYjJhN2ZlMDdlNDBkOGRhZTNlNDA4NmFhMjliOGE2YTEyM2MxYSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiMmQxNzM5NzY5YWU2MDk3ZTY0NTMxMTNiODY3OTVjNDNkNGM0ZjVmMjA2Mjg2M2EzZmY1ZTU5ZjZiOWQwMDVhNyJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L190-L208",
+          "version": "repo-lines-v1:sha256:81870aadd82b5cda7e612e179303be0e09ebf41725da28dcf5fa0a4ac3b8edc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxY2Q5OWE1YTFmOWM0N2YzMjg4OTcwYTI2NWVmM2QzNDg3ZDYzMWJiNjY2ODNkN2QxYTRmNzViNmI0NTM4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3OTc3MDBkMGEwYjZhZmUwYmMyMzBlODY2MmVhNWJkNTg1MTA0NjFmYzBjNDMzNWNjNjdlMjk0YzA1MzQxYjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyNmUxZWYxODY3YThmZjAwZmI2NTZhYWU1MTc3NjFkOTVkNWRiNDk3YmZiMWU0NGM0YmIzMDA3ODM3ZTg2NmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiZDE4NmIwMzg4YzA0YmQ0YmUzNjlmODU2NmJhYmI4MmYxZjY5ZGU3MTllYzc2MGU4Mjk1NDhlMmM2Y2U2YWEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_598e0a2df59c4eaa963ee2f629caf70e",
+      "statement": "The tests build Settings explicitly instead of relying on developer environment variables: the `settings` fixture in tests/conftest.py points OPENWIKI_BIN at the fake CLI with ALLOW_LOCAL_GIT and RUN_LOCAL_WORKER enabled and shortened worker intervals, taking values directly from constructor arguments (which pydantic-settings treats as highest precedence).",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L44-L57",
+          "version": "repo-lines-v1:sha256:99d12b11313e0fc69b428f38a9c58a18c218d1881dc37b426426303a7fbd8a5b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/test_provider_proxy.py#L110-L130",
+          "version": "repo-lines-v1:sha256:4b3d6088fc34264f09f3caa7d016bb21ce9f700f6edb134e5e4f94cc9c9df920:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE0NzA1MmMwZTdjNWFjNDU2NjA2NWVkY2M0MGM1ZDljZDYzYjRiNDk5OTJkYmY4YTUzMWRhYjY0M2MyYzdmOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVkZmQzMTc3ZmFlNWVjODU3YWQ3ZmM4Mjk5NDJiNDI3MjgyN2MxYTkxODA3MzBhODFkNzM5YWU0YTZlYzZkYWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjY5YjgyNzE2NTdjODVjMDI0MWUzMWQ4MDQ2NzQyMjFkNmJlODc2ZmM2ZmY1OTM1NTNlNjFkYTZjN2Q3MWE2MjEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxZjczYmZkNDE4MjRmMDNhOTEzOGNkYzdiNjc4NGY5NDYxOTQ0M2YzMzFjM2YyNTIzODJjOGI4YTY3MzU2NmQifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}

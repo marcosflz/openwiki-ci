@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 1,
+  "pageVersion": "sha256:7ce16ee9fc5b744c6f8558cb18dab22e8695d821ad9c96fbbba6ff95e43150d7",
+  "claims": [
+    {
+      "id": "claim_2f899be58500467aa049d9175bb509b1",
+      "statement": "POST /wikis validates the whole request before any row exists: ingestion.validate_git_url(url, allow_local=settings.allow_local_git) rejects malformed or disallowed URLs, and the router additionally rejects a source.auth.token on a non-http(s) URL, any push over an ssh/git:// URL, and an http(s) push without a token; every rejection is HTTP 422. Only on success does it call store.create and answer 202 with a WikiAccepted whose status is queued and whose links are {status, logs, download}.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L50-L89",
+          "version": "repo-lines-v1:sha256:162e5521a337df5b0e4d39996afb39e20a862fbc1db45e284811ad7bb2b1bb50:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE1N2I3NjU2MTBkMzcxODEyMWU1NGQ0ZGQ0ZWY2NmJmMzIzNjljOTQ2NjM1Yjc5Y2I4MjU5OGEzYWU0OTkxOWEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmNTBiYTM3MTA1YzZlNmMzYjAyMzg3MTI5NTM5OGFiNmQwYTg1YzIwYzg4MWQzM2RlMTg1MDNiYjdiMjlhMmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjkyMTBiNjc3NDU0ZDcyYTVkZmU3NTU2NDNhODk3MGMyZTcyNzA4YTZlY2VkMjUwMjliYWM1MGIxZjZkZGZhY2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjNjAwMmVmNDc2NWUyNzE4NzhlMjg4OGM1ODRjYWE2N2U0YjllZDAyMWMwODU4OWFhNWY3MWQ0NTI4ZDI1ZWUifQ"
+        },
+        {
+          "resource": "repo://app/schemas.py#L130-L134",
+          "version": "repo-lines-v1:sha256:51ebeae34781aaa8fa87edb9536c75de44009fe4d497de6a0d8e712c67172183:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDY1ZDg2OTc5ZTJkZGNmNDIxYmVkMGIwYThhZDcxYzJjMWUyYWE2NGQxZWE2N2MzYmQxYzk5OWIzYzRiNzgzZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGNjNGE3ZDFjYzc5NmFiYTNlNDY3MjMzMjdmNTE3ZTlmODExOTgyZDI1MGYwNzAyOTg2ZTRiNTc2NGFkOTU4OSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYWZkYTA4ZDkxYTZhYTBlNjUxNzQwYzY2MjBhYmFjZjBjZGFiZmI2YmEzY2E5NzE1YjNjNGMwZTI0MjBiNjc3YSJ9"
+        },
+        {
+          "resource": "repo://app/services/ingestion.py#L49-L74",
+          "version": "repo-lines-v1:sha256:262d32b0792de71b3912578c8d932cf45df8cd83f5d98355d327d094a57aec40:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjA2NzkxZThiYWRjZWZiNWM3YzFlYjhkOTU5NjY1ODdmZmFjNjQ3ZTE5YmI4Nzc5MWEwZTI0MGIxNTlmYTBiOGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE2YTI4YjNhNWFlOTM3MjBkZDcwYmUzODcxYjlhM2I2ZDAyYTZjNjhhMjNiNzc4MjdhMzY4MDg2MjQwZjkxNTQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjIxMmU0MjY2NDcwNmRiYTBkZjUyNWI1MTMxZDc0MWRhODc4YWVhNGYzNzQzMzhkNDIwOWU0ODA1ZjM4MTRmODMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQ3NWVjMzNjZmUwMDQyMzhmZDk2MGM4YWQwN2U1OWI3ZDNmMDE4ODQxMGU1ZDBmMzExOTkwM2U5YTQwMzBlZmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_643b3a61b5304aa5bfb9de9e49139009",
+      "statement": "A git job's stored source is {\"type\": \"git\", \"url\": <validated URL>, \"ref\": ..., \"token\": ...}: the token stays on the job row so a later retry can clone again without the client resending it, while the public WikiView exposes only the redacted URL (wiki_to_view maps source_type, source_url via redact_url, ref and filename).",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L81-L88",
+          "version": "repo-lines-v1:sha256:6e333942dc8720752f5758de87eb7d2a42f953846e836cba5f7af825fa818e11:eyJzZWxlY3RlZExpbmVDb3VudCI6OCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiOTcyZjM5NTE0N2U1ODZiZGI5MTY0ZGYyMmVmMjM4MTYxNTNlMjYxOTZhY2MxNjBjZWE4NmIyM2ZmOGEwMWNmYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMzBjMWYxODhmMTQyZWQ3YTgyNDY4MGIyMDcxNzJjNTUxOWJjNjE0YTQ4ZmRhN2NmMTY3ZWRiOGRkZjc5OTU2YyIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOGIyNzcyMTRjNzEwNTAzODYwNmZjYTQ5M2ZlMjdiMDcwN2I2YmNhOWYxODI1ZmM4MTIwN2JlMjYwMmNjY2Y3ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZDQxNjA1YTI1ZmM0MTA2ODM1YzczZDU5YTg3MDUzMzRhODU0ZGJlODc3NTY1ZTk5NzA2ODIwOTY5ZTgyYzk3ZiJ9"
+        },
+        {
+          "resource": "repo://app/schemas.py#L159-L197",
+          "version": "repo-lines-v1:sha256:edc4334c6bdc38a700b02305abd985a6a8fc0430daf5f4ac682be6b0dc206ff5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMWE4OGVlNjZlOWJiOWRkMTM5NzI2MjQzOGU3MDc2MGZhNzFjM2NhMDFlOWY4NDNkOGQ4MjY2NWEyNmRhYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNDA3NzcyMzJiMWQ4NmFiODM5NmYwYzU5N2Y1MzkxMWQyN2EzOWVkMjkzMzQxOGVmZGI5YWRlNWI1YjIxNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkMWNhOTgxNzZmOGUwY2FiZjdlYTA5NGVjNTdjODFiMzAyNjY0ZWE1NDA1Y2FiYzUyODg3MWZmNDAzOGZmN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1ec960ee83644c48ae7538cf347f2cfd",
+      "statement": "JobStore.claim_next is the only transition out of queued and is atomic (BEGIN IMMEDIATE, then SELECT ... WHERE status='queued' ORDER BY created_at LIMIT 1, then a conditional UPDATE ... WHERE wiki_id=? AND status='queued'); in that one call it writes status='fetching', a fresh claim_id, claimed_by, claimed_at, last_seen_at, attempts+1 and started_at=COALESCE(started_at, now), so attempts counts claims handed out and the first start time survives every requeue. If the conditional update affects no row the call returns None and the runner polls again.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L243-L269",
+          "version": "repo-lines-v1:sha256:25fdf753945a0b032263a0bb88cf92fc75616b0a43aca9352feab12d8ad2e0f7:eyJzZWxlY3RlZExpbmVDb3VudCI6MjcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQxZTk3OTE0NzNiNzkxOTIzNzY1MzkwN2IwMmM2ZWZkYjg5NzU5YmMwMjAzYzRhZWE4NzNkMGY4OGU1YTQ3YWYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwMjEzODY1M2EzZDVlMWU3MDVlMjBkN2ZlMWExNjZlZDk3N2Y0NjJlMDkxOGUwOWI1N2NjNzVlN2U2ZTQwOWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVkMDQ1ZDY2N2E2ODBmZWRiN2ExMjUwN2JjNzIxZTEwNzQ2YmIxNDgwY2ZjNjExNGU4NDIyNWQ4MDY5YjM0NzAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjUxYzhjOTg2NDg3NTg0ZGNhOWY1ZDBkNjNlMmU1NTljY2IyNGI4ZWJiZmJlNzcyNzNkN2FiZmNiZWM2YzIzZjkifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L69-L77",
+          "version": "repo-lines-v1:sha256:d59f5e99469675882a83430e61e6c145d836223eb4fd9f807e0239c3ff0c727b:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYmQyNmUyMWQ2MGZmMThhNTYzMThlN2ViOGU5NjRiNDQ5M2ZhY2RiMjczODliOTFjMGNkNTA2ODQ3NGI2NWViYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMDFiYTQ3MTljODBiNmZlOTExYjA5MWE3YzA1MTI0YjY0ZWVlY2U5NjRlMDljMDU4ZWY4Zjk4MDVkYWNhNTQ2YiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiYzFiOWJmZWQzYjE4MjljMTE2NzU3MWI5MTU4OThjNTZkZmZhZGJmZGQwNjUxMjFiZjVlZWI1MWVlY2NiY2ZjMiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWFiZDU4ZjYwN2FhNGNhMWFiYWRjYzcwMDM2MzRmOWUzYjg1NmM2MjhiMThiZGYxYWEzNzM3ZDk1ZWExNGY5ZCJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_187e0bab394a415e8ad3c7f647f50325",
+      "statement": "claim_id is the ownership token of an attempt: heartbeat and complete both filter on the (wiki_id, claim_id) pair, heartbeat returns ok=False when the pair no longer exists or the row left RUNNING_STATUSES, and complete returns False without writing when the claim was reaped, so a displaced worker cannot refresh progress or write a terminal state.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L271-L308",
+          "version": "repo-lines-v1:sha256:c0451c6dd807cded94d8ca706ded480fd6d1db5ae09ef36202e437e1669ec677:eyJzZWxlY3RlZExpbmVDb3VudCI6MzgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJhMGVmOWIzMzdjNGEyMTY5MTQ2NjRlNjM1NWMzMGUyOGU4YzY5MDM3ZmEzOWVmMWIzM2YwYjM3YWE0ODc1OTgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4NjJhYjU0ZGU2YTJmNjNlNzRjNzk5Nzg3ZGNmYmZkNzI2MTIzNWQxMzUxNjRiYWE1MjZhMTc0NTA2YjZmN2EiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjU0OTE5NjY5ZmU4YjQ1NmU3ZDkxODE2YzkyN2ZmMTVkNzg4Yjc4NTY1NjA0MDE1NzNhNTg0MTkxMjk5NjA4ZmUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUwYTM5ZTJmZTUyODU2MTg3OTBiN2QzNjczZjZkYzcyZjJmNDI3MGNhNDg2MDdjYTUyYmE0YThkMjRmNTI1NzYifQ"
+        },
+        {
+          "resource": "repo://app/core/storage.py#L310-L343",
+          "version": "repo-lines-v1:sha256:c540bace3fc1d460fd6018a3a97eba92c688a686bf8ea90a140044f4f36aa18c:eyJzZWxlY3RlZExpbmVDb3VudCI6MzQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUzYzJlMTY3ZTNlOWI4NDhiOTAzYzMyYTkwZGRlNjA0YmY3ZWU2ODRkY2ViOGEwMzhkNmEzMTM0ZTUzNWI4ODgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEyMThjMTgwYjMwNzJiOGZmNDI2N2ZjNGRlZmZhZmIwOWQ4NWZhNjFkMmM1N2JjYzAyMWQyOWQwZWE2YmY5NmYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRiM2QxMmE2NGYzZTRiMDk3OGFiY2QzMmFiZTQ1NmE1MTY2ODRjMjE5ZmM2NWE1NjhmYzM4MjA2NzBmMzgxMmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4OTcyMGI5Y2I1MWU2MzU1NzhhZDhiNTU0NTBhOWE4YzAwMWEwZGY4MzU1ZTVmYjI0YjY1ZjJiOWJhYjE4ZjIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_166e7daada6244798bd3418bc0afa732",
+      "statement": "The first thing the pipeline's _fetch does is test repo_dir/'.git': if a workspace from a previous attempt survives it logs 'repository workspace already present; resuming the generation' and skips cloning/extracting entirely, otherwise it deletes any leftover non-git directory with shutil.rmtree and fetches fresh. Resume is therefore filesystem-keyed, and because DELETE /wikis/{id} removes the whole jobs/<wiki_id>/ directory it also discards that wiki's resumability.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L219-L227",
+          "version": "repo-lines-v1:sha256:eec47ad246bc29d8b4aa9b806c08a1fcea6f52990ee2ba036e994cc56cd5ecad:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYzk2MDdjOWRlY2E5MDBkZmFmM2JiN2M4OTNhNjlmYjI0ZjkwMWE5OWFlN2YyMzBiN2FkNGM4MGQ2MDU2YjViOSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTIxOGMxODBiMzA3MmI4ZmY0MjY3ZmM0ZGVmZmFmYjA5ZDg1ZmE2MWQyYzU3YmNjMDIxZDI5ZDBlYTZiZjk2ZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTRlODhmMjJkM2ZmNTg0ZTMyMzZkODgwOTU1NTdlYmZmZDlkNDMxYjk4MmQ5ODRjMTQwOWYyMDIyODI3MDkzOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNTM3NWUzMzVlOTZjNWFjNDE3MTkxOTQ3NzM0N2Q0NTQzODkyNTViYWNiNjY2ZTU0YzAyMDcyYTQ1ZWE4NzQzZCJ9"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L155-L198",
+          "version": "repo-lines-v1:sha256:567f27c1913943d5cae568a33671ab8e85b0f7e04a4b4d6a77dcae9441e4dad6:eyJzZWxlY3RlZExpbmVDb3VudCI6NDQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImYwOGYzY2I2Y2EzYTVkMzZiMTJkNDU0OGM3ZTdmNTg3NTFlZTg4Y2UzMzk0ZWMyYTM0OGMzN2YwOWExOThhYjAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0NDUyYzVlNjFlODBkZWE0MzNmMmIyNThjYTdhZjU1NWQ0MTNjOGRiMDFlMjhlZjhiMTc5MzUwOWNmMDY1ZDkiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZkZWFlMDM0ZTkzZmFlMjY4ZDMzODEyZDNlNjk1MDc1N2E4ZDc5N2Q2NjJlOGYzMWIzODExMjQ0MWU4ZjMxNzMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_6b1f31f77ef844beaf1f7cb303544e57",
+      "statement": "ingestion.clone_git performs a shallow, tag-free clone (git clone --depth 1 --no-tags, 600 s timeout) with a ref fallback: with a ref it first tries --branch <ref> --single-branch, swallows an IngestionError (which is what happens for a raw commit SHA that --branch cannot check out), removes the partial destination, then shallow-clones the default branch and runs git fetch --depth 1 origin <ref> followed by git checkout --quiet FETCH_HEAD; a failure in that fallback is not swallowed and fails the wiki.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L167-L206",
+          "version": "repo-lines-v1:sha256:5fc561266029429fbd58d52410eab9d471d499d475e008ce2a60be4adb2ce9bb:eyJzZWxlY3RlZExpbmVDb3VudCI6NDAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE0YzA0Y2M5ZWNmNmY3NDFiNDU0YWQzZTlhZTRkMTA1Yzg3MjJmZDZlYzA5NGFlZTljYzdlZGVkMzgzNTdkMzciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY3NTEwZTVhNGRhMGY0NGRiYjk1Njg4YWU5OTNhOTdiYWQxOTY5YjcwNmM3YjM1MWQ2ZjgxZDc2Yzg1YTQ1NTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI2NDU5YmU2N2Y5NzNjNWY4NjkwYjI3MWI1OWVkMTMyODJhNDI3YzRiZTllZGU5ZGRlYjNjYmVmZDEzMmFiYzciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjE1ZGRiOTMyY2FlMGU3MWZlZDIxNzU3NjkwOTA1ZWY0YzE4NTMyNTg4YmE3NGMxMDI2OWE3ZjczYWU1ZjliZGIifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L186-L194",
+          "version": "repo-lines-v1:sha256:04a5ae0fe086917524e54bcbc3b3a1970cd5391f32c8920bc5685f2a1936432b:eyJzZWxlY3RlZExpbmVDb3VudCI6OSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNTljNzE0OTdjZmM4MmU2ZmUwZmZmZjBiMDYyMzY1ZWY0OTcxNTM4OGE2NTQ3Yjk3YTEzMDBmN2VlYTI4ZjAyZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTkwOWE1M2E2MThkMDI4ZTFkMzAwMGMwYTdhYmNlZWNiZTVmYjM3ZjRlNTExZWZlNDY2NDNmYWQ2ZTY2ODcyZiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiZmJkZjQ0OGMyZDk0NzE5NDIzOTBiNTYwZTA5MTdiODAwYWY2MzZkZmU4Zjk0MzE3M2ZlZGRiZTc5YTczMmFlZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYjAwOWNhNzdkMTE0OGU3M2RlZGQ1MzZmMGZjMDIyYzdkZDIyZTFjMmJkNThmODUxMzk4ODgwYjk2OWRjNzE1OSJ9"
+        },
+        {
+          "resource": "repo://tests/test_ingestion.py#L118-L143",
+          "version": "repo-lines-v1:sha256:34b5c90b2c684d8a17aaa452a292768995fda863ddb7b7b4ae40720af6fbdd2e:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2N2I2ZWU1MzBlYzkxYjc3ZDY1MmYzYjgyMjcwMGFiOTFmODg5MTkwYjUzMzk1ZjE1ZGYxMDA5M2M0ZjAyZDMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjZkMmNjY2Y2NjI1YWUwZTMyODhkYjY5OWIyOTE2OThhNzY2MzA3ZGI0NmRkZDQwYTExNWY5ODg5YjQzYjNjODciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5MjEwYTYxODhjZTg5YjI1OTkxZDAyOWZmNjkyMGY1ZGJkOGQ0NTY0NGE0MTEzZmQwZjA1ODFhYTcyOTkzMjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f2b6710808c443288219b8a85f03fbe0",
+      "statement": "After fetching, ingestion.ensure_git_repo(repo_dir) returns False when .git already exists and otherwise creates a repository with one initial commit; the pipeline logs 'source had no .git; initialized a git repository with an initial commit'. This exists because OpenWiki versions its source evidence through git, so a workspace without a repository is unusable.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L229-L245",
+          "version": "repo-lines-v1:sha256:b09c5651fc9cb6247f5a4600e4af97cb2c8d9a67b651fe6182abc0e6a0697b44:eyJzZWxlY3RlZExpbmVDb3VudCI6MTcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImZhODYwNTUyZmUxMzA1ZWEwYzc5MWZhMzI3ZGEyNzZhZjRjNTViZTRmMDc0MjYwODUwMzZiMGFkNzhjYzI3ZWIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTJhNDY1MDA5NWZhOTVkMGUyYmI0MWIyZGIyOTA5NGQzNDA0ZDI4Y2UxMjMzOWVjODhiYjRiNWM1YmU4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImRlNzU3NWMzYjc3NzZjZjJmOWMyYmZiY2E0NGYyMTQ4MTNhNzgyN2VhYTljMzg0NTRjNzAzYjY4OWE3NDQzODYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImNhYzM5ZDU1YjFjNDA5YWVlN2MzMThhZThmZWU0ZjEyOWVlODM1OWViMjczNjU3NWJlYmI4MDcxN2E1Mzk2OWQifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L196-L198",
+          "version": "repo-lines-v1:sha256:f4606d6adb2385ab610c7243c8461d3b2187bb367389216c25c1a76cb9082669:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYjZhYWZjOTc4N2U1YWEzOTFiYzgwZjZlNzljNzA1Y2ExZTkxOTBkNGI1ZjY5MTQ1MjY4YWIwMzJkMTc5ZWZhYiIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiYTQ0NTJjNWU2MWU4MGRlYTQzM2YyYjI1OGNhN2FmNTU1ZDQxM2M4ZGIwMWUyOGVmOGIxNzkzNTA5Y2YwNjVkOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjIzNWVhZGYyYzEzNjEzNTM0NGZjODI1NmI2M2Q3M2U5OTI1MTI4MzMyYzdlM2UwZWFlNmJkY2IwYWJkZjQ0NSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjAsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTNiMGM0NDI5OGZjMWMxNDlhZmJmNGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSJ9"
+        },
+        {
+          "resource": "repo://tests/test_ingestion.py#L89-L94",
+          "version": "repo-lines-v1:sha256:51c242af8414afbc81dc0b56ddd840b26c6eafedbd5571d3c61f76ce5bcb062e:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiNjY3YjZlZTUzMGVjOTFiNzdkNjUyZjNiODIyNzAwYWI5MWY4ODkxOTBiNTMzOTVmMTVkZjEwMDkzYzRmMDJkMyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNGJlMzMyZDBiMGM0ZmVlYTY0ZWJhYzAwNTc0MWYwMTk2NzZlMTcwNDgwMTE1M2YxNWU5YmVmZWViMzA5MmJiMCIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWI1NWEwNWQ4NjcyZTJkNzYzNTZhMmE2YmE4NjdkMzliNDRmNjVkNmQ3MDAyNDhkM2FmMGE1MjU4NGVhM2IxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZTFhMWI0Y2Q0ZTA2ZDFiYjc2OWIzYTRiZTU5OWIzMmEwNWRkYjQ4ZWU5ZTAwZWI3OTFhNDk4YzUyM2Q0NjM5OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_2b187c00fa1f44978839693c1a9a4d31",
+      "statement": "Hidden-wiki adoption runs before the mode decision: adopt_hidden_wiki(repo_dir, settings.wiki_artifact_dir) renames a wiki committed as the artifact directory (e.g. .openwiki/) to the hardcoded openwiki/, logs 'adopted .openwiki/ as openwiki/ for incremental updates', and is a no-op when the artifact dir is openwiki/, when openwiki/ already exists, or when there is no hidden wiki. That ordering is what lets such a repository resolve to an incremental update instead of a full init.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L81-L96",
+          "version": "repo-lines-v1:sha256:5e73c1d14eda9f59e6888e48d02ecfe24c78b11b6ad2614d0e7ed925f63ea624:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmYTUxYTgxOGE5M2E5YzczMzkwOGE3NDY0YTllN2Q4YTFiZjQ1MzJkYmRiNTU0MGE2YTUxMDVmODEyOWVlZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgyYzQwNmViMjAxMzFhZDIwOGE0MWZiNzYxYjU4ZmI3MmMzYTY2MjA3OTg1MzBlZDgyOWU2MGNjZWYyZDRmNDkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExYTQxMTU5ZjE5ZWYxMTgyM2UyODBiNGE3OWM5OWJlY2YwZjA2MDgyM2JlOTI1NzI4OGZmM2Q3MGI1MTc3ZmQifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L78-L93",
+          "version": "repo-lines-v1:sha256:242810fd4ec155f4df4d94b394b02dc4d5fea7f8eeae850531f52b14605f5594:eyJzZWxlY3RlZExpbmVDb3VudCI6MTYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFlOGJjMTUwMmNhZDBmMTkxMWM5ODVhOWVkYjAzYWMxNjY1ZWYxZDk0ZGZlY2EwZDNhOGIxMzllNTQ2MzQ0ODUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU1YmM0NzExZWNjYTA0NTBhZmM4MzI3NzlhODg2NzZhN2M2OTYwZmEzZGE1YWY0MTBlZTAyZDFlMDE1MTU5MWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjgwMGNkODcyYjZmMWE0YjBkYzY1ZjU4MGQ1ODE3ZWUxMTZiMzQzMzNmZDE2MmM5MzYzMjE5NGM3NDUxZjY0YWIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijk4YTNlZDdlMDVjNDQxZDA2OWVmMmI4N2M5MzkyMzEyNzU0YjMyOTI0YmVjYTI2NmJlMzU5M2JlYTEyMjhiYzgifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L242-L256",
+          "version": "repo-lines-v1:sha256:f3c83d49bc787052dc5390be068199ffbd2d9f5dccc0f43887b82b98bff25125:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY4Y2FhODcyZDlhNGFjMGMyMTI1NmFkMDI2NjNjZGViYzg4MmQ3MmRlMmE2NzY2NmUyNGZhNmU5YzE2ZmYzMDYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjllNDFkNmM0YzgwNzczZjExZmFiMDBjMTE0MGEwZjNkMmUyODE0N2MxMDMzYWUzOTJjM2QzYzFlZGU4ZmYxYTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUxODBlMjM5YjMxNGVlNjYyNTFmNjZmYWVlNjIyYjMyYzMyYjg5NGVmYmYyNjdhZmQ5MjUyZjRhNjg2YTgxMDYifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_f9e2a6a1f36244a1a84f3b24c0a15be4",
+      "statement": "Mode resolution is decide_mode(repo_dir, requested_mode): auto yields update when openwiki/index.md exists and init otherwise, an explicit update without that file degrades to init, and init always stays init. The pipeline logs the degradation as 'no existing wiki found in the source; falling back to --init' and the CLI consequently receives --init.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L85-L96",
+          "version": "repo-lines-v1:sha256:cecaa3183880b5b4c575f2a4f075fd182a23db436316737530bcbb83e1fbf2ad:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg1YjdiZTMxNGFlMGU0MTBmMWM4YWQwMzg3NjA5MzdlYzE3NTBlYWM0NDZjNDg4YjYxMTIyZTc3NWJkNDdjYzQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmYTUxYTgxOGE5M2E5YzczMzkwOGE3NDY0YTllN2Q4YTFiZjQ1MzJkYmRiNTU0MGE2YTUxMDVmODEyOWVlZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjVhM2M3YWUzZWI5YjhhYWM5YTZjNjFiZjk4ZGRmOWUwZDczNWNmNTY2NTE0YjhmOTc1OGFhM2Q5Yzc1YzE3M2YiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImExYTQxMTU5ZjE5ZWYxMTgyM2UyODBiNGE3OWM5OWJlY2YwZjA2MDgyM2JlOTI1NzI4OGZmM2Q3MGI1MTc3ZmQifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L62-L75",
+          "version": "repo-lines-v1:sha256:636e2a1128c858106ad0795f15ef6a9be5aa8bd08c091fb9cbcbfccc5810d9eb:eyJzZWxlY3RlZExpbmVDb3VudCI6MTQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImU3ZmY4MWEwZTNlNjZjZGM3NmFiNTU1YzMzZWUxYjZhMTA0NjU3NjZmMTI3OTE5ZDBiNjQ0MzdkNmViODA5NjMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjBhOGNkMWIyYWJkOGVhNWJjZWY3M2M3NTQwMjUzYjJmYzM4Zjc3Yzc3MTMxODQ4YTQ2YTU1Njk5YzMxNjQ1ZmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImFlYzIzZTJjMTE3YTU5Y2M2NzEwNzBiZDcwY2E0NzY1OWJkNzE4YTA1NTJkNDJlNWQ1ODlmOWQwNTBiMmE5ZGIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NDBiNTg3YjdjMzQxNzdjZTMxZTk0MWEyNjU4MjUyNDE1YTBjNTRmNjgzNzlhY2E2ZjNhMWMyMzM2YzIwODIifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L204-L234",
+          "version": "repo-lines-v1:sha256:ac918174669e71f1a7e3018470bc2d6bd22d5f8f588eaefbce29231f7bb7a48e:eyJzZWxlY3RlZExpbmVDb3VudCI6MzEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjEzNzQxMzQ4ZWE4Mjk4MGU3YjBjMWEwZDMwM2JlMWNiY2FkZDE0MzBmMGNiY2NkN2E3YmQ1ZjQyZTljMWNjNzYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhNTUwYTMyNjgxNGNkZTkxNzU4MWJkNjc3NzE3MWYwNDhlOWZkYTRlMTEzZDU2NmNmZmNiNTk5OGFkMmZhN2MiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ3MTlmMGZjNDAyODNkZTliMjIyNjBiZjEwMWE3YjU5NmJhNDhhZGI5YTdkZDM3MTU3YWMxZjY3MDkyZWJhYTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_955085fbcebf49db94e08921b024c188",
+      "statement": "The resolved mode is persisted, not just used locally: after report(status=\"generating\") — a heartbeat that moves the row fetching → generating — the pipeline calls store.update(wiki_id, mode=mode), so GET /wikis/{id} reports the effective mode rather than the requested one (a request for update on an undocumented source is observed as mode \"init\").",
+      "evidence": [
+        {
+          "resource": "repo://app/schemas.py#L159-L197",
+          "version": "repo-lines-v1:sha256:edc4334c6bdc38a700b02305abd985a6a8fc0430daf5f4ac682be6b0dc206ff5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMWE4OGVlNjZlOWJiOWRkMTM5NzI2MjQzOGU3MDc2MGZhNzFjM2NhMDFlOWY4NDNkOGQ4MjY2NWEyNmRhYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNDA3NzcyMzJiMWQ4NmFiODM5NmYwYzU5N2Y1MzkxMWQyN2EzOWVkMjkzMzQxOGVmZGI5YWRlNWI1YjIxNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkMWNhOTgxNzZmOGUwY2FiZjdlYTA5NGVjNTdjODFiMzAyNjY0ZWE1NDA1Y2FiYzUyODg3MWZmNDAzOGZmN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L70-L97",
+          "version": "repo-lines-v1:sha256:ed21604f949ad6381c75a7da4c6306725b55e6ddbf4204dae53b5bdff3da79dc:eyJzZWxlY3RlZExpbmVDb3VudCI6MjgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM3YjI5NTQzMzljYWI4OTJmZjk0NGQzOWIxZDBhMWFlNjk2Mzg4YThlZGE0MThlNWQ0YWE4NGU1OGRjMzg5MTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUyMGU3MzYzYzQwYTlmNDdlMDA4ZDBjYTZjMDU2Yzg5MjdlMzQyM2NjODk2MTU5ZjcwZmUwNjA4ZThiNWE4ZDYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZGVhM2NjMTQyYWIwZGNmMjYwNjBlZGQ4NTZmZjM5NGQ1ZDNlNjBhYjM5M2VmMTljN2Q4ZmNhNGM3MTA1OTEifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_15a2ebc8639e4298b501ec3054533bf8",
+      "statement": "An update run first unshallows the clone: ingestion.ensure_full_history returns False without touching the network when .git/shallow does not exist, and otherwise runs git fetch --quiet --unshallow origin, returning True; the pipeline calls it only when the resolved mode is update and logs 'fetched the full history so --update can diff against the last documented commit'. Without it, --update would diff HEAD against the commit in openwiki/.last-update.json without that commit present.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/ingestion.py#L209-L226",
+          "version": "repo-lines-v1:sha256:cd81cb938ad3fc8663b62b4cd7acf922a4936bea7ca0380d6a52cefa24a41b49:eyJzZWxlY3RlZExpbmVDb3VudCI6MTgsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNiODhmYzc5MWI1NDg4MTZkNmE2ZGM3NTk3OTA0OWMxYWM0ZTkzY2RjNWZlYTNjYjg2MGFkMGIxYzJhY2ZhMGUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwZTJhNDY1MDA5NWZhOTVkMGUyYmI0MWIyZGIyOTA5NGQzNDA0ZDI4Y2UxMjMzOWVjODhiYjRiNWM1YmU4ZjYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllODNlNmZjMGMzYjExMjMyMWQ1MTNjMjcyOTJkNjFjZDViZWE0YzE0YWU1MGNmMWNiYmJhY2ZhYWQ2NzgxMTIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImVkMmUzOGFjMmIxMTMzMGRlNDQwMjM2MzY1MTBkZDU1YTM5MDI2NWE1MGNhMTNmOTYwYjVkYmUwZGMzZDU2MzQifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L85-L90",
+          "version": "repo-lines-v1:sha256:e3886ab2550eb2a62800fd12d584c20531ee9ca48c43cd91fc9143382d22d6b8:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiODViN2JlMzE0YWUwZTQxMGYxYzhhZDAzODc2MDkzN2VjMTc1MGVhYzQ0NmM0ODhiNjExMjJlNzc1YmQ0N2NjNCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmQ4NjNkMmUzZDFjYmQ3ZTRiNmI3ZTFhNmExM2FmYTlmYTNmMzZlMGVhOGI5YzFjOTZiZjIxY2IyOTZkMWE0ZSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWEzYzdhZTNlYjliOGFhYzlhNmM2MWJmOThkZGY5ZTBkNzM1Y2Y1NjY1MTRiOGY5NzU4YWEzZDljNzVjMTczZiIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYmM5NGFhNWM4NmUwNWQxMjYxYTI5OTU3NmEwMjY0NmU0NjJlMjU0MWNjYTlkMDljMTNjZTYyN2NmMDExNzBmYyJ9"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L146-L160",
+          "version": "repo-lines-v1:sha256:7572ac609bdb6696e4b95d883a80ab424615e3145068a4fbc9eadd8e6f69179d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJiNmU0MmM4MjQwYjhiYjAzNTI4ZDUzNDg2NjM1MjkxYzUyZTdlYTdlMzNjYjBiNDQ3YmY0NTgzZTA2YmQyNGIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc5MWFmNWU0NDUyZDA4NTkzMzM3YjkwNjIyMTZiMjA1MWFkOTBjZWQ4NDExMzY3NjMyNTkxYmQ5MDgwOWNkYWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImI5ZGE5MmZjOWE3YTgwNGFmYzFlMDJmNmFhYTBlODQ5MWVhMjFhOWJlNmRjYzg5YzlhNGUzY2Q0ZDMyMzg1NzkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_5f286dad051f4c17b1c4b5bb7694c8ad",
+      "statement": "prepare_instructions(repo_dir, language) writes openwiki/INSTRUCTIONS.md only when a language was requested and the source does not already ship one (a user-authored brief always wins, and no language means no file). The file lives inside the wiki tree, so it is carried into the packaged zip and the pushed commit.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L140-L158",
+          "version": "repo-lines-v1:sha256:79b64d2334490ca1b473c595e2f8a458cebf26f46a560ca6bc666b6c0e9d4290:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc1YTE3OGQyMmU5MTgwNzQ2NDk3MTQ0YjYxNzA0NWFjNWRlNjIwMTdjMDUzMWNmMGVkNmYzMGNmNzc0MjYxYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjExNmNlYTg3YTExZWI2OGU5NTVhZjgyZjMyY2Q2MjBmNzE2NDA0Mjg4ZjY2MmNlYWMzYmQ5YmMyZDkzN2FlY2YiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImQ3MDE0OWUwNjlhZDY3ZWNjZjQ3MzY0NmZmMWM3NTAwNTBkMzI5ZDExMDAxOGRjNTc2Njg3OGVhZmExZDYwN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImQyZjQ4NjE5Y2MxZTUxMThhMGE2M2E5MDIyODNjMjcwMzE1MWRjODNkOWEzMTgxZGQ5MGM5NzgxNTI4NjEwYTEifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L40-L45",
+          "version": "repo-lines-v1:sha256:bd4dfc1bf69a27f7e58f727f988f937c9071266c2a8627207248597dd28c74dc:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2I2MTBiODM0MGZmZWNhN2I2YzUwMjQ3ODE5NWI3NGExYWI3N2E1YTZkN2JkYTE1NjE3OGE4MWIzYzFhZTdlZCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiMmVlYmNhOWUzYTMyOTE5ODlhZjFiZmZkMDY3ZTBmNDM2Mjc1MjljMGIwOWVlNmQ0ZDUzZjNjNGNhNTE1NmE0MSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiMjRlNWExNzRkYjE4YjNmMWJkN2M5NTI3MWYxZDcyZDdjZWFmNTA2NDlmNDYwYjQ4YTBhMzI0NDVjYzlmMjFhOCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiZGM0ZTkzZWNmMDRiZTcyNTI1ZTVjNDRlYjE0ZTY4YmFlZTBlYmQxZDNiMzA5MTI3YzUzYzdjYjJiYzgwNzQ0OSJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_6ad1ebf0a7a243fc83338524d74de5b7",
+      "statement": "run_openwiki composes the command from split_command(settings.openwiki_bin) plus ['--<mode>', '-p'], spawns it with cwd=repo_dir and stdin=DEVNULL while merging stderr into stdout, and streams every line into the job's logs_path with a [HH:MM:SS] UTC stamp after redact_text; the subprocess is bounded by settings.job_timeout_minutes, and exceeding it kills the process, appends '! openwiki exceeded the ... minute timeout and was killed' to the log and raises OpenWikiRunError. A non-zero exit raises OpenWikiRunError('openwiki exited with code N ...').",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L100-L114",
+          "version": "repo-lines-v1:sha256:c8c8f1db4ed008d005f2cda8a00de279a8316dd4be6ad21415d903c317c2e68b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY3MGEzMTQxZDFhZTllMjNkMzU2OWM5NmY5NzEzMjE2NTE5N2Y0OWYxZTc2YWZhNWVkNTljODYwY2ExMmZhOTciLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFhMjNlYzExYjc0MzMwNmNmN2EyNTJjNDI1NjA5YzJlNTQyMDIwN2I1YjgxOWE4OTYxYThhZWMzZTMwNWNkZDUiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExYTQxMTU5ZjE5ZWYxMTgyM2UyODBiNGE3OWM5OWJlY2YwZjA2MDgyM2JlOTI1NzI4OGZmM2Q3MGI1MTc3ZmQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjgxM2I0YmM2Y2I5YzBiZjQ5NmM2MWEyMTAxODZmOWM2ZGY4NmNmYTA4M2ViNDhkNDE1OTdjNmMyNWUxNTcyMWQifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L161-L264",
+          "version": "repo-lines-v1:sha256:493f6b092cd20b5c3a8eb20eb7bf3d4f1e00b5e4aea0f7d891016a01fdd6a835:eyJzZWxlY3RlZExpbmVDb3VudCI6MTA0LCJmaXJzdFNlbGVjdGVkTGluZUhhc2giOiJiM2U3NThkMjUwM2RkOWZkMWE1MzUxNzgwZjkxNjNkYjU1NmNjNGE5ZmM0MjBlZTI0ZmYyMDU1M2YxYjNlYzQwIiwibGFzdFNlbGVjdGVkTGluZUhhc2giOiI2Mjk0NTkzODNmODA0YzZkY2NkNGYwZDYzOWM2NWViMjAwYjUyOWQ0ZDkxZThlZGIwNGE4ZmYyMDM4MTk4YTc2IiwicHJlY2VkaW5nQ29udGV4dExpbmVDb3VudCI6MywicHJlY2VkaW5nQ29udGV4dEhhc2giOiJjM2QzODlkNDQ3ZGY2NDg3ODEyZWM3MDZmYTc0OTg3N2ViM2ExOWFiZjdkMjNlOTkwYzE5YTlhYzNiZTg4MTYyIiwiZm9sbG93aW5nQ29udGV4dExpbmVDb3VudCI6MCwiZm9sbG93aW5nQ29udGV4dEhhc2giOiJlM2IwYzQ0Mjk4ZmMxYzE0OWFmYmY0Yzg5OTZmYjkyNDI3YWU0MWU0NjQ5YjkzNGNhNDk1OTkxYjc4NTJiODU1In0"
+        }
+      ]
+    },
+    {
+      "id": "claim_53f498bec0ae43bb98d39d9717f1f06a",
+      "statement": "Cancellation of a running git generation is cooperative and delivered through the heartbeat: pipeline.report / WorkerLoop._track observe result['cancel'] (or ok=False for a lost lease), set the shared cancel_event and raise PipelineCancelled; run_openwiki watches that same event, kills the CLI child, logs '! openwiki killed: generation cancelled' and raises OpenWikiRunCancelled, which the pipeline re-raises as PipelineCancelled so the row is closed as cancelled.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L66-L78",
+          "version": "repo-lines-v1:sha256:3c15a17c08ac2efa25eb4d610d7fcf9286681026250f42508b552f0ba4a2d89f:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjljOGJmYjYwMDVmMWU5NjkzNGM3MDdhYjU3YmVhZDAzM2Q0YmIzNGJlMWE4YmRjMzg4NmZmMjA2ZDU1MjgyZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImM5NWE0Y2MxNDc4ZmIwZDg4YTdjMmZmYTE5OTAwNzIzYjIzOWE5NzdmYjZiNzliMzhkNjhmZWE3YzBlMTM2NjYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQ5MWEzNjZhYWFlMTRlNDJkYWNmZGM0M2E2YjI3YjA5ODY4NDJhYmEwYTA2NTZmYmY0YTM0Y2NkOGE1YTIxOWEifQ"
+        },
+        {
+          "resource": "repo://app/services/wiki_runner.py#L220-L261",
+          "version": "repo-lines-v1:sha256:9034e5bfcdcd1c35e625c3b881134c118edf02c0e181a9ad49719352743e11ad:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM5MWYzMmQzZTY2YWUxZGY2ODEyODVhZjMyNzU1MWZkYjcwZDRhZDQyNzNjOTQ4NDc3YjhkM2M0YTMxZDc4ZDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImIyOWM1MjQ0MzRjMDA5YWFmMGQ3ZmU5ZTJmZmU3MjJiMTcwY2Y4ZWIxYzhjMTU3NWU0ZTNiZDUxZTkyNmM3MWIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImMzMWMzNDgxMTc5ZmM1YTU1OGRiYzFmNTc4YjI5YjdiNmVjMDRlNmJlOGViNWMyYjI4MTcwNzkyY2FjZmViZjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjcxMTliNDlhYjNiNzE0MDY3YzM3YmFiYzZkMjY3ODdiYTVjYTkxYmU2MThiNWMzZDIwNmFiMGQ0YmE4OWQzMTIifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L132-L157",
+          "version": "repo-lines-v1:sha256:9e8fc0c32d663a5670d96262684f3b351e0b87b20f4d44efefe6c18e5e28d9dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMzA3MjJjNTdjN2I4ZTgwZTg3ZjE1OThhYWQxZWY3ODE5YzEyZDUwMjJiMWQxNGFiODhkNDBlODE1MTk4ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmMjUyNGU4ZGM1Y2JjYWYwOWY3M2MzNTRjMDM2OGMwODZkMTdiMzZjOTdhYWNkMGRhZTgzZjNhOTFhMDU5YjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzM2E2MjRhMDhkMmQ5MWUzODQxNDdiMTAzMmMxYjUxMWJhNzkyYjE4NzAyYjUzZmM4YjQwZDkwZTI1NWRkMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_315358b825cb4a8fbf01b0af1e097ec3",
+      "statement": "packer.pack_wiki(repo_dir, dest_zip, root_name=...) requires <repo>/openwiki/ and openwiki/index.md, raising PackError('openwiki/ directory was not produced') or PackError('openwiki/index.md is missing; the run did not complete') instead of ever returning a partial artifact; it writes each file as f\"{root_name}/{relative path}\" so the archive root is renamed without touching the workspace layout, counts .md entries as pages, and writes dest_zip + '.tmp' before replacing the destination so a killed run cannot leave a half-written zip for /download to serve.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/packer.py#L24-L59",
+          "version": "repo-lines-v1:sha256:5a8fdd9021ceae91b254625d46fdea0a34bbea52349e7284f1c4a6be2dbd3e44:eyJzZWxlY3RlZExpbmVDb3VudCI6MzYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImQ4Y2UyZjQxYjUxZTY1YWJjZjY0ZTUyM2EyZTQ1YzYwZjMyNWI3MWQ5ZGExNjYyMWM3MWE1NTdjZWM1MjliOGEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2ZGY2MjhhMTczNTQzMDVjMjJjMjRkYjg3OTdiZDY1YzE0MGIyOTYwNDg3NDBjYWVmMWI5YjMxNzhlZDVmMWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJiZWMxOGE2NjYyNTNiZjI1YmExNjFjOGQwYWVlMDVmYWFmMTMzODZlZTgzNmY5MjFmMTNjNWJkZmJjZjM1MjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L116-L125",
+          "version": "repo-lines-v1:sha256:c43e83a4594e810dd7958bf829b36562eeed1266b41c434dae18a3e71fc25765:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImJjZGYyZTg1ZDViYTM5NzUwZjU5YWQ2YTI1YjM5MjFjZDRlZWY2ZGJjN2I2ODMxYTU2Nzc5YjkwZjljNWFiM2QiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDI0YmU0OTkwNmQxYmIxZGY1ODg3Y2YxNTdlMWZhNTMwZDVkYWI5ODYyZmIzMWQ0YmQ5OThhZDI0Y2IxNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImI2MDU2MTBmODlmNGJhZGM3M2YzMjg5OGVmZDYyY2I2MjUyMTQyZmNlY2EwYzM2NmM4NzI3NTBmZWFhYWM3MGIifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_c1ca8b35c5e4458cb3875e1d9475fbdb",
+      "statement": "Packaging happens before the conditional push block, so the zip always reflects the CLI output: push runs only when the wiki carries push options and source type is git, push.enabled=false produces push_result status 'skipped' without calling the publisher, and a failed push closes the wiki as failed with push_result.status='failed' while the already-packaged wiki.zip remains downloadable.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/pipeline.py#L116-L152",
+          "version": "repo-lines-v1:sha256:d9f763d7cf269d2aec132e8ecc4113d6fafc749c997b0c1dd77b8648e1b913fd:eyJzZWxlY3RlZExpbmVDb3VudCI6MzcsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFjYmNkN2UyY2YwMTIxMzFhMzAxY2VmMTg4NjkyMzhmMTBhNjliNmU1NzE4ZTJjNDk5Mzk5NGU1Njk2M2U4YWQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjUxZWNhMmRkZTVkNzcxNTRhN2MwODE3NzM4MmZmZmVlZjNhNDhmNzczYjBhMjNmOTExZmE0MWRmZWY0YjJhOWMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQxZDI0YmU0OTkwNmQxYmIxZGY1ODg3Y2YxNTdlMWZhNTMwZDVkYWI5ODYyZmIzMWQ0YmQ5OThhZDI0Y2IxNWEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUyMGZlNDljY2MyZDM4Njk4OTUwZjE2OGM3MTNlM2Q4Yzk0ZmVjODMzMWEzMzE2MDNmMjlkZjJjNjk2MTdmOTgifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L104-L116",
+          "version": "repo-lines-v1:sha256:439dfd82863618542d5f715eea2b655dcf2464dcdf4b247b39633e72b152de4b:eyJzZWxlY3RlZExpbmVDb3VudCI6MTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjM5ZDA1N2VhZmZiYjAzOTFkNzAyNDk4OWFlYTJlZmFjODU0MjgwMzM0ZjBhNTZhOGJlMDI3M2ZiYjZhYTk1ZDIiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImY0YmZhZTRmNmNiMDI5NDE0NjI3M2Y2NzMwMzE3MDRjNGU1ZGI2OTRlOTMzMTlkYjg2OGJjZjAzYWE0MTM4NWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjA2Y2IzMzJlM2VmZGE0MjJkMzY1ZWQzMGM4NmM2ZTA1ZDRjOTZhNTBiMzRjNzAyODE4Mzg2ZWRjYzgwNjZmNmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjdlNWU4M2FkMTgxZWE2MTdiYjFkYjZhMWJjYmI0OTVkOGE1YTI4MGU0NmUyZWZlZjBkZGZhYjEwNGNhZDY2ODUifQ"
+        },
+        {
+          "resource": "repo://tests/test_push.py#L110-L144",
+          "version": "repo-lines-v1:sha256:14752c5c845241aa59fa931aecc58832f1d3e7c7a4c7f71cb4d5d343235e6638:eyJzZWxlY3RlZExpbmVDb3VudCI6MzUsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc4MzVhYzdiN2Q2NTBhMDA1MWVmM2EwMGYzYmJiYmEyMWZlOWJhNGFlYWM3MDFiMzk3YzgzNjVmMTlmNDQyNTMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhMjlkYmQ2OGEwMDk2OWEwY2RmOWRiYzAyZTc4MjY3MGY3NjliODg4ZDRiYTE4ZmY2ZTllOTk1NzgxYmY5MjIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyMzc1MjhlMjAwMTNjYjFjNTU0ZDI1ZmM2YzcyMDJmMDRlNmJiYjMyMGNjNTAwNTc3MzZkNzM2MDZjZjk5ZTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_2a31b2804be84aeabbf6e078a31330ca",
+      "statement": "WorkerLoop._run is the single translator from pipeline outcomes to terminal rows via store.complete(wiki_id, claim_id, ...): success → done with pages, size_bytes and push_result; PipelineCancelled → cancelled with the reason; PushError → failed with push_result.status='failed'; IngestionError, OpenWikiRunError and PackError → failed with the message; any other Exception → failed so a runner never dies; and asyncio.CancelledError is re-raised, leaving the claim running for the API's lease reaper to requeue.",
+      "evidence": [
+        {
+          "resource": "repo://app/main.py#L32-L41",
+          "version": "repo-lines-v1:sha256:f09780113afaf58a684101b719ffae19d755710185a69758a8b1b251e8d5226d:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhjNDQxM2MxYzkyNWNjZTUzNTczMWQ3MGNmNmRlYTYzZjgxOTMwNzFmMzZlYWQ3OGU5MzczY2MxMGIxOGM1MDUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjAxYmE0NzE5YzgwYjZmZTkxMWIwOTFhN2MwNTEyNGI2NGVlZWNlOTY0ZTA5YzA1OGVmOGY5ODA1ZGFjYTU0NmIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjViNGQ0Y2JkZDU1NTkyMzFjNjU2OWZhZWFmNDFlMjI2ZTUyYTEzOTZiMTdiNzJmMTBiMGZkMDQ2NzhjOGE2ZDgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImZhMGFmYWJjOGEwMzJkMDI1MWQxMjA1NjU4NmY5YTkwOTA5YjJiMDkxOGM0YmM1ODMxYmNmYTUwZWZhNzY1YTYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L78-L130",
+          "version": "repo-lines-v1:sha256:9cd5bbade63fb0982e854da9b4fda48ab880eabddaf5d8f9c070936656600ec1:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijk3ZDMwZGZmZjk4OTQyODU1MjViYjgwM2Y1YjljYzMwNjI2NjMxZjNmMTM5NzI3MGY2NDg5Yjk0NmE3NjI1Y2MiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImM4Njg2ZmY2ZmVhODVhNmRjMmEzZjg3MDgzNTk2NmIzMTBhNmUxMzRiMzUzNzExODE1N2JmMWRlZWI0N2ZhNzEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjhhNDVmZjFlZGJlYTY5OGEyOTZmZTY5OWZmNjllYzk5YmNjZGRlMDZhZDI5MmVkY2FkODE3ZDhkMmQxMWJkNDMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImE1M2Y4NGQxOWFlMTg5MWQ0YzRiMTc4M2JhNTdkNThkYTRhMDMyMDk4ZWU5NjZkZTUyMjVmZmJkODNjZjBjN2MifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_e4e58f5f649846aca3ee6524bbad5f7b",
+      "statement": "GET /wikis/{id}/download requires both an existing row and an existing wiki.zip: otherwise it answers 404 with detail 'wiki is not ready (status=...)' — which covers a still-running wiki and one whose run failed before packaging — while a success is a FileResponse with media_type application/zip and filename openwiki-{wiki_id}.zip. Because the check is only file existence, a retried wiki whose earlier attempt packaged a zip keeps serving that older archive until the new attempt replaces it.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L211-L231",
+          "version": "repo-lines-v1:sha256:e583ca450cced7c8d53c41db7fc8cae121ca143452cba1fa4def7d4d45522d27:eyJzZWxlY3RlZExpbmVDb3VudCI6MjEsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxY2Q5OWE1YTFmOWM0N2YzMjg4OTcwYTI2NWVmM2QzNDg3ZDYzMWJiNjY2ODNkN2QxYTRmNzViNmI0NTM4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjJlYzhiZjA0MjQ1MGZjNDA4ZTkzZGM4NWU2YWQxMWYwOGVkMjk2YThmODFjNjhlMWM5YzA3MTI1YTllZmEwYjMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6Ijc2NmMyMmIzOWNhNTFiNGQ0OGM5YzhlZjE1YTg4NWQyMzM0MTFiMWUzYThjMGE5YTIyNjc3NTU3MGFjNzE0MjcifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L57-L79",
+          "version": "repo-lines-v1:sha256:b4ce9f15fcfad8c86f1d575714b412ce9286b72bb9d826a256db444c10123a90:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjcyY2U5N2IyYzY0YWRhZjY1MTM5NTAwODE0MDIzNTZjNzdlMjc3NjEyYTMwY2EzZjdhMTc5NDAyYTc0NzNlN2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdjYTljYzMyNjgxY2JmNGQyMzkyNjg5NDQwMWQ2NzNkZmRhNGVjOTg1MzUzYzViZWRjMjJiZDE0ZGJmNzczMWEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6Ijc4NmEyY2FhMTAyMmQxNjA1ZjIxODAyZTg2YThlZGExNWEwNWYzMzk5ZDgyZGRlZTI0ZDU2OWQ3MzY2NzI3ZTAiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjQxOTY4ZjRlMTY2ZDIzMmRiYzgwYmNmMGFhNjkwM2U5YzVkZGVkZTI2ZDliZjQwM2YxOWRjNTMxZDZkZTU3YTcifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_36b846cbcd864d12911a53866b7c7380",
+      "statement": "GET /wikis/{id} returns the row mapped by wiki_to_view (status, redacted source_url, ref, language, effective mode, worker=claimed_by, attempts, progress, pages, size_bytes, error, push_result, created_at, started_at, finished_at); unknown or malformed ids return 404 without touching the filesystem because is_valid_wiki_id validates the ^[0-9a-f]{32}$ shape first, which also blocks traversal attempts such as /wikis/..%2Fescape.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L126-L130",
+          "version": "repo-lines-v1:sha256:b08c652dc5a558881c5dfb6bb1ef851e3306819eea870467423293d51486b435:eyJzZWxlY3RlZExpbmVDb3VudCI6NSwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMDViMDVlMjc0MDE2Y2QwMzJkNDhiNzEwNjM0NTBiYmVjOWE0Y2Q5ZDMwYTU5OTQxYzE0ZjFiMmRiMDkyOTg0OCIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNDgwMzM4ODQzOGJjOGJjMzNkYjZiNGZiNmUzZWExOTE0N2QxNTA1YWUxZWVjMWY3ZjJmNDU3MDg5NzAzYmE2OSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiNWZjZDM3ODc5ZDRkZjI0MTkyYzc0OTc0YjU4MDA2NjZlMjcyYjJlOTVmZDkyMGI0MTcyYjI4YTA3NzliZWUxMyIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiYzA5MTA4MWM3Y2YxOThiMDE1M2RhYmQ5ZWE0NDM2YjIyMDk3ZmMwYTdkM2U1MDNiYTcyM2RjYjY1MGM5YWU1ZCJ9"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L182-L187",
+          "version": "repo-lines-v1:sha256:09ec86db681771c104a7d0b3c60b931b0fe8d6e43ef3fc3be8e00302f169f279:eyJzZWxlY3RlZExpbmVDb3VudCI6NiwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiN2ZiMTIwYzZmYTY0OTRkM2IwMWU3NjhiNWE3ZDNmYjYwZTI0OTQ1NDEwNzY1YjNlNTZhMWFmNjRiZTkwYjQ2YSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNTFmZjhjYzU4ZWU1ZDllOGRiMmMwZWJhMDU1ODZlNGJkNmNiYjZjZmI4YzZkZjAxYzc3NjhiOGQwZWI2OWFiMSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiY2RmMTZkNmI1NzZhYWVhM2E5ZTU2ZGViODA3OTZkMTk1YjM1MDUwNTU5MDA1MTBkMWJjZjAwNjAxMGRiMWE4OCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNGJkMTg2YjAzODhjMDRiZDRiZTM2OWY4NTY2YmFiYjgyZjFmNjlkZTcxOWVjNzYwZTgyOTU0OGUyYzZjZTZhYSJ9"
+        },
+        {
+          "resource": "repo://app/schemas.py#L159-L197",
+          "version": "repo-lines-v1:sha256:edc4334c6bdc38a700b02305abd985a6a8fc0430daf5f4ac682be6b0dc206ff5:eyJzZWxlY3RlZExpbmVDb3VudCI6MzksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMwMWE4OGVlNjZlOWJiOWRkMTM5NzI2MjQzOGU3MDc2MGZhNzFjM2NhMDFlOWY4NDNkOGQ4MjY2NWEyNmRhYjgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImEzNDA3NzcyMzJiMWQ4NmFiODM5NmYwYzU5N2Y1MzkxMWQyN2EzOWVkMjkzMzQxOGVmZGI5YWRlNWI1YjIxNWYiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImJkMWNhOTgxNzZmOGUwY2FiZjdlYTA5NGVjNTdjODFiMzAyNjY0ZWE1NDA1Y2FiYzUyODg3MWZmNDAzOGZmN2QiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjMwYzFmMTg4ZjE0MmVkN2E4MjQ2ODBiMjA3MTcyYzU1MTliYzYxNGE0OGZkYTdjZjE2N2VkYjhkZGY3OTk1NmMifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L185-L187",
+          "version": "repo-lines-v1:sha256:3766f5e9b91af673a58f3c3d664f4800195867fe4206c99f538a4198ae64bc3a:eyJzZWxlY3RlZExpbmVDb3VudCI6MywiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiMTJjYzJhMDNkOGM5NjQ1OTQ0NDg4NGQ3NjZiMzgxZWMxOTIwOTVkZWY0OWNiOGQzYzBlZjA5ZThhZjVlMzcwNyIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiZGMzMWQ4OTExMmJlYTBlNzMyYzNhMTJhYzQ1ZTNhODg0YjlmZGY3YmRiMTQ1OTAwNzA1YjhkZDc5YTk2NzViMiIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiOTdhODkyNDk1NzliYTQ4ZTZjNzE2NzNmYjVmNjk1MTU0ZDA2OWU1ZGU3MTIwODY0NjFkMWFhNjExZjU4M2RjZSIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiOWE2Y2Q0ZGI1MmFmODkyZDAwNzkxNWFkNmI5ZjYzN2VjZDU0NWY3OTc2ZjZmMzJiYWRhMDA0Nzc2ZDZhNmYwNiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_e3040820fe384bacae46633606a18fa9",
+      "statement": "GET /wikis/{id}/logs?tail=N (N between 1 and MAX_LOG_TAIL=2000, default 50) returns text/plain and reads only the last N lines of the worker-written log file via a bounded deque, answering an empty body before the file exists; unknown ids are 404. That file is the only run log the API exposes, so pipeline log() calls and the CLI's streamed stdout/stderr land there together.",
+      "evidence": [
+        {
+          "resource": "repo://app/routers/wikis.py#L190-L208",
+          "version": "repo-lines-v1:sha256:81870aadd82b5cda7e612e179303be0e09ebf41725da28dcf5fa0a4ac3b8edc2:eyJzZWxlY3RlZExpbmVDb3VudCI6MTksImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImUxY2Q5OWE1YTFmOWM0N2YzMjg4OTcwYTI2NWVmM2QzNDg3ZDYzMWJiNjY2ODNkN2QxYTRmNzViNmI0NTM4OTYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE3OTc3MDBkMGEwYjZhZmUwYmMyMzBlODY2MmVhNWJkNTg1MTA0NjFmYzBjNDMzNWNjNjdlMjk0YzA1MzQxYjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyNmUxZWYxODY3YThmZjAwZmI2NTZhYWU1MTc3NjFkOTVkNWRiNDk3YmZiMWU0NGM0YmIzMDA3ODM3ZTg2NmYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRiZDE4NmIwMzg4YzA0YmQ0YmUzNjlmODU2NmJhYmI4MmYxZjY5ZGU3MTllYzc2MGU4Mjk1NDhlMmM2Y2U2YWEifQ"
+        },
+        {
+          "resource": "repo://app/services/pipeline.py#L36-L45",
+          "version": "repo-lines-v1:sha256:552789b5d13a12d65306d286209214681259e1572bc9559f59499e303a93a644:eyJzZWxlY3RlZExpbmVDb3VudCI6MTAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjY2NGFmOGM4MzFkODIwMWVmYWYxZGM5NWRhNzA0MzE0ZmI4NjBkMDRmZjJhMzk4YmUzOTgxNDdkMWU3NWJkYTUiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijg2OTlkY2YxYjg5ZGFkZTI0MDI0NzI4ZGY3MDI3OGQ2NmZlOWRjZjAxMjViYzUyNjYzNTFjMDhlYjE1M2YxYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjZiMWVmODIyYWU5OGQzNTExZTBmYzc5MWE1MGE4ZmYzNGM3YjhhNDhiZGNiNDdkOWI2N2FkODIzYzI2NDI3ZjciLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRkNjE1ZGNlYzYzZmY3YWY4ZTE4OTI1OTFjODhmZWQ1Yjk4ZDVmOGJmZjAwMzc5YWUwNGMwZDU4ZGFiYzE2MmEifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L47-L50",
+          "version": "repo-lines-v1:sha256:a89de5e88dd828db8d08facf44f6c0019122aed5b033a614cbfe73fb1bfea78e:eyJzZWxlY3RlZExpbmVDb3VudCI6NCwiZmlyc3RTZWxlY3RlZExpbmVIYXNoIjoiYWFkYTY1N2MyYzcxYTRhNzQ3MjljZWY5NzY3MDhmNGI5NGI5MGNkMzY2NDk4ZDdkOGUzYzJiZjU0NmVhZDUyYSIsImxhc3RTZWxlY3RlZExpbmVIYXNoIjoiNzgyNjc0M2VmYzdiMmUzZGVhNzc1NTY5MDNhOTkzNDJjMGVlMWQzMTIyNTBiOTk4NjkwMWMwMTg5NWFjMGZkOSIsInByZWNlZGluZ0NvbnRleHRMaW5lQ291bnQiOjMsInByZWNlZGluZ0NvbnRleHRIYXNoIjoiM2NkOWVjMjc5NTNiMjUzNTRiNDdjY2MzNjRjMzNjZDM2NTRlM2FhNjhmZmIxOWFjOTM0NGJjNGNiZGJkMWI0ZCIsImZvbGxvd2luZ0NvbnRleHRMaW5lQ291bnQiOjMsImZvbGxvd2luZ0NvbnRleHRIYXNoIjoiNWY2MTYzZTg1ZDEyY2VlOTFkNzQzM2M0NmU3ZjE2Y2IwMDliOGU4N2RiOWY1Y2RkODMxYjk3MjY1MDcwZmZlMiJ9"
+        }
+      ]
+    },
+    {
+      "id": "claim_9180e14d00a14dec951a92b795275249",
+      "statement": "POST /wikis/{id}/retry requeues only failed or cancelled rows (409 otherwise, 404 for unknown ids) by clearing the result and claim columns while deliberately keeping attempts and everything on disk; the next claim then finds the surviving workspace and OpenWiki's own run state, so the retry resumes the generation instead of starting over and can end done with a downloadable zip.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L399-L418",
+          "version": "repo-lines-v1:sha256:0c268d0f3f2c2191393835127df6aa2e7b58ddc980537951f6f6331235dda061:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyODJlNzAxZWFiMTJhOWQ3ODMwMThlZmQ4NGZjMjRhMWNlZDVhM2EwMjdhMzg2NWRkOGQ1NTM4NTcwZTgyNmYiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjdlYWE3NGNlYTJjYzhjYjAxZDNhM2E5ZWFkNzU4OWRlMWNiZWViMWIxM2EwODRlM2MzNWQwMTU4ZDRlNzQzYjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjljMWU0ZGRmM2QzZWFmMjgzMWI3OTI3YzhkYzEyODVjYzhjMTQ4MjQ1NDQzYmVjMWQxOWM1MzZmYjZkOWEwZTkiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjAwZWQxMTRmN2I3ZTRhYjI1MmY0NTlhMTE2MTVkMzE4M2M1NDUyNGMyMTgwZTAzMGJmNTA2ZjNjNmQyZjkwYTMifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L160-L179",
+          "version": "repo-lines-v1:sha256:3b34114c815e929ceed2ce426b95eb06afc10337898661760689be0857615bbe:eyJzZWxlY3RlZExpbmVDb3VudCI6MjAsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ1MzI2OTVmZjkxMTMzNTM5M2YyZWMyMjNmYWE0OWMwZTFjNTJjNDU2YzQ3MmU0ZWE0MzkzYmRkMTNmZDgxOTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6Ijc3MWJmODMzMjc3NzU1OWZmMTUxNmZhOTY2ODIyNGIxMzA0NzVjYTRhNDIxODFlZDY4MTU4OTAyYWZiMzg5NTMiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImExZjU3ZmZlYzEyZjdlNTI0NTM5OTY5NzI2YTYyN2NlMTA0MWZiNmQ5YjY5ZjY4Y2ZjODg4NmVlOWM0N2FlZGMiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhlNjZmZDY4NDkyN2VlYTczN2FiY2NkZjY0OTUwNThiNjc3NDRmZGZmNWVjOGI4ZTViYTZmNTE0M2Y3NTIwM2MifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L125-L157",
+          "version": "repo-lines-v1:sha256:1ba9dc0076c0bef549deb5471ddf286a0963ecae506bec6b4485ab9384b27060:eyJzZWxlY3RlZExpbmVDb3VudCI6MzMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImViZjFmM2IzOTg3ZmFkMzViNGY3NDYzODFlMWU4OWMxZWYwYTljNDQ0OTY5ZGY1OTQyYjYyODM0YjdkNjRmMzEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2ODYyYzQ2MzE4OWNhNzUwYjZjNTIzNWUyMGEzMjFlZTk5ZWJmMTA3MmE5MTE0OWI3MjRlOGU3OTUwODlkYWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImVhYWY0YTgxNDQxNTNkNzczYzYwZTc3NGIxNGM3ZTRmMmQ5NWQ5NDc2NDJkMWRiM2FlMjdhMzgxMzNiMTExMWUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjA0M2JhOWYwYTc5MWQ5NDk2ZDhmMDlmYThkNTNiYzY4YWZmYjI2ZTVhN2FhY2E4MWU2YWQ3ZmQ1ZjdiZWEyOTgifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_7811a12932de4917aabadb7530fc24b9",
+      "statement": "While a generation runs, progress on the row is derived from OpenWiki's own durable plan: WorkerLoop._track polls read_run_state (which tolerates a missing, unparsable or oddly shaped openwiki/.run.json) and turns it into the progress column via format_progress ('2/7 pages · generating'), falling back to packer.count_pages ('N pages written') while the plan is still empty; the same heartbeat refreshes the lease and delivers the cancel flag.",
+      "evidence": [
+        {
+          "resource": "repo://app/services/wiki_runner.py#L96-L137",
+          "version": "repo-lines-v1:sha256:c20075e0ac1e3ccc847b85372c14e972b4c1f4078a2851a69517d79ecdcf3fb3:eyJzZWxlY3RlZExpbmVDb3VudCI6NDIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjJmMmRkOGQ0YTliYTJiZjViYTRiZDZmNGJmOGU5MDI4NTVmYmIyNjU4YzMxYzdkNDVmNjEzNjJjYTIzY2EwMDgiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ4OTYwMGE3M2QyZTAyZjM1MmI5MGZlZjFkOGQ2MzgxMWJhNGE4ZWUwYzFiZWFhN2FlNDY1OGYzNmFhMmUxOTgiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImUwYjIxYmY4OTVmYWUyZDczOTIwZDkzMTc4Y2ZkNTg0MWNkZjhmOTUyNDUxNmM4YTU2NTg0MzZhNGFjNDhmM2IiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjU5MzgyYmMyNDA1ZWVhZTg3YmY5NzJlOGRiM2U0ODM2M2I2YjQ0Y2UyMzYwNTMwYjk2MzJmNWRmNjhjNTYwZTYifQ"
+        },
+        {
+          "resource": "repo://app/worker/loop.py#L132-L157",
+          "version": "repo-lines-v1:sha256:9e8fc0c32d663a5670d96262684f3b351e0b87b20f4d44efefe6c18e5e28d9dd:eyJzZWxlY3RlZExpbmVDb3VudCI6MjYsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQyMzA3MjJjNTdjN2I4ZTgwZTg3ZjE1OThhYWQxZWY3ODE5YzEyZDUwMjJiMWQxNGFiODhkNDBlODE1MTk4ZDAiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImVmMjUyNGU4ZGM1Y2JjYWYwOWY3M2MzNTRjMDM2OGMwODZkMTdiMzZjOTdhYWNkMGRhZTgzZjNhOTFhMDU5YjIiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjQzM2E2MjRhMDhkMmQ5MWUzODQxNDdiMTAzMmMxYjUxMWJhNzkyYjE4NzAyYjUzZmM4YjQwZDkwZTI1NWRkMDQiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjoxLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYyYWI1NmFjMGE4NjliZjgwOWVlZTFiZGRjZTM4OGFmMDc3YzlmYjM2NzI1MjFkYzdmYzk1ZTIwOWExMTc3Y2EifQ"
+        },
+        {
+          "resource": "repo://tests/test_wiki_state.py#L61-L113",
+          "version": "repo-lines-v1:sha256:2d4e7dedd32378458dd0b30698ae6813d466090a3b9aadf2df3e1fbefd67d4b3:eyJzZWxlY3RlZExpbmVDb3VudCI6NTMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjQ2Y2FiNzA2ZGE5NWY5NmU3NmU2OTBlYTJhMjViNjViOTFhMjQ5ZjkxMWRmYThiOWNhMTNlMDgwNDM0ZTljYzkiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI3OTQ2ZWI4YzI4M2U0Y2Y5NGEwY2I2MjZjYTA5MWU0N2ZmNDM2Y2NmMTQ3NWZhMTYxZDA1ODBhNWVhNDE0MjEiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImY3ZGE3MGI0NzA3NmYxZTYzNzVlNzMwZDk2MTZmNzljMmU0M2IyYzgwN2EzN2YyYjZkN2JiODMyNzFlNmVlMDEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjowLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImUzYjBjNDQyOThmYzFjMTQ5YWZiZjRjODk5NmZiOTI0MjdhZTQxZTQ2NDliOTM0Y2E0OTU5OTFiNzg1MmI4NTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_d595739bb3d645fc8b8f23bb36046800",
+      "statement": "The end-to-end tests exercise this exact production path without a model provider or network by pointing Settings.openwiki_bin at tests/fixtures/fake_openwiki.py with run_local_worker=True; the fake CLI writes an openwiki/ tree (index.md, architecture.md, .claims/quickstart.json), records its argv in .fake-args.json and can be made to fail (FAKE_OPENWIKI_FAIL) or sleep (FAKE_OPENWIKI_SLEEP) from the environment.",
+      "evidence": [
+        {
+          "resource": "repo://tests/conftest.py#L44-L66",
+          "version": "repo-lines-v1:sha256:c18c9fc8fbbe67120ef46af5af7b8a59bdb0d8f4753522929c18358f84e218a6:eyJzZWxlY3RlZExpbmVDb3VudCI6MjMsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjNmYjYxNTVkY2VjNTBlMDQ0NzYyZmE2MmU2YWU2NjYxNDVmMDNmYjE0NGNlMGIwM2RiZGY0ODYyYjQyNWNhY2QiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjhmMTk4YzFkNGVlMTBmOWVmMDYwNzZhODViZDAzZGVmMzE3OTc2NzNhYjMxZDVjZmYzOGRhZmNmNThjOGVlNDAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE2NjgxYTBhNGQ4YzUyN2I1ZmJmYjJmYTZmZTg3NzNlZDUyNWUwOTViZjNlZDY1M2QwYTdiZmU3NjU4MTU4NzEiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImYzYmY2ODkxZWQxODZjN2ExOTk5MWM0NzlmYWFmZjgzNDNkNmRiNmM4MzcxNmE2MGY0YzZhOTY0YmJlYmI5MDQifQ"
+        },
+        {
+          "resource": "repo://tests/fixtures/fake_openwiki.py#L25-L56",
+          "version": "repo-lines-v1:sha256:3b2682fd2fd41968a9019822f4b8cb7fdb07e9ae65b9834c1829c88d9fb6e721:eyJzZWxlY3RlZExpbmVDb3VudCI6MzIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFiMzk3OTMzYTI0YTgwMWVlOTIzMzI3YmQ2OWEwMTA0OWMwNzc5MTUwMjFjZjJlYzM5ZGRhNGY4MWFhODM3ZTQiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6IjE2MjMzYjNmZmVhMzJhMjNkZjUzMDY1MzQzNDhmMmRlZTc3NmE1YTZmNzRmYjUzMzE3NWRkYzUzOWE4ZmU0NjQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImE5OGIwNjNkOWI0N2U2NTM3OTYyNTU3MmNjZTE5NzY2OWQ1NzY3ZTEyYzE4YmUwNzU2NTJiOGNkOTgxY2U4ZDUiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjNkNDEzNDBjYzIzOWExNTljZTliNjAyMmU5ZjYzMjI4MzJlMmVhZDc2Y2FlOWU0NzU0ZDIxMGViOGZiNmQ1ZTgifQ"
+        },
+        {
+          "resource": "repo://tests/test_api_wikis.py#L198-L221",
+          "version": "repo-lines-v1:sha256:c0b95e1d912bd8a76b1aae7798097e1e30cb0ff276a8ea64d4b83296202b0e3d:eyJzZWxlY3RlZExpbmVDb3VudCI6MjQsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkYWM4MGEyNTQxZWZiMjNmYThiMGM3Y2JmZmMzMDRiOTZhNmU3YTY5ODM0NzZiZTQxODE0ZTU0ZTg5YzQzYTEiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImMyN2IyZGUzMzNmNjNkYTAwMDVhZWRjZjg2ODFjZWMwYmNmYWQ2NWZiMzM1MzI3OWYwZDRlZjhmY2UyN2VmOTAiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6ImYyOTljYjZmNGRjZmJhNGIwYThmMTM0N2JmOGQ3ZGI3ODdmODdiODI3MzFmYTdmMjNhNTliMjYzOTdkODA5ZmIiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjhkODAzOGM0YjhiYjJiZWZkYWZjN2UyMGFhMjc1ZjIwY2JmYTJjYjk1YWI2ZDgzYTNiNjJkMjkzNGExNjBiYTUifQ"
+        }
+      ]
+    },
+    {
+      "id": "claim_1cfebd34ef174326a2b14b8299c00074",
+      "statement": "Cancelling a wiki is state-dependent in the store: a queued row is closed immediately as cancelled with error 'cancelled before start', while one in a running status is only flagged with cancel_requested and reported as 'cancelling', leaving the worker to notice the flag on its next heartbeat and close the row as cancelled; a terminal row yields 'not_running' (HTTP 409 at the router) and an unknown id 404.",
+      "evidence": [
+        {
+          "resource": "repo://app/core/storage.py#L386-L397",
+          "version": "repo-lines-v1:sha256:0e45c6601726e7de8238ec13caed9c0acc98a10d6ac7d37a5af47d798cce3d3c:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6ImI5YjNjYmJmYTk1NGI5MjlhMDg4YWQwM2MwNDExMWRjZDBkYzExZDI3NTk2MmIyZWUwOGVmNDdkMDQ0MTZjNzMiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImFkMjIyY2UzYTVlMzUyMDA5NTY0ODdlMzM3NzgwOTI4MGExMTk0NDk0YWUyMzcyNTY1ZTk4ZWRjZTgxYmFkOWQiLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjM5ZDA5Y2JjMTk3NTM0MGYxNzI5YTEwMDQ1ZmJlYTIyMWI4MjgzZjMzY2U5YWM2OGFlMWM2ZDNmODYyYTVjNjgiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6IjRlOGViYWZhNzNiZjhhYzkyMjkwODllNDc4NmM4NzM4Y2M0YjIwY2JhOGZhNDg5YzgwYjMwMDk1NGViMDNlMGUifQ"
+        },
+        {
+          "resource": "repo://app/routers/wikis.py#L146-L157",
+          "version": "repo-lines-v1:sha256:0f190e2b2076bf06291976fb9e27631105d73059289cda02d324f185e08e7171:eyJzZWxlY3RlZExpbmVDb3VudCI6MTIsImZpcnN0U2VsZWN0ZWRMaW5lSGFzaCI6IjFmODEzY2I5YjJmZDQ4ZTRmMTc1YjYwYWNjZTJhNWI2YjU1M2M0MzAyMzQ0YWUyOGIyNGNkNjdkNjYxZDBjM2EiLCJsYXN0U2VsZWN0ZWRMaW5lSGFzaCI6ImE4NmVkMzdlNTVjN2E4ZDEyM2ZiODY4NDk5Njg4ZTcwOTYyNDYxZmZmZDE4MzBjMjk1OWZiMzk0OTFjNDI3MTciLCJwcmVjZWRpbmdDb250ZXh0TGluZUNvdW50IjozLCJwcmVjZWRpbmdDb250ZXh0SGFzaCI6IjllNWQ0Y2RlNTc3MTNkZTc2ZjViMmUzMzRiNzg1OGVkNWUzNTc1MmNjZDllZjFmNzk1ZDZkNDRlZmM3YmMwNGYiLCJmb2xsb3dpbmdDb250ZXh0TGluZUNvdW50IjozLCJmb2xsb3dpbmdDb250ZXh0SGFzaCI6ImRjNjAwMmVmNDc2NWUyNzE4NzhlMjg4OGM1ODRjYWE2N2U0YjllZDAyMWMwODU4OWFhNWY3MWQ0NTI4ZDI1ZWUifQ"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "by": "openwiki/0.6.0",
+    "at": "2026-09-27T09:33:59.807Z"
+  }
+}
