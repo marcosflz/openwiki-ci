@@ -84,10 +84,11 @@ async def run_pipeline(
 
     requested_mode = str(wiki.get("mode") or "auto")
     mode = decide_mode(repo_dir, requested_mode)
-    if mode == "update" and await ingestion.ensure_full_history(
-        repo_dir, url=str(source.get("url") or ""), token=token
-    ):
-        log("fetched the full history so --update can diff against the last documented commit")
+    if mode == "update":
+        if await ingestion.ensure_full_history(repo_dir, url=str(source.get("url") or ""), token=token):
+            log("fetched the full history so --update can diff against the last documented commit")
+        if await ingestion.reset_unpublished_wiki_commit(repo_dir, secrets=secrets):
+            log("dropped an unpublished wiki commit so --update sees a clean diff")
     report(status="generating")
     store.update(wiki_id, resolved_mode=mode)
     if requested_mode == "update" and mode == "init":

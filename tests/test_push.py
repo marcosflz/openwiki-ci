@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import asyncio
+import json
 from pathlib import Path
 
 import pytest
 
-from app.services.ingestion import IngestionError, git_auth_prefix
+from app.services.ingestion import IngestionError, git_auth_prefix, reset_unpublished_wiki_commit
 from tests.conftest import _git, wait_for_status
 
 
@@ -21,6 +23,37 @@ def test_git_auth_prefix():
     assert prefix[1].startswith("http.extraHeader=Authorization: Basic ")
     with pytest.raises(IngestionError):
         git_auth_prefix("git@github.com:acme/repo.git", "token-123")
+
+
+def _commit(repo: Path, message: str) -> None:
+    _git(["-c", "user.email=t@t", "-c", "user.name=t", "add", "-A"], repo)
+    _git(["-c", "user.email=t@t", "-c", "user.name=t", "commit", "--quiet", "-m", message], repo)
+
+
+def test_reset_unpublished_wiki_commit(tmp_path):
+    repo = tmp_path / "reset-repo"
+    repo.mkdir()
+    (repo / "README.md").write_text("# src\n", encoding="utf-8")
+    _git(["init", "--quiet"], repo)
+    _commit(repo, "source")
+    base = _git(["rev-parse", "HEAD"], repo).strip()
+
+    wiki = repo / ".openwiki"
+    wiki.mkdir()
+    (wiki / "index.md").write_text("# wiki\n", encoding="utf-8")
+    (wiki / ".last-update.json").write_text(json.dumps({"gitHead": base}), encoding="utf-8")
+    _commit(repo, "wiki")  # unpublished wiki commit, like a failed push
+
+    assert asyncio.run(reset_unpublished_wiki_commit(repo)) is True
+    assert _git(["rev-parse", "HEAD"], repo).strip() == base
+    assert (wiki / "index.md").exists()  # files stay in the working tree
+    # Nothing left to reset on a second pass.
+    assert asyncio.run(reset_unpublished_wiki_commit(repo)) is False
+
+    # Real repository changes are left alone.
+    (repo / "src.py").write_text("print(1)\n", encoding="utf-8")
+    _commit(repo, "feature")
+    assert asyncio.run(reset_unpublished_wiki_commit(repo)) is False
 
 
 def test_push_commits_the_wiki_to_the_cloned_branch(client, make_remote_repo):

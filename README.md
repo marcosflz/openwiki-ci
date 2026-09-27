@@ -1,4 +1,4 @@
-# OpenWiki Service
+# openwiki-ci Service
 
 Servicio HTTP (Docker) que recibe un repositorio — URL git pública, privada con
 personal access token, o un `zip`/`tar` subido — y devuelve la documentación

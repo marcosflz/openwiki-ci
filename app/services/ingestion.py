@@ -15,6 +15,7 @@ from __future__ import annotations
 import asyncio
 import base64
 import hashlib
+import json
 import re
 import shutil
 import tarfile
@@ -38,6 +39,9 @@ SUPPORTED_ARCHIVE_SUFFIXES = (
 
 _CLONE_TIMEOUT_SECONDS = 600
 _GIT_TIMEOUT_SECONDS = 300
+
+#: Repository paths that only contain OpenWiki's own output.
+WIKI_ONLY_PATHS = ("openwiki/", ".openwiki/")
 
 
 class IngestionError(Exception):
@@ -224,6 +228,52 @@ async def ensure_full_history(repo_dir: Path, *, url: str, token: str | None = N
         secrets=(token,) if token else (),
         timeout_seconds=_CLONE_TIMEOUT_SECONDS,
     )
+    return True
+
+
+async def reset_unpublished_wiki_commit(repo_dir: Path, *, secrets: tuple[str, ...] = ()) -> bool:
+    """Drop a wiki-only local commit left behind by a failed push.
+
+    When a push fails, the generated wiki stays committed in the workspace.
+    OpenWiki's next ``--update`` would then see its own wiki as a repository
+    change and re-document pages that did not change. Resetting HEAD to the
+    commit recorded in ``.last-update.json`` keeps updates cheap; the wiki files
+    stay in the working tree (the next push commits them again).
+    """
+    repo_dir = Path(repo_dir)
+    last_update = next(
+        (
+            path
+            for path in (
+                repo_dir / "openwiki" / ".last-update.json",
+                repo_dir / ".openwiki" / ".last-update.json",
+            )
+            if path.exists()
+        ),
+        None,
+    )
+    if last_update is None:
+        return False
+    try:
+        documented = str(json.loads(last_update.read_text(encoding="utf-8")).get("gitHead") or "")
+    except (OSError, json.JSONDecodeError):
+        return False
+    if not documented:
+        return False
+
+    code, head, _ = await run_git_status(["rev-parse", "HEAD"], cwd=repo_dir)
+    head = head.strip()
+    if code != 0 or not head or head == documented:
+        return False
+    code, out, _ = await run_git_status(
+        ["diff", "--name-only", documented, "HEAD"], cwd=repo_dir, secrets=secrets
+    )
+    if code != 0:
+        return False
+    changed = [line.strip() for line in out.splitlines() if line.strip()]
+    if not changed or any(not line.startswith(WIKI_ONLY_PATHS) for line in changed):
+        return False
+    await run_git(["reset", "--mixed", "--quiet", documented], cwd=repo_dir, secrets=secrets)
     return True
 
 
