@@ -363,6 +363,13 @@ class JobStore:
                 (worker_id, utc_now()),
             )
 
+    def prune_workers(self, max_age_seconds: int = 3600) -> int:
+        """Forget workers that have been gone for a while."""
+        cutoff = _seconds_ago(max_age_seconds)
+        with self._lock:
+            cursor = self._connection.execute("DELETE FROM workers WHERE last_seen_at <= ?", (cutoff,))
+        return cursor.rowcount
+
     def stats(self, *, worker_ttl_seconds: int = 120) -> dict[str, int]:
         cutoff = _seconds_ago(worker_ttl_seconds)
         with self._lock:

@@ -105,6 +105,14 @@ def test_stats_count_recent_workers(tmp_path):
     assert stats["workers"] == 1
 
 
+def test_prune_workers(tmp_path):
+    store = _make_store(tmp_path)
+    store.note_worker("worker-a")
+
+    assert store.prune_workers(0) == 1
+    assert store.stats()["workers"] == 0
+
+
 def test_legacy_job_json_is_migrated(tmp_path):
     data_dir = tmp_path / "data"
     jobs_dir = data_dir / "jobs" / ("a" * 32)

@@ -37,6 +37,7 @@ async def _reap_loop(store: JobStore, settings: Settings) -> None:
             requeued = store.recover_stale(settings.worker_lease_seconds)
             if requeued:
                 logger.warning("requeued %s stale wiki claim(s)", requeued)
+            store.prune_workers()
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
