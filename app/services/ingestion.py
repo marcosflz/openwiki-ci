@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import hashlib
 import re
 import shutil
 import tarfile
@@ -248,11 +249,16 @@ async def ensure_git_repo(repo_dir: Path, *, timeout_seconds: int = _GIT_TIMEOUT
 # ---------------------------------------------------------------------------
 # Uploads
 # ---------------------------------------------------------------------------
-async def save_upload(chunks: AsyncIterator[bytes], dest: Path, *, max_bytes: int) -> int:
-    """Stream uploaded chunks to ``dest`` enforcing a size limit."""
+async def save_upload(chunks: AsyncIterator[bytes], dest: Path, *, max_bytes: int) -> tuple[int, str]:
+    """Stream uploaded chunks to ``dest`` enforcing a size limit.
+
+    Returns ``(bytes_written, sha256_hex)``; the digest identifies identical
+    uploads so the API can deduplicate them.
+    """
     dest = Path(dest)
     dest.parent.mkdir(parents=True, exist_ok=True)
     written = 0
+    digest = hashlib.sha256()
     with dest.open("wb") as handle:
         async for chunk in chunks:
             written += len(chunk)
@@ -260,8 +266,9 @@ async def save_upload(chunks: AsyncIterator[bytes], dest: Path, *, max_bytes: in
                 handle.close()
                 dest.unlink(missing_ok=True)
                 raise IngestionError(f"upload exceeds the {max_bytes // (1024 * 1024)} MB limit")
+            digest.update(chunk)
             handle.write(chunk)
-    return written
+    return written, digest.hexdigest()
 
 
 def archive_suffix(filename: str) -> str | None:

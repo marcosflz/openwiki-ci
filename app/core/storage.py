@@ -20,6 +20,7 @@ import re
 import shutil
 import sqlite3
 import threading
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -66,6 +67,7 @@ CREATE TABLE IF NOT EXISTS wikis (
     concurrency INTEGER,
     mode TEXT NOT NULL DEFAULT 'auto',
     resolved_mode TEXT,
+    fingerprint TEXT,
     push TEXT,
     claimed_by TEXT,
     claim_id TEXT,
@@ -123,8 +125,13 @@ class JobStore:
             self._connection.execute("PRAGMA busy_timeout=5000")
             self._connection.executescript(_SCHEMA)
             columns = {row["name"] for row in self._connection.execute("PRAGMA table_info(wikis)")}
-            if "resolved_mode" not in columns:  # upgrade databases created before this column
+            if "resolved_mode" not in columns:  # upgrade databases created before these columns
                 self._connection.execute("ALTER TABLE wikis ADD COLUMN resolved_mode TEXT")
+            if "fingerprint" not in columns:
+                self._connection.execute("ALTER TABLE wikis ADD COLUMN fingerprint TEXT")
+            self._connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_wikis_fingerprint ON wikis (fingerprint)"
+            )
         self.migrate_legacy_files()
 
     # --- paths --------------------------------------------------------------
@@ -159,23 +166,72 @@ class JobStore:
         concurrency: int | None,
         mode: str = "auto",
         push: dict[str, Any] | None = None,
+        fingerprint: str | None = None,
     ) -> dict[str, Any]:
+        job, _ = self.create_deduplicated(
+            fingerprint=fingerprint,
+            dedupe=False,
+            source=source,
+            language=language,
+            concurrency=concurrency,
+            mode=mode,
+            push=push,
+        )
+        return job
+
+    def create_deduplicated(
+        self,
+        *,
+        fingerprint: str | None,
+        dedupe: bool = True,
+        source: dict[str, Any],
+        language: str | None,
+        concurrency: int | None,
+        mode: str = "auto",
+        push: dict[str, Any] | None = None,
+    ) -> tuple[dict[str, Any], bool]:
+        """Create a wiki unless an identical one is queued or running.
+
+        Runs in a single ``BEGIN IMMEDIATE`` transaction, so two simultaneous
+        submissions cannot both create a job. Returns ``(wiki, created)``;
+        ``created=False`` means an active wiki with the same fingerprint was
+        reused.
+        """
         wiki_id = new_wiki_id()
         with self._lock:
-            self._connection.execute(
-                "INSERT INTO wikis (wiki_id, status, source, language, concurrency, mode, push, created_at)"
-                " VALUES (?, 'queued', ?, ?, ?, ?, ?, ?)",
-                (
-                    wiki_id,
-                    json.dumps(source, ensure_ascii=False),
-                    language,
-                    concurrency,
-                    mode,
-                    json.dumps(push, ensure_ascii=False) if push is not None else None,
-                    utc_now(),
-                ),
-            )
-        return self.get(wiki_id)
+            self._connection.execute("BEGIN IMMEDIATE")
+            try:
+                if dedupe and fingerprint:
+                    row = self._connection.execute(
+                        "SELECT * FROM wikis WHERE fingerprint=?"
+                        " AND status IN ('queued','fetching','generating','finalizing')"
+                        " ORDER BY created_at LIMIT 1",
+                        (fingerprint,),
+                    ).fetchone()
+                    if row is not None:
+                        self._connection.execute("COMMIT")
+                        return self._decode(row), False
+                self._connection.execute(
+                    "INSERT INTO wikis (wiki_id, status, source, language, concurrency, mode, push,"
+                    " fingerprint, created_at) VALUES (?, 'queued', ?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        wiki_id,
+                        json.dumps(source, ensure_ascii=False),
+                        language,
+                        concurrency,
+                        mode,
+                        json.dumps(push, ensure_ascii=False) if push is not None else None,
+                        fingerprint,
+                        utc_now(),
+                    ),
+                )
+                self._connection.execute("COMMIT")
+            except BaseException:
+                self._connection.execute("ROLLBACK")
+                raise
+        job = self.get(wiki_id)
+        assert job is not None
+        return job, True
 
     def get(self, wiki_id: str) -> dict[str, Any] | None:
         if not self.is_valid_wiki_id(wiki_id):
@@ -243,6 +299,20 @@ class JobStore:
                 (cutoff,),
             ).fetchall()
         return sum(1 for row in rows if self.delete(row["wiki_id"]))
+
+    def cleanup_staging(self, max_age_seconds: int = 3600) -> int:
+        """Remove abandoned upload staging files."""
+        staging = self.data_dir / "staging"
+        if not staging.exists():
+            return 0
+        cutoff = time.time() - max_age_seconds
+        removed = 0
+        for path in staging.iterdir():
+            with contextlib.suppress(OSError):
+                if path.is_file() and path.stat().st_mtime < cutoff:
+                    path.unlink()
+                    removed += 1
+        return removed
 
     # --- worker coordination ------------------------------------------------
     def claim_next(self, worker_id: str) -> dict[str, Any] | None:

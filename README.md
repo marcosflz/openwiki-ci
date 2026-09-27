@@ -95,6 +95,32 @@ Durante la generación, `progress` se lee del propio plan de OpenWiki
 (`3/7 pages · generating`) y los logs llevan marca de tiempo
 (`[HH:MM:SS]`).
 
+### Idempotencia (no duplicar trabajos)
+
+`POST /wikis` deduplica por **huella**: si ya hay una wiki *en cola o en
+ejecución* para el mismo source + `ref` + `language` + `mode` + `push`
+(estado/rama), devuelve esa misma wiki con `"deduplicated": true` en lugar de
+crear otra. El chequeo es atómico (SQLite `BEGIN IMMEDIATE`), así que dos
+peticiones simultáneas tampoco crean dos trabajos.
+
+```bash
+# primera: crea la wiki
+curl -X POST http://localhost:8000/wikis -H "Content-Type: application/json" \
+  -d '{"source": {"url": "https://github.com/org/repo.git"}}'
+# {"wiki_id": "abc...", "status": "queued", "deduplicated": false, ...}
+
+# repetida mientras sigue activa: devuelve la misma
+# {"wiki_id": "abc...", "status": "queued", "deduplicated": true, ...}
+
+# forzar una nueva aunque exista otra activa
+curl -X POST "http://localhost:8000/wikis?force=true" ... 
+```
+
+- Las wikis **terminadas** (`done`/`failed`/`cancelled`) no bloquean: puedes
+  relanzar el mismo repo cuando quieras.
+- En subidas, la huella es el `sha256` del archivo: subir dos veces el mismo
+  zip reutiliza la wiki activa.
+
 ### Repositorio público
 
 ```bash

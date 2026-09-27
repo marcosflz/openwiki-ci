@@ -86,6 +86,27 @@ def test_stale_claims_are_requeued(tmp_path):
     assert requeued["attempts"] == 1
 
 
+def test_create_deduplicated(tmp_path):
+    store = _make_store(tmp_path)
+    kwargs = {
+        "source": {"type": "git", "url": "https://github.com/acme/repo.git", "token": TOKEN},
+        "language": None,
+        "concurrency": None,
+    }
+    first, created = store.create_deduplicated(fingerprint="fp-1", **kwargs)
+    assert created is True
+
+    second, created = store.create_deduplicated(fingerprint="fp-1", **kwargs)
+    assert created is False
+    assert second["wiki_id"] == first["wiki_id"]
+
+    # Terminal wikis do not block a new submission with the same fingerprint.
+    store.update(first["wiki_id"], status="done")
+    third, created = store.create_deduplicated(fingerprint="fp-1", **kwargs)
+    assert created is True
+    assert third["wiki_id"] != first["wiki_id"]
+
+
 def test_queued_cancel_and_retry(tmp_path):
     store = _make_store(tmp_path)
     wiki = _queue_wiki(store)

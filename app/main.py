@@ -54,6 +54,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     async def lifespan(app: FastAPI):
         worker: WorkerLoop | None = None
         store.purge_expired(settings.job_retention_hours)
+        store.cleanup_staging()
         recovered = store.recover_stale(settings.worker_lease_seconds)
         if recovered:
             logger.warning("requeued %s stale wiki claim(s) at startup", recovered)

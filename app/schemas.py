@@ -131,6 +131,13 @@ class WikiAccepted(BaseModel):
     wiki_id: str
     status: WikiStatus
     links: dict[str, str]
+    deduplicated: bool = Field(
+        False,
+        description=(
+            "True when an identical wiki was already queued or running and it was "
+            "reused instead of creating a new one (submit with ?force=true to override)."
+        ),
+    )
 
 
 class WikiView(BaseModel):

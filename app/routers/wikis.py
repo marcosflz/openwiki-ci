@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import contextlib
 from collections import deque
 from collections.abc import AsyncIterator
 from pathlib import Path
 from typing import Literal
+from uuid import uuid4
 
 from fastapi import APIRouter, File, Form, HTTPException, Query, Request, UploadFile, status
 from fastapi.responses import FileResponse, PlainTextResponse
@@ -13,13 +15,14 @@ from fastapi.responses import FileResponse, PlainTextResponse
 from ..core.storage import TERMINAL_STATUSES
 from ..schemas import WikiAccepted, WikiCreate, WikiStatus, WikiView, wiki_to_view
 from ..services import ingestion
+from ..services.fingerprint import wiki_fingerprint
 
 router = APIRouter(prefix="/wikis", tags=["wikis"])
 
 MAX_LOG_TAIL = 2000
 
 
-def _accepted(wiki_id: str) -> WikiAccepted:
+def _accepted(wiki_id: str, *, deduplicated: bool = False) -> WikiAccepted:
     base = f"/wikis/{wiki_id}"
     return WikiAccepted(
         wiki_id=wiki_id,
@@ -29,6 +32,7 @@ def _accepted(wiki_id: str) -> WikiAccepted:
             "logs": f"{base}/logs",
             "download": f"{base}/download",
         },
+        deduplicated=deduplicated,
     )
 
 
@@ -47,7 +51,14 @@ def list_wikis(
     status_code=status.HTTP_202_ACCEPTED,
     summary="Generate a wiki from a git repository (public, or private with a token)",
 )
-async def create_wiki(payload: WikiCreate, request: Request) -> WikiAccepted:
+async def create_wiki(
+    payload: WikiCreate,
+    request: Request,
+    force: bool = Query(
+        False,
+        description="Create a new wiki even if an identical one is queued or running.",
+    ),
+) -> WikiAccepted:
     settings = request.app.state.settings
     try:
         url = ingestion.validate_git_url(payload.source.url, allow_local=settings.allow_local_git)
@@ -79,14 +90,34 @@ async def create_wiki(payload: WikiCreate, request: Request) -> WikiAccepted:
             )
 
     source = {"type": "git", "url": url, "ref": payload.source.ref, "token": token}
-    job = request.app.state.store.create(
+    push_options = payload.push.model_dump() if payload.push is not None else None
+    fingerprint = wiki_fingerprint(
         source=source,
         language=payload.language,
-        concurrency=payload.concurrency,
         mode=payload.mode,
-        push=payload.push.model_dump() if payload.push is not None else None,
+        push=push_options,
     )
-    return _accepted(job["wiki_id"])
+    store = request.app.state.store
+    if force:
+        job = store.create(
+            source=source,
+            language=payload.language,
+            concurrency=payload.concurrency,
+            mode=payload.mode,
+            push=push_options,
+            fingerprint=fingerprint,
+        )
+        created = True
+    else:
+        job, created = store.create_deduplicated(
+            fingerprint=fingerprint,
+            source=source,
+            language=payload.language,
+            concurrency=payload.concurrency,
+            mode=payload.mode,
+            push=push_options,
+        )
+    return _accepted(job["wiki_id"], deduplicated=not created)
 
 
 @router.post(
@@ -101,6 +132,10 @@ async def upload_source(
     language: str | None = Form(None),
     concurrency: int | None = Form(None, ge=1, le=8),
     mode: Literal["auto", "init", "update"] | None = Form(None),
+    force: bool = Query(
+        False,
+        description="Create a new wiki even if an identical one is queued or running.",
+    ),
 ) -> WikiAccepted:
     settings = request.app.state.settings
     filename = Path(file.filename or "upload").name
@@ -115,24 +150,62 @@ async def upload_source(
         )
 
     store = request.app.state.store
-    job = store.create(
-        source={"type": "upload", "filename": filename, "archive": f"upload{suffix}"},
-        language=language,
-        concurrency=concurrency,
-        mode=mode or "auto",
-    )
-    dest = store.job_dir(job["wiki_id"]) / f"upload{suffix}"
+    staging = settings.data_dir / "staging"
+    staging.mkdir(parents=True, exist_ok=True)
+    temp = staging / f"{uuid4().hex}{suffix}"
     try:
-        await ingestion.save_upload(
+        _, digest = await ingestion.save_upload(
             _upload_chunks(file),
-            dest,
+            temp,
             max_bytes=settings.max_upload_mb * 1024 * 1024,
         )
     except ingestion.IngestionError as exc:
-        store.delete(job["wiki_id"])
+        with contextlib.suppress(OSError):
+            temp.unlink()
         raise HTTPException(status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail=str(exc)) from exc
 
-    return _accepted(job["wiki_id"])
+    resolved_mode = mode or "auto"
+    source = {
+        "type": "upload",
+        "filename": filename,
+        "archive": f"upload{suffix}",
+        "sha256": digest,
+    }
+    fingerprint = wiki_fingerprint(
+        source=source,
+        language=language,
+        mode=resolved_mode,
+        push=None,
+    )
+    try:
+        if force:
+            job = store.create(
+                source=source,
+                language=language,
+                concurrency=concurrency,
+                mode=resolved_mode,
+                fingerprint=fingerprint,
+            )
+            created = True
+        else:
+            job, created = store.create_deduplicated(
+                fingerprint=fingerprint,
+                source=source,
+                language=language,
+                concurrency=concurrency,
+                mode=resolved_mode,
+            )
+        if created:
+            dest = store.job_dir(job["wiki_id"]) / f"upload{suffix}"
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            temp.replace(dest)
+        else:
+            temp.unlink(missing_ok=True)
+    except BaseException:
+        with contextlib.suppress(OSError):
+            temp.unlink()
+        raise
+    return _accepted(job["wiki_id"], deduplicated=not created)
 
 
 async def _upload_chunks(file: UploadFile, chunk_size: int = 1024 * 1024) -> AsyncIterator[bytes]:
