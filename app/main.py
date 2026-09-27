@@ -14,7 +14,7 @@ from fastapi import FastAPI
 from . import __version__
 from .core.config import Settings
 from .core.storage import JobStore
-from .routers import health, jobs
+from .routers import health, wikis
 from .services.model_status import ModelStatusCache
 from .services.provider_proxy import ProxyHandle, parse_extra_headers, start_proxy
 from .workers.pool import JobPool
@@ -74,10 +74,15 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.state.proxy = None
 
     app.include_router(health.router)
-    app.include_router(jobs.router)
+    app.include_router(wikis.router)
 
     @app.get("/", include_in_schema=False)
     def root() -> dict[str, str]:
-        return {"service": "openwiki-service", "docs": "/docs", "health": "/health"}
+        return {
+            "service": "openwiki-service",
+            "docs": "/docs",
+            "health": "/health",
+            "wikis": "/wikis",
+        }
 
     return app

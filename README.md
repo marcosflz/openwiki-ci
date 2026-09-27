@@ -6,9 +6,9 @@ generada por [OpenWiki](https://github.com/langchain-ai/openwiki) como un
 `wiki.zip` (Markdown + `openwiki/.claims/`). Opcionalmente, con `push`, la
 commitea de vuelta al repositorio de origen.
 
-- **API**: Python 3.12 + FastAPI (jobs asíncronos con estado consultable).
+- **API**: Python 3.12 + FastAPI (generaciones asíncronas con estado consultable).
 - **Generación**: el CLI `openwiki` (Node 22) se ejecuta en modo one-shot
-  (`openwiki --init -p`) dentro del workspace del job.
+  (`openwiki --init -p`) dentro del workspace de la generación.
 - **Desacople**: todo el contacto con OpenWiki vive en
   `app/services/wiki_runner.py`; actualizar OpenWiki es reconstruir la imagen
   con otro `OPENWIKI_VERSION`, sin tocar el código del servicio.
@@ -29,23 +29,23 @@ Documentación interactiva de la API: http://localhost:8000/docs
 
 | Método | Ruta | Descripción |
 | --- | --- | --- |
-| `POST` | `/jobs` | Crea un job a partir de una URL git (JSON). |
-| `POST` | `/jobs/upload` | Crea un job a partir de un `zip`/`tar` (multipart). |
-| `GET` | `/jobs` | Lista los jobs (más recientes primero). |
-| `GET` | `/jobs/{id}` | Estado, progreso, páginas, errores. |
-| `GET` | `/jobs/{id}/logs?tail=50` | Cola del log de ejecución de OpenWiki. |
-| `GET` | `/jobs/{id}/wiki.zip` | Descarga la wiki (raíz `.openwiki/` dentro del zip). |
-| `POST` | `/jobs/{id}/cancel` | Cancela un job en cola o en ejecución. |
-| `POST` | `/jobs/{id}/retry` | Reencola un job fallido/cancelado; OpenWiki reanuda desde `.run.json`. |
-| `DELETE` | `/jobs/{id}` | Borra un job terminado. |
+| `POST` | `/wikis` | Crea una wiki a partir de una URL git (JSON). |
+| `POST` | `/wikis/upload` | Crea una wiki a partir de un `zip`/`tar` (multipart). |
+| `GET` | `/wikis` | Lista las wikis (más recientes primero). |
+| `GET` | `/wikis/{id}` | Estado, progreso, páginas, errores. |
+| `GET` | `/wikis/{id}/logs?tail=50` | Cola del log de ejecución de OpenWiki. |
+| `GET` | `/wikis/{id}/download` | Descarga la wiki (raíz `.openwiki/` dentro del zip). |
+| `POST` | `/wikis/{id}/cancel` | Cancela una wiki en cola o en ejecución. |
+| `POST` | `/wikis/{id}/retry` | Reencola una wiki fallida/cancelada; OpenWiki reanuda desde `.run.json`. |
+| `DELETE` | `/wikis/{id}` | Borra una wiki terminada. |
 | `GET` | `/health` | Salud del servicio, pool de workers y configuración del modelo (sin llamar al proveedor). |
 | `GET` | `/health/model` | Comprobación activa de que el modelo configurado responde (cacheada; `?force=true`). |
 
-Estados de un job: `queued → fetching → generating → finalizing → done`
-(o `failed`, `cancelled`). Los jobs son resumibles: si el timeout lo mata o
-cancelas la generación, `POST /jobs/{id}/retry` lo reencola en el **mismo
+Estados de una wiki: `queued → fetching → generating → finalizing → done`
+(o `failed`, `cancelled`). Las wikis son resumibles: si el timeout lo mata o
+cancelas la generación, `POST /wikis/{id}/retry` la reencola en el **mismo
 workspace** y OpenWiki continúa desde su cola de páginas
-(`openwiki/.run.json`); al reiniciar el contenedor, los jobs en curso se
+(`openwiki/.run.json`); al reiniciar el contenedor, las wikis en curso se
 reencolan igual.
 
 Durante la generación, `progress` se lee del propio plan de OpenWiki
@@ -55,19 +55,19 @@ Durante la generación, `progress` se lee del propio plan de OpenWiki
 ### Repositorio público
 
 ```bash
-curl -X POST http://localhost:8000/jobs \
+curl -X POST http://localhost:8000/wikis \
   -H "Content-Type: application/json" \
   -d '{"source": {"url": "https://github.com/org/repo.git"}, "language": "es"}'
 ```
 
 ```json
-{ "job_id": "e6c1...", "status": "queued", "links": { "status": "/jobs/e6c1...", "logs": "...", "wiki": "..." } }
+{ "wiki_id": "e6c1...", "status": "queued", "links": { "status": "/wikis/e6c1...", "logs": "...", "wiki": "..." } }
 ```
 
 ### Repositorio privado (PAT)
 
 ```bash
-curl -X POST http://localhost:8000/jobs \
+curl -X POST http://localhost:8000/wikis \
   -H "Content-Type: application/json" \
   -d '{
         "source": {
@@ -89,7 +89,7 @@ repositorio de origen (solo fuentes git; requiere un PAT con permiso de
 escritura):
 
 ```bash
-curl -X POST http://localhost:8000/jobs \
+curl -X POST http://localhost:8000/wikis \
   -H "Content-Type: application/json" \
   -d '{
         "source": {"url": "https://github.com/org/repo.git", "auth": {"token": "ghp_xxx"}},
@@ -110,19 +110,19 @@ curl -X POST http://localhost:8000/jobs \
   `PUSH_AUTHOR_EMAIL`).
 - El token viaja en la cabecera HTTP del `git push` (nunca en la URL) y se
   redacta de logs y errores.
-- Si el push falla (permisos, rama protegida, non-fast-forward), el job queda
+- Si el push falla (permisos, rama protegida, non-fast-forward), la wiki queda
   `failed` con el detalle en `push_result`, pero el `wiki.zip` sigue
-  descargable; `POST /jobs/{id}/retry` reanuda y reintenta el push.
+  descargable; `POST /wikis/{id}/retry` reanuda y reintenta el push.
 - El resultado se expone en `push_result` (`pushed` / `no_changes` / `failed` /
   `skipped`) con `branch` y `commit`.
-- Los jobs en modo `update` sobre un clon superficial hacen
+- Las wikis en modo `update` sobre un clon superficial hacen
   `git fetch --unshallow`: OpenWiki necesita el commit documentado
   (`gitHead` de `.last-update.json`) para calcular el diff incremental.
 
 ### Subida de un zip/tar
 
 ```bash
-curl -X POST http://localhost:8000/jobs/upload \
+curl -X POST http://localhost:8000/wikis/upload \
   -F "file=@code.zip" \
   -F "language=es"
 ```
@@ -136,12 +136,12 @@ evidencia de sus Claims con git).
 ### Consultar y descargar
 
 ```bash
-curl http://localhost:8000/jobs/<job_id>
-curl "http://localhost:8000/jobs/<job_id>/logs?tail=100"
-curl -OJ http://localhost:8000/jobs/<job_id>/wiki.zip
+curl http://localhost:8000/wikis/<wiki_id>
+curl "http://localhost:8000/wikis/<wiki_id>/logs?tail=100"
+curl -OJ http://localhost:8000/wikis/<wiki_id>/download
 ```
 
-Opciones por job: `language` (idioma de la wiki; se escribe
+Opciones por wiki: `language` (idioma de la wiki; se escribe
 `openwiki/INSTRUCTIONS.md` si el repo no trae uno), `concurrency` (1–8,
 páginas en paralelo de OpenWiki), `mode` y `push` (commit al repo, ver
 arriba):
@@ -257,13 +257,13 @@ Variables propias del servicio:
 
 | Variable | Default | Descripción |
 | --- | --- | --- |
-| `DATA_DIR` | `/data` (Linux) | Estado persistente: jobs, repos, wikis, logs. |
+| `DATA_DIR` | `/data` (Linux) | Estado persistente: wikis, repos, logs. |
 | `JOB_TIMEOUT_MINUTES` | `45` | Timeout por generación; al superarlo se mata el proceso. |
 | `MAX_UPLOAD_MB` | `200` | Tamaño máximo de subida. |
 | `MAX_EXTRACTED_MB` | `1024` | Tamaño máximo descomprimido. |
 | `MAX_CONCURRENT_JOBS` | `2` | Generaciones simultáneas (workers). |
 | `DEFAULT_PAGE_CONCURRENCY` | `2` | `OPENWIKI_PAGE_CONCURRENCY` por defecto (1–8). |
-| `JOB_RETENTION_HOURS` | `0` | Borra jobs terminados tras N horas (`0` = conservar). |
+| `JOB_RETENTION_HOURS` | `0` | Borra wikis terminadas tras N horas (`0` = conservar). |
 | `MODEL_CHECK_TTL_SECONDS` | `30` | Caché de `/health/model` (`0` = probar en cada llamada). |
 | `MODEL_CHECK_TIMEOUT_SECONDS` | `20` | Timeout de la prueba activa del modelo. |
 | `OPENAI_COMPATIBLE_EXTRA_HEADERS` | — | JSON con cabeceras extra para gateways OpenAI-compatible (ver abajo). |
@@ -323,9 +323,9 @@ proveedor de modelos ni red.
 app/
 ├── main.py                  # factory de FastAPI + lifespan (workers, recuperación)
 ├── core/config.py           # Settings (env vars)
-├── core/storage.py          # job.json por job, escrituras atómicas
+├── core/storage.py          # job.json por generación, escrituras atómicas
 ├── core/util.py             # redacción de credenciales
-├── routers/jobs.py          # endpoints de jobs
+├── routers/wikis.py          # endpoints de wikis
 ├── routers/health.py        # /health
 ├── services/ingestion.py    # clone git, subidas, extracción segura, git init
 ├── services/wiki_runner.py  # ÚNICO punto de contacto con el CLI OpenWiki
@@ -343,7 +343,7 @@ app/
 3. Cuando haga falta una cola persistente (Redis, RQ, Celery), solo se
    reemplaza `app/workers/pool.py`.
 
-Roadmap natural ya previsto: `GET /jobs/{id}/pages` (páginas parseadas desde el
+Roadmap natural ya previsto: `GET /wikis/{id}/pages` (páginas parseadas desde el
 front matter), webhooks de finalización y servido del visualizador
 estático (`openwiki visualize --export`).
 
@@ -352,11 +352,11 @@ estático (`openwiki visualize --export`).
 - **Sin autenticación** en la API: pensada para red interna o detrás de un
   reverse proxy con auth. Añadir un bearer token es el siguiente paso natural.
 - El pool de workers es **in-process**: con varias réplicas del contenedor,
-  cada réplica ejecuta sus propios jobs; usa `DATA_DIR` por réplica.
+  cada réplica ejecuta sus propias generaciones; usa `DATA_DIR` por réplica.
 - El token de un repo privado se guarda en `job.json` (volumen `/data`, fuera
   de logs y respuestas) para poder reintentar el job sin reenviarlo; si el
   workspace se pierde, el job fallará y hay que reenviarlo.
 - `push` escribe en tu repositorio con ese PAT: revisa la rama destino. Si el
-  push falla, el job queda `failed` pero la wiki sigue descargable.
+  push falla, la generación queda `failed` pero la wiki sigue descargable.
 - `ALLOW_LOCAL_GIT=true` permite clonar rutas locales/`file://` (útil en
   desarrollo); no lo actives en producción.

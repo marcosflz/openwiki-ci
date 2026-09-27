@@ -127,29 +127,29 @@ def make_remote_repo(tmp_path: Path):
     return _make
 
 
-def wait_for_status(client, job_id: str, *, timeout: float = 30.0) -> dict:
-    """Poll a job until it reaches a terminal status."""
+def wait_for_status(client, wiki_id: str, *, timeout: float = 30.0) -> dict:
+    """Poll a wiki until it reaches a terminal status."""
     deadline = time.monotonic() + timeout
     last: dict | None = None
     while time.monotonic() < deadline:
-        response = client.get(f"/jobs/{job_id}")
+        response = client.get(f"/wikis/{wiki_id}")
         assert response.status_code == 200, response.text
         last = response.json()
         if last["status"] in {"done", "failed", "cancelled"}:
             return last
         time.sleep(0.1)
-    raise AssertionError(f"job {job_id} did not finish within {timeout}s (last={last})")
+    raise AssertionError(f"wiki {wiki_id} did not finish within {timeout}s (last={last})")
 
 
-def wait_for_state(client, job_id: str, wanted: str, *, timeout: float = 15.0) -> dict:
-    """Poll a job until it reaches a specific non-terminal status."""
+def wait_for_state(client, wiki_id: str, wanted: str, *, timeout: float = 15.0) -> dict:
+    """Poll a wiki until it reaches a specific non-terminal status."""
     deadline = time.monotonic() + timeout
     last: dict | None = None
     while time.monotonic() < deadline:
-        response = client.get(f"/jobs/{job_id}")
+        response = client.get(f"/wikis/{wiki_id}")
         assert response.status_code == 200, response.text
         last = response.json()
         if last["status"] == wanted:
             return last
         time.sleep(0.05)
-    raise AssertionError(f"job {job_id} never reached {wanted} (last={last})")
+    raise AssertionError(f"wiki {wiki_id} never reached {wanted} (last={last})")

@@ -9,7 +9,7 @@ def test_health(client):
     payload = response.json()
     assert payload["status"] == "ok"
     assert payload["version"]
-    assert payload["jobs"]["workers"] == 1
+    assert payload["pool"]["workers"] == 1
 
 
 def test_root_redirects_to_docs(client):

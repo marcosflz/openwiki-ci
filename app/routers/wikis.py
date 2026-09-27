@@ -1,4 +1,4 @@
-"""Job endpoints: submit repositories, poll status, download generated wikis."""
+"""Wiki endpoints: submit repositories, poll status, download generated wikis."""
 
 from __future__ import annotations
 
@@ -11,43 +11,43 @@ from fastapi import APIRouter, File, Form, HTTPException, Query, Request, Upload
 from fastapi.responses import FileResponse, PlainTextResponse
 
 from ..core.storage import TERMINAL_STATUSES
-from ..schemas import JobAccepted, JobCreate, JobStatus, JobView, job_to_view
+from ..schemas import WikiAccepted, WikiCreate, WikiStatus, WikiView, wiki_to_view
 from ..services import ingestion
 
-router = APIRouter(prefix="/jobs", tags=["jobs"])
+router = APIRouter(prefix="/wikis", tags=["wikis"])
 
 MAX_LOG_TAIL = 2000
 
 
-def _accepted(job_id: str) -> JobAccepted:
-    base = f"/jobs/{job_id}"
-    return JobAccepted(
-        job_id=job_id,
-        status=JobStatus.queued,
+def _accepted(wiki_id: str) -> WikiAccepted:
+    base = f"/wikis/{wiki_id}"
+    return WikiAccepted(
+        wiki_id=wiki_id,
+        status=WikiStatus.queued,
         links={
             "status": base,
             "logs": f"{base}/logs",
-            "wiki": f"{base}/wiki.zip",
+            "download": f"{base}/download",
         },
     )
 
 
-@router.get("", response_model=list[JobView], summary="List jobs (newest first)")
-def list_jobs(
+@router.get("", response_model=list[WikiView], summary="List wikis (newest first)")
+def list_wikis(
     request: Request,
     limit: int = Query(50, ge=1, le=500),
-) -> list[JobView]:
+) -> list[WikiView]:
     store = request.app.state.store
-    return [job_to_view(job) for job in store.list_jobs(limit=limit)]
+    return [wiki_to_view(job) for job in store.list_jobs(limit=limit)]
 
 
 @router.post(
     "",
-    response_model=JobAccepted,
+    response_model=WikiAccepted,
     status_code=status.HTTP_202_ACCEPTED,
-    summary="Submit a git repository (public, or private with a token)",
+    summary="Generate a wiki from a git repository (public, or private with a token)",
 )
-async def create_job(payload: JobCreate, request: Request) -> JobAccepted:
+async def create_wiki(payload: WikiCreate, request: Request) -> WikiAccepted:
     settings = request.app.state.settings
     try:
         url = ingestion.validate_git_url(payload.source.url, allow_local=settings.allow_local_git)
@@ -92,9 +92,9 @@ async def create_job(payload: JobCreate, request: Request) -> JobAccepted:
 
 @router.post(
     "/upload",
-    response_model=JobAccepted,
+    response_model=WikiAccepted,
     status_code=status.HTTP_202_ACCEPTED,
-    summary="Submit an uploaded zip/tar archive",
+    summary="Generate a wiki from an uploaded zip/tar archive",
 )
 async def upload_source(
     request: Request,
@@ -102,7 +102,7 @@ async def upload_source(
     language: str | None = Form(None),
     concurrency: int | None = Form(None, ge=1, le=8),
     mode: Literal["auto", "init", "update"] | None = Form(None),
-) -> JobAccepted:
+) -> WikiAccepted:
     settings = request.app.state.settings
     filename = Path(file.filename or "upload").name
     suffix = ingestion.archive_suffix(filename)
@@ -145,64 +145,64 @@ async def _upload_chunks(file: UploadFile, chunk_size: int = 1024 * 1024) -> Asy
         yield chunk
 
 
-@router.post("/{job_id}/cancel", summary="Cancel a queued or running job")
-async def cancel_job(job_id: str, request: Request) -> dict[str, str]:
-    outcome = await request.app.state.pool.cancel(job_id)
+@router.post("/{wiki_id}/cancel", summary="Cancel a queued or running generation")
+async def cancel_wiki(wiki_id: str, request: Request) -> dict[str, str]:
+    outcome = await request.app.state.pool.cancel(wiki_id)
     if outcome == "not_found":
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="job not found")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
     if outcome == "not_running":
-        job = request.app.state.store.get(job_id)
+        job = request.app.state.store.get(wiki_id)
         raise HTTPException(
             status.HTTP_409_CONFLICT,
-            detail=f"job is not running (status={job.get('status') if job else 'unknown'})",
+            detail=f"wiki is not running (status={job.get('status') if job else 'unknown'})",
         )
-    return {"job_id": job_id, "status": outcome}
+    return {"wiki_id": wiki_id, "status": outcome}
 
 
 @router.post(
-    "/{job_id}/retry",
-    response_model=JobAccepted,
+    "/{wiki_id}/retry",
+    response_model=WikiAccepted,
     status_code=status.HTTP_202_ACCEPTED,
-    summary="Re-enqueue a failed/cancelled job (OpenWiki resumes where it stopped)",
+    summary="Re-enqueue a failed/cancelled wiki (OpenWiki resumes where it stopped)",
 )
-async def retry_job(job_id: str, request: Request) -> JobAccepted:
-    outcome = await request.app.state.pool.retry(job_id)
+async def retry_wiki(wiki_id: str, request: Request) -> WikiAccepted:
+    outcome = await request.app.state.pool.retry(wiki_id)
     if outcome == "not_found":
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="job not found")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
     if outcome == "not_retryable":
-        job = request.app.state.store.get(job_id)
+        job = request.app.state.store.get(wiki_id)
         raise HTTPException(
             status.HTTP_409_CONFLICT,
             detail=(
-                "only failed or cancelled jobs can be retried "
+                "only failed or cancelled wikis can be retried "
                 f"(status={job.get('status') if job else 'unknown'})"
             ),
         )
-    return _accepted(job_id)
+    return _accepted(wiki_id)
 
 
-@router.get("/{job_id}", response_model=JobView, summary="Get job status")
-def get_job(job_id: str, request: Request) -> JobView:
-    job = request.app.state.store.get(job_id)
+@router.get("/{wiki_id}", response_model=WikiView, summary="Get wiki status")
+def get_wiki(wiki_id: str, request: Request) -> WikiView:
+    job = request.app.state.store.get(wiki_id)
     if job is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="job not found")
-    return job_to_view(job)
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
+    return wiki_to_view(job)
 
 
 @router.get(
-    "/{job_id}/logs",
+    "/{wiki_id}/logs",
     response_class=PlainTextResponse,
     summary="Tail the OpenWiki run log",
 )
 def get_logs(
-    job_id: str,
+    wiki_id: str,
     request: Request,
     tail: int = Query(50, ge=1, le=MAX_LOG_TAIL),
 ) -> PlainTextResponse:
     store = request.app.state.store
-    if store.get(job_id) is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="job not found")
-    path = store.logs_path(job_id)
+    if store.get(wiki_id) is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
+    path = store.logs_path(wiki_id)
     if not path.exists():
         return PlainTextResponse("")
     with path.open("r", encoding="utf-8", errors="replace") as handle:
@@ -211,16 +211,16 @@ def get_logs(
 
 
 @router.get(
-    "/{job_id}/wiki.zip",
+    "/{wiki_id}/download",
     response_class=FileResponse,
-    summary="Download the generated wiki",
+    summary="Download the generated wiki as a zip",
 )
-def download_wiki(job_id: str, request: Request) -> FileResponse:
+def download_wiki(wiki_id: str, request: Request) -> FileResponse:
     store = request.app.state.store
-    job = store.get(job_id)
+    job = store.get(wiki_id)
     if job is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="job not found")
-    path = store.wiki_zip_path(job_id)
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
+    path = store.wiki_zip_path(wiki_id)
     if not path.exists():
         raise HTTPException(
             status.HTTP_404_NOT_FOUND,
@@ -229,19 +229,19 @@ def download_wiki(job_id: str, request: Request) -> FileResponse:
     return FileResponse(
         path,
         media_type="application/zip",
-        filename=f"openwiki-{job_id}.zip",
+        filename=f"openwiki-{wiki_id}.zip",
     )
 
 
-@router.delete("/{job_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete a finished job")
-def delete_job(job_id: str, request: Request) -> None:
+@router.delete("/{wiki_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Delete a finished wiki")
+def delete_wiki(wiki_id: str, request: Request) -> None:
     store = request.app.state.store
-    job = store.get(job_id)
+    job = store.get(wiki_id)
     if job is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="job not found")
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail="wiki not found")
     if job.get("status") not in TERMINAL_STATUSES:
         raise HTTPException(
             status.HTTP_409_CONFLICT,
-            detail=f"job is still running (status={job.get('status')})",
+            detail=f"wiki is still running (status={job.get('status')})",
         )
-    store.delete(job_id)
+    store.delete(wiki_id)

@@ -107,7 +107,7 @@ def test_forward_app_rejects_paths_outside_base():
     assert asyncio.run(scenario()).status_code == 404
 
 
-def test_jobs_point_openwiki_at_the_proxy(tmp_path, make_git_repo):
+def test_wikis_point_openwiki_at_the_proxy(tmp_path, make_git_repo):
     from fastapi.testclient import TestClient
 
     settings = Settings(
@@ -127,11 +127,11 @@ def test_jobs_point_openwiki_at_the_proxy(tmp_path, make_git_repo):
         assert proxy.base_url.startswith("http://127.0.0.1:")
         assert proxy.base_url.endswith("/zen/go/v1")
 
-        response = client.post("/jobs", json={"source": {"url": str(repo)}})
-        payload = wait_for_status(client, response.json()["job_id"])
+        response = client.post("/wikis", json={"source": {"url": str(repo)}})
+        payload = wait_for_status(client, response.json()["wiki_id"])
         assert payload["status"] == "done", payload
 
-        download = client.get(f"/jobs/{payload['job_id']}/wiki.zip")
+        download = client.get(f"/wikis/{payload['wiki_id']}/download")
         with zipfile.ZipFile(io.BytesIO(download.content)) as zf:
             env = json.loads(zf.read(".openwiki/.fake-env.json"))
         # OpenWiki received the loopback proxy URL, not the upstream one.

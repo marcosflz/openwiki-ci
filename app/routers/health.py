@@ -30,7 +30,7 @@ def health(request: Request) -> dict[str, object]:
         "openwiki_bin": settings.openwiki_bin,
         "openwiki_found": shutil.which(binary) is not None,
         "data_dir": str(settings.data_dir),
-        "jobs": pool.stats,
+        "pool": pool.stats,
         "model": describe_model(settings),
     }
 

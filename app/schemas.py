@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field, field_validator
 from .core.util import redact_url
 
 
-class JobStatus(str, Enum):
+class WikiStatus(str, Enum):
     queued = "queued"
     fetching = "fetching"
     generating = "generating"
@@ -86,7 +86,7 @@ class PushOptions(BaseModel):
 
 
 class PushResult(BaseModel):
-    """Outcome of the push requested for a job."""
+    """Outcome of the push requested for a wiki."""
 
     status: Literal["pushed", "no_changes", "failed", "skipped"]
     branch: str | None = None
@@ -95,7 +95,9 @@ class PushResult(BaseModel):
     at: str | None = None
 
 
-class JobCreate(BaseModel):
+class WikiCreate(BaseModel):
+    """Input of ``POST /wikis``: where to get the code and how to document it."""
+
     source: GitSource
     language: str | None = Field(
         None,
@@ -107,7 +109,7 @@ class JobCreate(BaseModel):
         None,
         ge=1,
         le=8,
-        description="OpenWiki page workers for this job (OPENWIKI_PAGE_CONCURRENCY).",
+        description="OpenWiki page workers for this generation (OPENWIKI_PAGE_CONCURRENCY).",
     )
     mode: Literal["auto", "init", "update"] = Field(
         "auto",
@@ -125,15 +127,15 @@ class JobCreate(BaseModel):
     )
 
 
-class JobAccepted(BaseModel):
-    job_id: str
-    status: JobStatus
+class WikiAccepted(BaseModel):
+    wiki_id: str
+    status: WikiStatus
     links: dict[str, str]
 
 
-class JobView(BaseModel):
-    job_id: str
-    status: JobStatus
+class WikiView(BaseModel):
+    wiki_id: str
+    status: WikiStatus
     source_type: str
     source_url: str = Field("", description="Redacted URL for git sources.")
     ref: str | None = None
@@ -152,7 +154,12 @@ class JobView(BaseModel):
     finished_at: str | None = None
 
 
-def job_to_view(job: dict[str, Any]) -> JobView:
+def wiki_to_view(job: dict[str, Any]) -> WikiView:
+    """Map an internal job record to the public wiki representation.
+
+    Internally a generation is a ``job`` (queue, workers, ``job.json``); the
+    public API exposes it as a ``wiki``.
+    """
     source = job.get("source") or {}
     source_type = source.get("type", "git")
     if source_type == "git":
@@ -165,9 +172,9 @@ def job_to_view(job: dict[str, Any]) -> JobView:
         filename = source.get("filename")
     push_request = job.get("push")
     push_result_data = job.get("push_result")
-    return JobView(
-        job_id=job["job_id"],
-        status=JobStatus(job.get("status", "queued")),
+    return WikiView(
+        wiki_id=job["job_id"],
+        status=WikiStatus(job.get("status", "queued")),
         source_type=source_type,
         source_url=source_url,
         ref=ref,
